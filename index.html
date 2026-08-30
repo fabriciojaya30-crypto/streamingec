@@ -1,1 +1,990 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Streaming EC</title><link rel="stylesheet" href="style.css"></head><body><header><div class="c nav"><a class="brand" href="index.html"><img src="logo.jpg"><span>Streaming EC</span></a><nav class="links"><a href="#catalogo">Catálogo</a><a href="cursos.html">Cursos</a><a class="btn wa" href="https://wa.me/qr/2D6ZXQWJBBC7C1">WhatsApp</a></nav></div></header><main><section class="hero"><div class="c"><span class="badge">TIENDA DIGITAL</span><h1>Todo lo digital,<br><span class="red">bien organizado.</span></h1><p class="muted">Streaming, inteligencia artificial, diseño, cursos y licencias. Entra a cada producto para ver sus planes, detalles y condiciones antes de comprar.</p><a class="btn primary" href="#catalogo">Ver catálogo →</a></div></section><section class="section" id="catalogo"><div class="c"><h2>Productos destacados</h2><input id="q" class="search" placeholder="Buscar Netflix, Gemini, cursos, Office..."><div class="chips"><button class="chip active" data-cat="Todos">Todos</button><button class="chip" data-cat="Streaming">Streaming</button><button class="chip" data-cat="Inteligencia Artificial">IA</button><button class="chip" data-cat="Música">Música</button><button class="chip" data-cat="Diseño">Diseño</button><button class="chip" data-cat="Cursos">Cursos</button><button class="chip" data-cat="Software y licencias">Software</button></div><div class="grid" id="grid"></div></div></section></main><footer><div class="c">© 2026 Streaming EC</div></footer><script>const P={"netflix": ["Netflix", "Streaming", ["Netflix 4K — 1 mes", "Netflix 4K — 3 meses"]], "chatgpt": ["ChatGPT", "Inteligencia Artificial", ["Plan 1 — 1 mes", "Plan 2 — 3 meses", "Plan 3 — 6 meses"]], "gemini": ["Gemini PRO + Google One", "Inteligencia Artificial", ["Gemini PRO — 1 mes", "Gemini PRO — 3 meses", "Gemini PRO — 12 meses"]], "spotify": ["Spotify Premium", "Música", ["Premium — 1 mes", "Premium — 3 meses"]], "youtube": ["YouTube Premium", "Streaming", ["Premium — 1 mes", "Premium — 3 meses"]], "canva": ["Canva Premium PRO", "Diseño", ["Canva PRO — 1 mes", "Canva PRO — 12 meses"]], "cursos": ["Cursos", "Cursos", ["Curso de ejemplo — Acceso digital", "Curso premium — Acceso digital"]], "microsoft-office": ["Microsoft Office 365", "Software y licencias", ["Office 365 — 1 año", "Office 365 — Personalizado"]]};let cat='Todos';const g=document.querySelector('#grid'),q=document.querySelector('#q');function render(){let s=q.value.toLowerCase();g.innerHTML=Object.entries(P).filter(([k,p])=>(cat==='Todos'||p[1]===cat)&&p[0].toLowerCase().includes(s)).map(([k,p])=>'<article class="card"><div class="icon">'+p[0].slice(0,2).toUpperCase()+'</div><span class="badge">'+p[1]+'</span><h3>'+p[0]+'</h3><p>Ver planes, descripción, requisitos, garantía y preguntas frecuentes.</p><a class="btn primary" href="'+k+'.html">Ver planes →</a></article>').join('')}q.oninput=render;document.querySelectorAll('.chip').forEach(x=>x.onclick=()=>{document.querySelectorAll('.chip').forEach(y=>y.classList.remove('active'));x.classList.add('active');cat=x.dataset.cat;render()});render()</script></body></html>
+<!doctype html>
+<html lang="es">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Streaming EC</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="c nav">
+
+<a
+    class="brand"
+    href="index.html"
+>
+
+<img src="logo.jpg">
+
+<span>
+    Streaming EC
+</span>
+
+</a>
+
+
+<nav class="links">
+
+<a href="#catalogo">
+    Catálogo
+</a>
+
+<a href="cursos.html">
+    Cursos
+</a>
+
+<a
+    class="btn wa"
+    href="https://wa.me/qr/2D6ZXQWJBBC7C1"
+>
+    WhatsApp
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<main>
+
+
+<section class="hero">
+
+<div class="c">
+
+<span class="badge">
+    TIENDA DIGITAL
+</span>
+
+
+<h1>
+
+Todo lo digital,
+
+<br>
+
+<span class="red">
+    bien organizado.
+</span>
+
+</h1>
+
+
+<p class="muted">
+
+Streaming, inteligencia artificial,
+diseño, cursos y licencias.
+Entra a cada producto para ver
+sus planes, detalles y condiciones
+antes de comprar.
+
+</p>
+
+
+<a
+    class="btn primary"
+    href="#catalogo"
+>
+    Ver catálogo →
+</a>
+
+</div>
+
+</section>
+
+
+
+<section
+    class="section"
+    id="catalogo"
+>
+
+<div class="c">
+
+
+<h2>
+    Productos destacados
+</h2>
+
+
+<input
+    id="q"
+    class="search"
+    placeholder="Buscar Netflix, Gemini, cursos, Office..."
+>
+
+
+<!-- CATEGORÍAS DINÁMICAS -->
+
+<div
+    class="chips"
+    id="chips"
+>
+
+<button
+    class="chip active"
+    data-cat=""
+>
+    Todos
+</button>
+
+</div>
+
+
+
+<!-- PRODUCTOS DINÁMICOS -->
+
+<div
+    class="grid"
+    id="grid"
+>
+
+<p>
+    Cargando productos...
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+<div class="c">
+
+© 2026 Streaming EC
+
+</div>
+
+</footer>
+
+
+
+<script>
+
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let productos = [];
+
+let categorias = [];
+
+let categoriaActual = "";
+
+const g =
+    document.querySelector("#grid");
+
+const q =
+    document.querySelector("#q");
+
+const chips =
+    document.querySelector("#chips");
+
+
+
+/* ==================================================
+   ESCAPAR HTML
+================================================== */
+
+function escapeHtml(texto) {
+
+    return String(texto ?? "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* ==================================================
+   CARGAR CATEGORÍAS
+================================================== */
+
+async function cargarCategorias() {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias"
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "Error cargando categorías"
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        categorias =
+            Array.isArray(datos)
+            ? datos.filter(
+                categoria =>
+                    categoria.activa
+            )
+            : [];
+
+
+        mostrarCategorias();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   MOSTRAR CATEGORÍAS
+================================================== */
+
+function mostrarCategorias() {
+
+    chips.innerHTML = "";
+
+
+    /* TODOS */
+
+    const todos =
+        document.createElement(
+            "button"
+        );
+
+
+    todos.className =
+        "chip active";
+
+
+    todos.dataset.cat =
+        "";
+
+
+    todos.textContent =
+        "Todos";
+
+
+    todos.onclick =
+        () => {
+
+            categoriaActual =
+                "";
+
+            actualizarBotones();
+
+            render();
+
+        };
+
+
+    chips.appendChild(
+        todos
+    );
+
+
+
+    /* CATEGORÍAS */
+
+    categorias.forEach(
+        categoria => {
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+
+            boton.className =
+                "chip";
+
+
+            boton.dataset.cat =
+                categoria.nombre;
+
+
+            boton.textContent =
+                categoria.nombre;
+
+
+            boton.onclick =
+                () => {
+
+                    categoriaActual =
+                        categoria.nombre;
+
+                    actualizarBotones();
+
+                    render();
+
+                };
+
+
+            chips.appendChild(
+                boton
+            );
+
+        }
+    );
+
+}
+
+
+
+/* ==================================================
+   ACTUALIZAR BOTONES
+================================================== */
+
+function actualizarBotones() {
+
+    document
+        .querySelectorAll(
+            ".chip"
+        )
+        .forEach(
+            boton => {
+
+                boton.classList.toggle(
+                    "active",
+                    boton.dataset.cat ===
+                    categoriaActual
+                );
+
+            }
+        );
+
+}
+
+
+
+/* ==================================================
+   CARGAR PRODUCTOS
+================================================== */
+
+async function cargarProductos() {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/productos"
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "Error cargando productos"
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        productos =
+            Array.isArray(datos)
+            ? datos.filter(
+                producto =>
+                    producto.activo
+            )
+            : [];
+
+
+        render();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        g.innerHTML = `
+
+            <p>
+
+                No se pudieron cargar
+                los productos.
+
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   RENDER PRODUCTOS
+================================================== */
+
+function render() {
+
+    const busqueda =
+        q.value
+            .trim()
+            .toLowerCase();
+
+
+    const filtrados =
+        productos.filter(
+            producto => {
+
+                const nombre =
+                    String(
+                        producto.nombre || ""
+                    )
+                    .toLowerCase();
+
+
+                const descripcion =
+                    String(
+                        producto.descripcion || ""
+                    )
+                    .toLowerCase();
+
+
+                const categoria =
+                    String(
+                        producto.categoria || ""
+                    );
+
+
+                const coincideBusqueda =
+                    !busqueda ||
+                    nombre.includes(
+                        busqueda
+                    ) ||
+                    descripcion.includes(
+                        busqueda
+                    );
+
+
+                const coincideCategoria =
+                    !categoriaActual ||
+                    categoria ===
+                    categoriaActual;
+
+
+                return (
+                    coincideBusqueda &&
+                    coincideCategoria
+                );
+
+            }
+        );
+
+
+    g.innerHTML = "";
+
+
+    if (
+        filtrados.length === 0
+    ) {
+
+        g.innerHTML = `
+
+            <p>
+
+                No hay productos
+                disponibles.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtrados.forEach(
+        producto => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "card";
+
+
+            /* =========================
+               IMAGEN
+            ========================= */
+
+            let imagen =
+                `<div class="icon">
+
+                    ${
+                        escapeHtml(
+                            String(
+                                producto.nombre ||
+                                "PR"
+                            )
+                            .slice(
+                                0,
+                                2
+                            )
+                            .toUpperCase()
+                        )
+                    }
+
+                </div>`;
+
+
+            if (
+                producto.imagen
+            ) {
+
+                imagen = `
+
+                    <img
+                        src="${escapeHtml(
+                            producto.imagen
+                        )}"
+                        alt="${escapeHtml(
+                            producto.nombre
+                        )}"
+                        style="
+                            width:100%;
+                            height:180px;
+                            object-fit:cover;
+                            border-radius:10px;
+                            margin-bottom:15px;
+                        "
+                        onerror="
+                            this.style.display='none';
+                        "
+                    >
+
+                `;
+
+            }
+
+
+
+            /* =========================
+               TARJETA
+            ========================= */
+
+            card.innerHTML = `
+
+                ${imagen}
+
+
+                ${
+                    producto.categoria
+                    ? `
+
+                        <span class="badge">
+
+                            ${escapeHtml(
+                                producto.categoria
+                            )}
+
+                        </span>
+
+                    `
+                    : ""
+                }
+
+
+                <h3>
+
+                    ${escapeHtml(
+                        producto.nombre ||
+                        "Producto"
+                    )}
+
+                </h3>
+
+
+                <p>
+
+                    ${escapeHtml(
+                        producto.descripcion ||
+                        "Producto digital disponible."
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+
+                        $${Number(
+                            producto.precio || 0
+                        ).toFixed(2)}
+
+                    </strong>
+
+                </p>
+
+
+                <button
+                    class="btn primary"
+                    onclick="verProducto('${escapeHtml(
+                        String(
+                            producto.id
+                        )
+                    )}')"
+                >
+
+                    Ver detalles →
+
+                </button>
+
+            `;
+
+
+            g.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+
+/* ==================================================
+   VER PRODUCTO
+================================================== */
+
+function verProducto(id) {
+
+    const producto =
+        productos.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!producto) {
+
+        return;
+
+    }
+
+
+    /*
+       Si el producto tiene una página
+       específica antigua, la usamos.
+       Si no, mostramos sus detalles.
+    */
+
+    const nombre =
+        String(
+            producto.nombre || ""
+        )
+        .toLowerCase();
+
+
+    const paginas = {
+
+        "netflix":
+            "netflix.html",
+
+        "chatgpt":
+            "chatgpt.html",
+
+        "gemini":
+            "gemini.html",
+
+        "spotify":
+            "spotify.html",
+
+        "youtube":
+            "youtube.html",
+
+        "canva":
+            "canva.html",
+
+        "microsoft office 365":
+            "microsoft-office.html"
+
+    };
+
+
+    if (
+        paginas[nombre]
+    ) {
+
+        window.location.href =
+            paginas[nombre];
+
+        return;
+
+    }
+
+
+    /* =========================
+       PRODUCTO NUEVO
+    ========================= */
+
+    let detalles =
+        producto.detalles ||
+        "";
+
+
+    let solicitud =
+        producto.solicitud ||
+        "";
+
+
+    const contenido = `
+
+        <div
+            style="
+                max-width:700px;
+                margin:40px auto;
+                padding:25px;
+            "
+        >
+
+            <a
+                href="index.html"
+                class="btn"
+            >
+                ← Volver
+            </a>
+
+
+            <h1>
+
+                ${escapeHtml(
+                    producto.nombre
+                )}
+
+            </h1>
+
+
+            ${
+                producto.imagen
+                ? `
+
+                    <img
+                        src="${escapeHtml(
+                            producto.imagen
+                        )}"
+                        style="
+                            width:100%;
+                            max-height:350px;
+                            object-fit:cover;
+                            border-radius:12px;
+                            margin:20px 0;
+                        "
+                    >
+
+                `
+                : ""
+            }
+
+
+            <h2>
+
+                $${Number(
+                    producto.precio || 0
+                ).toFixed(2)}
+
+            </h2>
+
+
+            ${
+                producto.descripcion
+                ? `
+
+                    <h3>
+                        Descripción
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(
+                            producto.descripcion
+                        )}
+                    </p>
+
+                `
+                : ""
+            }
+
+
+            ${
+                detalles
+                ? `
+
+                    <h3>
+                        Detalles
+                    </h3>
+
+                    <p
+                        style="
+                            white-space:pre-line;
+                        "
+                    >
+                        ${escapeHtml(
+                            detalles
+                        )}
+                    </p>
+
+                `
+                : ""
+            }
+
+
+            ${
+                solicitud
+                ? `
+
+                    <h3>
+                        Detalles de solicitud
+                    </h3>
+
+                    <p
+                        style="
+                            white-space:pre-line;
+                        "
+                    >
+                        ${escapeHtml(
+                            solicitud
+                        )}
+                    </p>
+
+                `
+                : ""
+            }
+
+
+            <br>
+
+
+            <a
+                class="btn primary"
+                href="https://wa.me/qr/2D6ZXQWJBBC7C1"
+            >
+
+                Solicitar por WhatsApp
+
+            </a>
+
+        </div>
+
+    `;
+
+
+    document.body.innerHTML =
+        contenido;
+
+}
+
+
+
+/* ==================================================
+   BUSCADOR
+================================================== */
+
+q.addEventListener(
+    "input",
+    render
+);
+
+
+
+/* ==================================================
+   INICIAR
+================================================== */
+
+async function iniciar() {
+
+    await cargarCategorias();
+
+    await cargarProductos();
+
+}
+
+
+iniciar();
+
+
+</script>
+
+
+</body>
+
+</html>

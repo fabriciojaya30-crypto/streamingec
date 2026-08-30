@@ -27,22 +27,26 @@ header {
     align-items: center;
 }
 
-header h1 {
-    margin: 0;
+.logo {
     font-size: 25px;
+    font-weight: bold;
 }
 
-header span {
+.logo span {
     color: #e50914;
 }
 
+.admin {
+    font-size: 16px;
+}
+
 .contenedor {
-    max-width: 1100px;
-    margin: 0 auto;
+    max-width: 1150px;
+    margin: auto;
     padding: 40px 20px;
 }
 
-.encabezado-productos {
+.encabezado {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,9 +54,9 @@ header span {
     margin-bottom: 30px;
 }
 
-h2 {
-    font-size: 32px;
-    margin: 0 0 8px 0;
+h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
 }
 
 .subtitulo {
@@ -60,154 +64,224 @@ h2 {
     margin: 0;
 }
 
+button {
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 9px;
+    padding: 13px 20px;
+    font-size: 15px;
+}
+
+.btn-agregar {
+    background: #222;
+    color: white;
+}
+
+.btn-agregar:hover {
+    background: #333;
+}
+
+.btn-guardar {
+    background: #e50914;
+    color: white;
+    font-size: 17px;
+    padding: 15px 25px;
+}
+
+.btn-guardar:hover {
+    background: #b20710;
+}
+
 .estado {
     display: none;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 9px;
     background: #172b1b;
     color: #4ade80;
 }
 
 .estado.error {
-    background: #2a1111;
-    color: #f87171;
+    background: #351414;
+    color: #ff6b6b;
 }
 
 .productos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 25px;
 }
 
 .producto {
     background: #151515;
-    border: 1px solid #292929;
-    border-radius: 14px;
-    padding: 22px;
-    position: relative;
+    border: 1px solid #2b2b2b;
+    border-radius: 15px;
+    padding: 25px;
 }
 
-.producto h3 {
-    margin-top: 0;
-    font-size: 22px;
+.producto-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.producto-numero {
+    color: #888;
+    font-size: 14px;
+}
+
+.producto h2 {
+    margin: 4px 0 0;
+    font-size: 23px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
 }
 
 .campo {
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
-.campo label {
-    display: block;
-    color: #aaa;
+.campo.ancho {
+    grid-column: 1 / -1;
+}
+
+label {
+    color: #bbb;
     font-size: 14px;
-    margin-bottom: 6px;
+    font-weight: bold;
 }
 
-.campo input {
+input,
+textarea,
+select {
     width: 100%;
-    padding: 11px;
-    border-radius: 8px;
-    border: 1px solid #333;
     background: #0d0d0d;
     color: white;
-    font-size: 16px;
+    border: 1px solid #363636;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    outline: none;
 }
 
-.activo {
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #e50914;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.descripcion {
+    min-height: 90px;
+}
+
+.detalles {
+    min-height: 130px;
+}
+
+.solicitud {
+    min-height: 130px;
+}
+
+.imagen-preview {
+    margin-top: 10px;
+    max-width: 180px;
+    max-height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: none;
+    border: 1px solid #333;
+}
+
+.activo-contenedor {
+    margin-top: 20px;
+    padding: 15px;
+    background: #101010;
+    border-radius: 9px;
+    border: 1px solid #292929;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    color: #ccc;
+    gap: 10px;
 }
 
-.activo input {
+.activo-contenedor input {
     width: 18px;
     height: 18px;
 }
 
-.badge {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 20px;
-    background: #14532d;
-    color: #4ade80;
-    font-size: 12px;
-}
-
-.badge.inactivo {
-    background: #451a1a;
-    color: #f87171;
-}
-
-.botones {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.boton {
-    padding: 14px 22px;
-    border: 0;
-    border-radius: 9px;
-    background: #e50914;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.activo-contenedor label {
     cursor: pointer;
 }
 
-.boton:hover {
-    background: #b20710;
-}
-
-.boton-secundario {
-    background: #222;
-}
-
-.boton-secundario:hover {
-    background: #333;
-}
-
-.boton-eliminar {
-    width: 100%;
-    margin-top: 15px;
-    padding: 10px;
-    border: 1px solid #5c2020;
-    border-radius: 8px;
+.btn-eliminar {
     background: #2a1111;
     color: #f87171;
-    cursor: pointer;
+    border: 1px solid #542020;
 }
 
-.boton-eliminar:hover {
+.btn-eliminar:hover {
     background: #451a1a;
 }
 
-.cargando {
+.sin-productos {
+    padding: 50px 20px;
+    text-align: center;
+    background: #151515;
+    border: 1px dashed #333;
+    border-radius: 15px;
     color: #aaa;
-    padding: 30px 0;
 }
 
-.error {
-    color: #f87171;
-    background: #2a1111;
-    padding: 15px;
-    border-radius: 8px;
+.acciones-finales {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 
-    .encabezado-productos {
+    header {
+        padding: 18px;
+    }
+
+    .contenedor {
+        padding: 25px 15px;
+    }
+
+    .encabezado {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .encabezado-productos .boton {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo.ancho {
+        grid-column: auto;
+    }
+
+    .producto-cabecera {
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .btn-agregar {
         width: 100%;
     }
+
 }
 </style>
 </head>
@@ -215,41 +289,63 @@ h2 {
 <body>
 
 <header>
-    <h1>Streaming <span>EC</span></h1>
-    <div>⚙️ Administrador</div>
+
+    <div class="logo">
+        Streaming <span>EC</span>
+    </div>
+
+    <div class="admin">
+        ⚙️ Administrador
+    </div>
+
 </header>
 
 <main class="contenedor">
 
-    <div class="encabezado-productos">
+    <div class="encabezado">
 
         <div>
-            <h2>Productos</h2>
+            <h1>Productos</h1>
 
             <p class="subtitulo">
                 Administra los productos y servicios de tu tienda.
             </p>
         </div>
 
-        <button class="boton boton-secundario" onclick="agregarProducto()">
+        <button
+            class="btn-agregar"
+            onclick="agregarProducto()"
+        >
             ➕ Agregar producto
         </button>
 
     </div>
 
-    <div id="estado" class="estado"></div>
 
-    <div id="productos" class="productos">
+    <div
+        id="estado"
+        class="estado"
+    ></div>
 
-        <div class="cargando">
+
+    <div
+        id="productos"
+        class="productos"
+    >
+
+        <div class="sin-productos">
             Cargando productos...
         </div>
 
     </div>
 
-    <div class="botones">
 
-        <button class="boton" onclick="guardarCambios()">
+    <div class="acciones-finales">
+
+        <button
+            class="btn-guardar"
+            onclick="guardarCambios()"
+        >
             💾 Guardar cambios
         </button>
 
@@ -257,292 +353,750 @@ h2 {
 
 </main>
 
+
 <script>
 
 let productos = [];
 
 
-// ==========================================
+// ==================================================
 // CARGAR PRODUCTOS
-// ==========================================
+// ==================================================
 
 async function cargarProductos() {
 
-    const contenedor = document.getElementById("productos");
+    const contenedor =
+        document.getElementById("productos");
 
     try {
 
-        const respuesta = await fetch("/admin/api/productos.js");
+        const respuesta =
+            await fetch("/api/productos");
 
         if (!respuesta.ok) {
-            throw new Error("No se pudo acceder a la API.");
+
+            throw new Error(
+                "La API no respondió correctamente."
+            );
+
         }
 
-        productos = await respuesta.json();
+        productos =
+            await respuesta.json();
+
+        if (!Array.isArray(productos)) {
+
+            throw new Error(
+                "La API devolvió un formato incorrecto."
+            );
+
+        }
 
         mostrarProductos();
 
     } catch (error) {
 
         contenedor.innerHTML = `
-            <div class="error">
-                ❌ Error al cargar los productos.<br><br>
-                ${error.message}
+            <div class="sin-productos">
+                ❌ No se pudieron cargar los productos.
+                <br><br>
+                ${escapeHtml(error.message)}
             </div>
         `;
 
     }
+
 }
 
 
-// ==========================================
+// ==================================================
 // MOSTRAR PRODUCTOS
-// ==========================================
+// ==================================================
 
 function mostrarProductos() {
 
-    const contenedor = document.getElementById("productos");
+    const contenedor =
+        document.getElementById("productos");
 
     contenedor.innerHTML = "";
 
-    productos.forEach((producto, indice) => {
 
-        const tarjeta = document.createElement("div");
+    if (productos.length === 0) {
 
-        tarjeta.className = "producto";
+        contenedor.innerHTML = `
+            <div class="sin-productos">
 
-        tarjeta.innerHTML = `
+                <div style="font-size:40px;">
+                    📦
+                </div>
 
-            <h3>${escapeHtml(producto.nombre)}</h3>
+                <h3>
+                    No hay productos todavía
+                </h3>
 
-            <div class="badge ${producto.activo ? "" : "inactivo"}">
-                ${producto.activo ? "Activo" : "Inactivo"}
-            </div>
-
-            <div class="campo">
-
-                <label>Nombre</label>
-
-                <input
-                    type="text"
-                    value="${escapeHtml(producto.nombre)}"
-                    oninput="actualizarNombre(${indice}, this.value)"
-                >
+                <p>
+                    Pulsa "Agregar producto" para crear
+                    tu primer producto.
+                </p>
 
             </div>
-
-            <div class="campo">
-
-                <label>Precio</label>
-
-                <input
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value="${producto.precio}"
-                    oninput="actualizarPrecio(${indice}, this.value)"
-                >
-
-            </div>
-
-            <label class="activo">
-
-                <input
-                    type="checkbox"
-                    ${producto.activo ? "checked" : ""}
-                    onchange="actualizarActivo(${indice}, this.checked)"
-                >
-
-                Producto activo
-
-            </label>
-
-            <button
-                class="boton-eliminar"
-                onclick="eliminarProducto(${indice})"
-            >
-                🗑️ Eliminar producto
-            </button>
-
         `;
 
-        contenedor.appendChild(tarjeta);
+        return;
 
-    });
+    }
+
+
+    productos.forEach(
+        (producto, indice) => {
+
+            const tarjeta =
+                document.createElement("div");
+
+            tarjeta.className =
+                "producto";
+
+
+            tarjeta.innerHTML = `
+
+                <div class="producto-cabecera">
+
+                    <div>
+
+                        <div class="producto-numero">
+                            PRODUCTO ${indice + 1}
+                        </div>
+
+                        <h2>
+                            ${escapeHtml(
+                                producto.nombre ||
+                                "Nuevo producto"
+                            )}
+                        </h2>
+
+                    </div>
+
+                    <button
+                        class="btn-eliminar"
+                        onclick="eliminarProducto(${indice})"
+                    >
+                        🗑️ Eliminar
+                    </button>
+
+                </div>
+
+
+                <div class="grid">
+
+
+                    <!-- NOMBRE -->
+
+                    <div class="campo">
+
+                        <label>
+                            Nombre del producto *
+                        </label>
+
+                        <input
+                            type="text"
+                            value="${escapeAttr(
+                                producto.nombre || ""
+                            )}"
+                            placeholder="Ej: Netflix Premium"
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'nombre',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </div>
+
+
+                    <!-- PRECIO -->
+
+                    <div class="campo">
+
+                        <label>
+                            Precio *
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value="${producto.precio ?? 0}"
+                            placeholder="0.00"
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'precio',
+                                    Number(this.value)
+                                )
+                            "
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORIA -->
+
+                    <div class="campo">
+
+                        <label>
+                            Categoría
+                        </label>
+
+                        <select
+                            onchange="
+                                actualizar(
+                                    ${indice},
+                                    'categoria',
+                                    this.value
+                                )
+                            "
+                        >
+
+                            <option
+                                value=""
+                                ${!producto.categoria
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Seleccionar categoría
+                            </option>
+
+                            <option
+                                value="Streaming"
+                                ${producto.categoria === "Streaming"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Streaming
+                            </option>
+
+                            <option
+                                value="Cursos"
+                                ${producto.categoria === "Cursos"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Cursos
+                            </option>
+
+                            <option
+                                value="Software"
+                                ${producto.categoria === "Software"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Software
+                            </option>
+
+                            <option
+                                value="IA"
+                                ${producto.categoria === "IA"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Inteligencia Artificial
+                            </option>
+
+                            <option
+                                value="Licencias"
+                                ${producto.categoria === "Licencias"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Licencias
+                            </option>
+
+                            <option
+                                value="Otros"
+                                ${producto.categoria === "Otros"
+                                    ? "selected"
+                                    : ""}
+                            >
+                                Otros
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- IMAGEN -->
+
+                    <div class="campo">
+
+                        <label>
+                            URL de imagen
+                        </label>
+
+                        <input
+                            type="url"
+                            value="${escapeAttr(
+                                producto.imagen || ""
+                            )}"
+                            placeholder="https://..."
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'imagen',
+                                    this.value
+                                );
+                                actualizarPreview(
+                                    ${indice},
+                                    this.value
+                                )
+                            "
+                        >
+
+                        <img
+                            id="preview-${indice}"
+                            class="imagen-preview"
+                            src="${escapeAttr(
+                                producto.imagen || ""
+                            )}"
+                            style="
+                                display:${
+                                    producto.imagen
+                                    ? "block"
+                                    : "none"
+                                };
+                            "
+                            onerror="
+                                this.style.display='none'
+                            "
+                        >
+
+                    </div>
+
+
+                    <!-- DESCRIPCION -->
+
+                    <div class="campo ancho">
+
+                        <label>
+                            Descripción
+                        </label>
+
+                        <textarea
+                            class="descripcion"
+                            placeholder="
+                                Ej: Disfruta del servicio
+                                durante 3 meses.
+                            "
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'descripcion',
+                                    this.value
+                                )
+                            "
+                        >${escapeHtml(
+                            producto.descripcion || ""
+                        )}</textarea>
+
+                    </div>
+
+
+                    <!-- DETALLES -->
+
+                    <div class="campo ancho">
+
+                        <label>
+                            Detalles del producto
+                        </label>
+
+                        <textarea
+                            class="detalles"
+                            placeholder="
+                                Ej:
+                                • Duración: 3 meses
+                                • Activación inmediata
+                                • Soporte incluido
+                                • Compatible con TV y móvil
+                            "
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'detalles',
+                                    this.value
+                                )
+                            "
+                        >${escapeHtml(
+                            producto.detalles || ""
+                        )}</textarea>
+
+                    </div>
+
+
+                    <!-- DETALLES DE SOLICITUD -->
+
+                    <div class="campo ancho">
+
+                        <label>
+                            Detalles de solicitud
+                        </label>
+
+                        <textarea
+                            class="solicitud"
+                            placeholder="
+                                Indica qué debe enviar
+                                el cliente para realizar
+                                la solicitud.
+                            "
+                            oninput="
+                                actualizar(
+                                    ${indice},
+                                    'detalles_solicitud',
+                                    this.value
+                                )
+                            "
+                        >${escapeHtml(
+                            producto.detalles_solicitud || ""
+                        )}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIVO -->
+
+                <div class="activo-contenedor">
+
+                    <input
+                        id="activo-${indice}"
+                        type="checkbox"
+                        ${
+                            producto.activo
+                            ? "checked"
+                            : ""
+                        }
+                        onchange="
+                            actualizar(
+                                ${indice},
+                                'activo',
+                                this.checked
+                            )
+                        "
+                    >
+
+                    <label for="activo-${indice}">
+                        Producto activo
+                    </label>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(tarjeta);
+
+        }
+    );
+
 }
 
 
-// ==========================================
-// ACTUALIZAR DATOS
-// ==========================================
+// ==================================================
+// ACTUALIZAR PRODUCTO
+// ==================================================
 
-function actualizarNombre(indice, valor) {
+function actualizar(
+    indice,
+    campo,
+    valor
+) {
 
-    productos[indice].nombre = valor;
-
-}
-
-function actualizarPrecio(indice, valor) {
-
-    productos[indice].precio = Number(valor);
-
-}
-
-function actualizarActivo(indice, valor) {
-
-    productos[indice].activo = valor;
-
-    mostrarProductos();
+    productos[indice][campo] = valor;
 
 }
 
 
-// ==========================================
+// ==================================================
+// PREVISUALIZAR IMAGEN
+// ==================================================
+
+function actualizarPreview(
+    indice,
+    url
+) {
+
+    const imagen =
+        document.getElementById(
+            `preview-${indice}`
+        );
+
+    if (!imagen) return;
+
+    if (!url) {
+
+        imagen.style.display = "none";
+
+        return;
+
+    }
+
+    imagen.src = url;
+
+    imagen.style.display = "block";
+
+}
+
+
+// ==================================================
 // AGREGAR PRODUCTO
-// ==========================================
+// ==================================================
 
 function agregarProducto() {
 
-    const nuevoProducto = {
+    const nuevoId =
+        "producto-" + Date.now();
 
-        id: "producto-" + Date.now(),
 
-        nombre: "Nuevo producto",
+    productos.push({
+
+        id: nuevoId,
+
+        nombre: "",
 
         precio: 0,
 
+        descripcion: "",
+
+        detalles: "",
+
+        detalles_solicitud: "",
+
+        categoria: "",
+
+        imagen: "",
+
         activo: true
 
-    };
+    });
 
-    productos.push(nuevoProducto);
 
     mostrarProductos();
 
-    const estado = document.getElementById("estado");
 
-    estado.className = "estado";
+    mostrarEstado(
+        "➕ Producto nuevo agregado. Completa sus datos y pulsa Guardar cambios.",
+        false
+    );
 
-    estado.style.display = "block";
-
-    estado.textContent =
-        "➕ Producto agregado. Escribe su nombre y precio y luego pulsa Guardar cambios.";
 
     window.scrollTo({
+
         top: document.body.scrollHeight,
+
         behavior: "smooth"
+
     });
 
 }
 
 
-// ==========================================
+// ==================================================
 // ELIMINAR PRODUCTO
-// ==========================================
+// ==================================================
 
 function eliminarProducto(indice) {
 
-    const producto = productos[indice];
+    const producto =
+        productos[indice];
 
-    const confirmar = confirm(
-        `¿Seguro que quieres eliminar "${producto.nombre}"?`
-    );
 
-    if (!confirmar) {
+    const nombre =
+        producto.nombre ||
+        "este producto";
+
+
+    if (
+        !confirm(
+            `¿Seguro que quieres eliminar "${nombre}"?`
+        )
+    ) {
+
         return;
+
     }
 
-    productos.splice(indice, 1);
+
+    productos.splice(
+        indice,
+        1
+    );
+
 
     mostrarProductos();
 
 }
 
 
-// ==========================================
+// ==================================================
 // GUARDAR CAMBIOS
-// ==========================================
+// ==================================================
 
 async function guardarCambios() {
 
-    const estado = document.getElementById("estado");
+    mostrarEstado(
+        "💾 Guardando cambios...",
+        false
+    );
 
-    estado.className = "estado";
-
-    estado.style.display = "block";
-
-    estado.textContent = "💾 Guardando cambios...";
 
     try {
 
-        const respuesta = await fetch("/admin/api/productos.js", {
+        const respuesta =
+            await fetch(
+                "/api/productos",
+                {
 
-            method: "POST",
+                    method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                    headers: {
 
-            body: JSON.stringify(productos)
+                        "Content-Type":
+                            "application/json"
 
-        });
+                    },
 
-        const resultado = await respuesta.json();
+                    body:
+                        JSON.stringify(
+                            productos
+                        )
+
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
 
         if (!respuesta.ok) {
 
             throw new Error(
-                resultado.error || "No se pudieron guardar los cambios."
+                resultado.error ||
+                "No se pudieron guardar los cambios."
             );
 
         }
 
-        estado.textContent =
-            "✅ Productos guardados correctamente.";
+
+        mostrarEstado(
+            "✅ Productos guardados correctamente.",
+            false
+        );
+
 
         mostrarProductos();
 
+
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
+
 
     } catch (error) {
 
-        estado.className = "estado error";
-
-        estado.textContent =
-            "❌ " + error.message;
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
 
     }
 
 }
 
 
-// ==========================================
-// SEGURIDAD HTML
-// ==========================================
+// ==================================================
+// MENSAJES
+// ==================================================
 
-function escapeHtml(text) {
+function mostrarEstado(
+    mensaje,
+    esError
+) {
 
-    return String(text)
+    const estado =
+        document.getElementById(
+            "estado"
+        );
 
-        .replace(/&/g, "&amp;")
 
-        .replace(/</g, "&lt;")
+    estado.style.display =
+        "block";
 
-        .replace(/>/g, "&gt;")
 
-        .replace(/"/g, "&quot;")
+    estado.className =
+        esError
+        ? "estado error"
+        : "estado";
 
-        .replace(/'/g, "&#039;");
+
+    estado.textContent =
+        mensaje;
 
 }
 
 
-// ==========================================
+// ==================================================
+// SEGURIDAD
+// ==================================================
+
+function escapeHtml(texto) {
+
+    return String(texto)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttr(texto) {
+
+    return escapeHtml(texto);
+
+}
+
+
+// ==================================================
 // INICIAR
-// ==========================================
+// ==================================================
 
 cargarProductos();
 

@@ -1,183 +1,328 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Streaming EC</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Administrador - Streaming EC</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0b0b0b;
-            color: white;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        .header {
-            background: #111;
-            border-bottom: 1px solid #292929;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0b0b;
+    color: #fff;
+}
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+header {
+    background: #111;
+    border-bottom: 1px solid #292929;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .header span {
-            color: #e50914;
-        }
+header h1 {
+    margin: 0;
+    font-size: 25px;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+header span {
+    color: #e50914;
+}
 
-        .welcome {
-            margin-bottom: 30px;
-        }
+.contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
 
-        .welcome h2 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
+h2 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
 
-        .welcome p {
-            color: #aaa;
-        }
+.subtitulo {
+    color: #aaa;
+    margin-bottom: 30px;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+.estado {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #172b1b;
+    color: #4ade80;
+}
 
-        .card {
-            background: #151515;
-            border: 1px solid #292929;
-            border-radius: 14px;
-            padding: 25px;
-            transition: 0.2s;
-        }
+.productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
 
-        .card:hover {
-            border-color: #e50914;
-            transform: translateY(-2px);
-        }
+.producto {
+    background: #151515;
+    border: 1px solid #292929;
+    border-radius: 14px;
+    padding: 22px;
+}
 
-        .card h3 {
-            margin-top: 0;
-            font-size: 20px;
-        }
+.producto h3 {
+    margin-top: 0;
+    font-size: 22px;
+}
 
-        .card p {
-            color: #999;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.campo {
+    margin-top: 16px;
+}
 
-        .button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 11px 18px;
-            background: #e50914;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
+.campo label {
+    display: block;
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
 
-        .button:hover {
-            background: #b20710;
-        }
+.campo input {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0d0d0d;
+    color: white;
+    font-size: 16px;
+}
 
-        .status {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 5px 10px;
-            background: #123d20;
-            color: #54d477;
-            border-radius: 20px;
-            font-size: 12px;
-        }
+.activo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    color: #ccc;
+}
 
-        @media (max-width: 600px) {
-            .header {
-                padding: 15px;
-            }
+.activo input {
+    width: 18px;
+    height: 18px;
+}
 
-            .container {
-                margin-top: 25px;
-            }
+.badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #14532d;
+    color: #4ade80;
+    font-size: 12px;
+}
 
-            .welcome h2 {
-                font-size: 26px;
-            }
-        }
-    </style>
+.badge.inactivo {
+    background: #451a1a;
+    color: #f87171;
+}
+
+.boton {
+    margin-top: 30px;
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 9px;
+    background: #e50914;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #b20710;
+}
+
+.cargando {
+    color: #aaa;
+    padding: 30px 0;
+}
+
+.error {
+    color: #f87171;
+    background: #2a1111;
+    padding: 15px;
+    border-radius: 8px;
+}
+</style>
 </head>
 
 <body>
 
-    <header class="header">
-        <h1>Streaming <span>EC</span></h1>
-        <div>⚙️ Administrador</div>
-    </header>
+<header>
+    <h1>Streaming <span>EC</span></h1>
+    <div>⚙️ Administrador</div>
+</header>
 
-    <main class="container">
+<main class="contenedor">
 
-        <section class="welcome">
-            <h2>Panel de administración</h2>
-            <p>
-                Desde aquí podrás administrar los productos y servicios de tu tienda.
-            </p>
-        </section>
+    <h2>Productos</h2>
 
-        <section class="grid">
+    <p class="subtitulo">
+        Administra los productos y servicios de tu tienda.
+    </p>
 
-            <div class="card">
-                <h3>📦 Productos</h3>
-                <p>
-                    Administrar productos, precios, disponibilidad y promociones.
-                </p>
-                <span class="status">Próximamente</span>
+    <div id="estado" class="estado"></div>
+
+    <div id="productos" class="productos">
+        <div class="cargando">
+            Cargando productos...
+        </div>
+    </div>
+
+    <button class="boton" onclick="guardarCambios()">
+        💾 Guardar cambios
+    </button>
+
+</main>
+
+<script>
+
+let productos = [];
+
+async function cargarProductos() {
+
+    const contenedor = document.getElementById("productos");
+
+    try {
+
+        const respuesta = await fetch("/admin/api/productos.js");
+
+        if (!respuesta.ok) {
+            throw new Error("No se pudo acceder a la API.");
+        }
+
+        const texto = await respuesta.text();
+
+        /*
+         * La API actual devuelve JavaScript.
+         * Extraemos el array de productos para mostrarlo.
+         */
+
+        const inicio = texto.indexOf("const productos = [");
+        const fin = texto.indexOf("];", inicio);
+
+        if (inicio === -1 || fin === -1) {
+            throw new Error("Formato de productos no reconocido.");
+        }
+
+        const contenido = texto
+            .substring(
+                inicio + "const productos = ".length,
+                fin + 1
+            );
+
+        productos = Function("return " + contenido)();
+
+        mostrarProductos();
+
+    } catch (error) {
+
+        contenedor.innerHTML = `
+            <div class="error">
+                ❌ Error al cargar los productos.<br><br>
+                ${error.message}
+            </div>
+        `;
+
+    }
+}
+
+function mostrarProductos() {
+
+    const contenedor = document.getElementById("productos");
+
+    contenedor.innerHTML = "";
+
+    productos.forEach((producto, indice) => {
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.className = "producto";
+
+        tarjeta.innerHTML = `
+
+            <h3>${producto.nombre}</h3>
+
+            <div class="badge ${producto.activo ? "" : "inactivo"}">
+                ${producto.activo ? "Activo" : "Inactivo"}
             </div>
 
-            <div class="card">
-                <h3>💰 Precios</h3>
-                <p>
-                    Cambiar los precios de tus servicios sin modificar cada página.
-                </p>
-                <span class="status">Próximamente</span>
+            <div class="campo">
+
+                <label>Nombre</label>
+
+                <input
+                    type="text"
+                    value="${producto.nombre}"
+                    onchange="productos[${indice}].nombre = this.value"
+                >
+
             </div>
 
-            <div class="card">
-                <h3>📝 Descripciones</h3>
-                <p>
-                    Modificar títulos, descripciones y características de los productos.
-                </p>
-                <span class="status">Próximamente</span>
+            <div class="campo">
+
+                <label>Precio</label>
+
+                <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value="${producto.precio}"
+                    onchange="productos[${indice}].precio = Number(this.value)"
+                >
+
             </div>
 
-            <div class="card">
-                <h3>🔗 Enlaces</h3>
-                <p>
-                    Cambiar los enlaces de compra o contacto de cada producto.
-                </p>
-                <span class="status">Próximamente</span>
-            </div>
+            <label class="activo">
 
-        </section>
+                <input
+                    type="checkbox"
+                    ${producto.activo ? "checked" : ""}
+                    onchange="productos[${indice}].activo = this.checked"
+                >
 
-    </main>
+                Producto activo
+
+            </label>
+
+        `;
+
+        contenedor.appendChild(tarjeta);
+
+    });
+}
+
+function guardarCambios() {
+
+    const estado = document.getElementById("estado");
+
+    estado.style.display = "block";
+
+    estado.textContent =
+        "⚠️ Los cambios están preparados, pero todavía no se pueden guardar permanentemente. Primero debemos conectar el sistema de almacenamiento.";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+cargarProductos();
+
+</script>
 
 </body>
 </html>

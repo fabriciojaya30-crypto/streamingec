@@ -1,0 +1,1 @@
+Streaming EC v4 — tienda multipágina. Reemplazar $X por precios reales y completar las condiciones de cada producto antes de publicar.

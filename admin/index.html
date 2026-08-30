@@ -1,391 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Administrador - Streaming EC</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0b0b;
-    color: white;
-}
-
-header {
-    background: #111;
-    border-bottom: 1px solid #292929;
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #e50914;
-}
-
-.admin {
-    font-size: 16px;
-}
-
-.contenedor {
-    max-width: 1200px;
-    margin: auto;
-    padding: 35px 20px;
-}
-
-h1,
-h2,
-h3 {
-    margin-top: 0;
-}
-
-.subtitulo {
-    color: #aaa;
-    margin-top: -5px;
-}
-
-button {
-    border: 0;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 9px;
-    padding: 12px 18px;
-    font-size: 15px;
-}
-
-.btn-principal {
-    background: #e50914;
-    color: white;
-}
-
-.btn-principal:hover {
-    background: #b20710;
-}
-
-.btn-secundario {
-    background: #222;
-    color: white;
-}
-
-.btn-secundario:hover {
-    background: #333;
-}
-
-.btn-eliminar {
-    background: #2a1111;
-    color: #f87171;
-    border: 1px solid #542020;
-}
-
-.btn-eliminar:hover {
-    background: #451a1a;
-}
-
-.estado {
-    display: none;
-    margin: 20px 0;
-    padding: 15px;
-    border-radius: 9px;
-    background: #172b1b;
-    color: #4ade80;
-}
-
-.estado.error {
-    background: #351414;
-    color: #ff6b6b;
-}
-
-
-/* =========================
-   CATEGORÍAS
-========================= */
-
-.seccion-categorias {
-    background: #151515;
-    border: 1px solid #2b2b2b;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-.encabezado-seccion {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.categoria-nueva {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.categoria-nueva input {
-    flex: 1;
-}
-
-.categorias-lista {
-    display: grid;
-    gap: 10px;
-}
-
-.categoria-item {
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 10px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.categoria-item input[type="text"] {
-    flex: 1;
-}
-
-.categoria-item.inactiva {
-    opacity: .55;
-}
-
-.categoria-acciones {
-    display: flex;
-    gap: 7px;
-}
-
-.estado-categoria {
-    min-width: 70px;
-    text-align: center;
-    font-size: 12px;
-    padding: 6px 8px;
-    border-radius: 20px;
-    background: #16351f;
-    color: #4ade80;
-}
-
-.estado-categoria.inactiva {
-    background: #351414;
-    color: #f87171;
-}
-
-
-/* =========================
-   PRODUCTOS
-========================= */
-
-.encabezado-productos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.productos {
-    display: grid;
-    gap: 25px;
-}
-
-.producto {
-    background: #151515;
-    border: 1px solid #2b2b2b;
-    border-radius: 15px;
-    padding: 25px;
-}
-
-.producto-cabecera {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.producto-numero {
-    color: #888;
-    font-size: 13px;
-}
-
-.producto h2 {
-    margin: 5px 0 0;
-    font-size: 23px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.campo {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.campo.ancho {
-    grid-column: 1 / -1;
-}
-
-label {
-    color: #bbb;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    background: #0d0d0d;
-    color: white;
-    border: 1px solid #363636;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 15px;
-    font-family: Arial, sans-serif;
-    outline: none;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #e50914;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.descripcion {
-    min-height: 90px;
-}
-
-.detalles,
-.solicitud {
-    min-height: 130px;
-}
-
-.imagen-preview {
-    margin-top: 10px;
-    max-width: 180px;
-    max-height: 120px;
-    border-radius: 8px;
-    object-fit: cover;
-    display: none;
-    border: 1px solid #333;
-}
-
-.activo-contenedor {
-    margin-top: 20px;
-    padding: 15px;
-    background: #101010;
-    border-radius: 9px;
-    border: 1px solid #292929;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.activo-contenedor input {
-    width: 18px;
-    height: 18px;
-}
-
-.sin-productos {
-    padding: 50px 20px;
-    text-align: center;
-    background: #151515;
-    border: 1px dashed #333;
-    border-radius: 15px;
-    color: #aaa;
-}
-
-.acciones-finales {
-    margin-top: 30px;
-}
-
-.cargando {
-    color: #aaa;
-    padding: 30px;
-}
-
-
-/* =========================
-   MÓVIL
-========================= */
-
-@media (max-width: 700px) {
-
-    header {
-        padding: 18px;
-    }
-
-    .contenedor {
-        padding: 25px 15px;
-    }
-
-    .encabezado-productos,
-    .encabezado-seccion {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .campo.ancho {
-        grid-column: auto;
-    }
-
-    .categoria-nueva {
-        flex-direction: column;
-    }
-
-    .categoria-item {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .categoria-acciones {
-        width: 100%;
-    }
-
-    .categoria-acciones button {
-        flex: 1;
-    }
-
-    .producto-cabecera {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-}
-
-</style>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Streaming EC</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =========================
+           CATEGORÍAS DINÁMICAS
+        ========================= */
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 30px;
+        }
+
+        .chip {
+            cursor: pointer;
+        }
+
+        /* =========================
+           PRODUCTOS
+        ========================= */
+
+        .producto-card {
+            position: relative;
+        }
+
+        .producto-precio {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .producto-descripcion {
+            min-height: 45px;
+        }
+
+        .producto-detalles {
+            color: #aaa;
+            white-space: pre-line;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .sin-productos {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            color: #999;
+        }
+
+        .cargando {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            color: #999;
+        }
+
+        .imagen-producto {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .imagen-placeholder {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #171717;
+            color: #777;
+            font-size: 35px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.82);
+            z-index: 9999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.activo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-contenido {
+            width: 100%;
+            max-width: 650px;
+            background: #151515;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 0;
+            background: #292929;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-imagen {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-precio {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .modal-bloque {
+            margin-top: 20px;
+        }
+
+        .modal-bloque h4 {
+            margin-bottom: 8px;
+        }
+
+        .modal-bloque p {
+            color: #bbb;
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+
+    </style>
 
 </head>
 
@@ -395,67 +177,93 @@ textarea {
 
 <header>
 
-    <div class="logo">
-        Streaming <span>EC</span>
-    </div>
+    <div class="c nav">
 
-    <div class="admin">
-        ⚙️ Administrador
+        <a
+            class="brand"
+            href="index.html"
+        >
+
+            <img src="logo.jpg">
+
+            <span>
+                Streaming EC
+            </span>
+
+        </a>
+
+
+        <nav class="links">
+
+            <a href="#catalogo">
+                Catálogo
+            </a>
+
+            <a href="cursos.html">
+                Cursos
+            </a>
+
+            <a
+                class="btn wa"
+                href="https://wa.me/qr/2D6ZXQWJBBC7C1"
+            >
+                WhatsApp
+            </a>
+
+        </nav>
+
     </div>
 
 </header>
 
 
-<main class="contenedor">
+
+<main>
 
 
 <!-- =========================
-     CATEGORÍAS
+     HERO
 ========================= -->
 
-<section class="seccion-categorias">
+<section class="hero">
 
-    <div class="encabezado-seccion">
+    <div class="c">
 
-        <div>
-
-            <h2>🏷️ Categorías</h2>
-
-            <p class="subtitulo">
-                Administra las categorías de tu tienda.
-            </p>
-
-        </div>
-
-    </div>
+        <span class="badge">
+            TIENDA DIGITAL
+        </span>
 
 
-    <div class="categoria-nueva">
+        <h1>
 
-        <input
-            id="nuevaCategoria"
-            type="text"
-            placeholder="Nombre de la nueva categoría"
+            Todo lo digital,
+
+            <br>
+
+            <span class="red">
+                bien organizado.
+            </span>
+
+        </h1>
+
+
+        <p class="muted">
+
+            Streaming, inteligencia artificial,
+            diseño, cursos y licencias.
+            Entra a cada producto para ver
+            sus planes, detalles y condiciones
+            antes de comprar.
+
+        </p>
+
+
+        <a
+            class="btn primary"
+            href="#catalogo"
         >
-
-        <button
-            class="btn-principal"
-            onclick="agregarCategoria()"
-        >
-            ➕ Agregar categoría
-        </button>
-
-    </div>
-
-
-    <div
-        id="categorias"
-        class="categorias-lista"
-    >
-
-        <div class="cargando">
-            Cargando categorías...
-        </div>
+            Ver catálogo →
+        </a>
 
     </div>
 
@@ -464,68 +272,110 @@ textarea {
 
 
 <!-- =========================
-     ESTADO
+     CATÁLOGO
 ========================= -->
 
-<div
-    id="estado"
-    class="estado"
-></div>
+<section
+    class="section"
+    id="catalogo"
+>
+
+    <div class="c">
+
+
+        <h2>
+            Productos destacados
+        </h2>
+
+
+        <input
+            id="q"
+            class="search"
+            placeholder="Buscar Netflix, Gemini, cursos, Office..."
+        >
+
+
+        <!-- CATEGORÍAS DINÁMICAS -->
+
+        <div
+            id="chips"
+            class="chips"
+        >
+
+            <button
+                class="chip active"
+                data-cat=""
+            >
+                Todos
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCTOS -->
+
+        <div
+            class="grid"
+            id="grid"
+        >
+
+            <div class="cargando">
+                Cargando productos...
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="c">
+
+        © 2026 Streaming EC
+
+    </div>
+
+</footer>
 
 
 
 <!-- =========================
-     PRODUCTOS
+     MODAL PRODUCTO
 ========================= -->
 
-<div class="encabezado-productos">
-
-    <div>
-
-        <h1>Productos</h1>
-
-        <p class="subtitulo">
-            Administra los productos y servicios de tu tienda.
-        </p>
-
-    </div>
-
-
-    <button
-        class="btn-secundario"
-        onclick="agregarProducto()"
-    >
-        ➕ Agregar producto
-    </button>
-
-</div>
-
-
 <div
-    id="productos"
-    class="productos"
+    id="modal"
+    class="modal"
 >
 
-    <div class="cargando">
-        Cargando productos...
+    <div class="modal-contenido">
+
+
+        <button
+            class="modal-cerrar"
+            onclick="cerrarModal()"
+        >
+            ×
+        </button>
+
+
+        <div id="modalContenido">
+
+        </div>
+
+
     </div>
 
 </div>
 
-
-<div class="acciones-finales">
-
-    <button
-        class="btn-principal"
-        onclick="guardarCambios()"
-    >
-        💾 Guardar cambios
-    </button>
-
-</div>
-
-
-</main>
 
 
 <script>
@@ -539,6 +389,41 @@ let productos = [];
 
 let categorias = [];
 
+let categoriaActual = "";
+
+
+
+const grid =
+    document.getElementById("grid");
+
+const buscador =
+    document.getElementById("q");
+
+const chips =
+    document.getElementById("chips");
+
+
+
+/* ==================================================
+   ESCAPAR HTML
+================================================== */
+
+function escapeHtml(texto) {
+
+    return String(texto ?? "")
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
 
 
 /* ==================================================
@@ -547,13 +432,11 @@ let categorias = [];
 
 async function cargarCategorias() {
 
-    const contenedor =
-        document.getElementById("categorias");
-
     try {
 
         const respuesta =
             await fetch("/api/categorias");
+
 
         if (!respuesta.ok) {
 
@@ -563,26 +446,28 @@ async function cargarCategorias() {
 
         }
 
-        categorias =
+
+        const datos =
             await respuesta.json();
 
-        if (!Array.isArray(categorias)) {
 
-            throw new Error(
-                "Formato de categorías incorrecto."
-            );
+        categorias =
+            Array.isArray(datos)
+            ? datos.filter(
+                categoria => categoria.activa
+            )
+            : [];
 
-        }
 
         mostrarCategorias();
 
+
     } catch (error) {
 
-        contenedor.innerHTML = `
-            <div class="sin-productos">
-                ❌ ${escapeHtml(error.message)}
-            </div>
-        `;
+        console.error(
+            "Error cargando categorías:",
+            error
+        );
 
     }
 
@@ -596,93 +481,87 @@ async function cargarCategorias() {
 
 function mostrarCategorias() {
 
-    const contenedor =
-        document.getElementById("categorias");
-
-    contenedor.innerHTML = "";
+    chips.innerHTML = "";
 
 
-    if (categorias.length === 0) {
+    /* BOTÓN TODOS */
 
-        contenedor.innerHTML = `
-            <div class="sin-productos">
-                No hay categorías todavía.
-            </div>
-        `;
+    const botonTodos =
+        document.createElement("button");
 
-        return;
+    botonTodos.className =
+        "chip" +
+        (
+            categoriaActual === ""
+            ? " active"
+            : ""
+        );
 
-    }
+    botonTodos.dataset.cat = "";
 
+    botonTodos.textContent =
+        "Todos";
+
+
+    botonTodos.onclick = function() {
+
+        categoriaActual = "";
+
+        actualizarBotonesCategorias();
+
+        renderProductos();
+
+    };
+
+
+    chips.appendChild(
+        botonTodos
+    );
+
+
+    /* CATEGORÍAS */
 
     categorias.forEach(
-        (categoria, indice) => {
+        categoria => {
 
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "categoria-item" +
-                (!categoria.activa
-                    ? " inactiva"
-                    : "");
+            const boton =
+                document.createElement("button");
 
 
-            item.innerHTML = `
-
-                <input
-                    type="text"
-                    value="${escapeAttr(categoria.nombre)}"
-                    id="categoria-nombre-${indice}"
-                >
-
-
-                <span
-                    class="estado-categoria
-                    ${!categoria.activa
-                        ? "inactiva"
-                        : ""}"
-                >
-                    ${
-                        categoria.activa
-                        ? "Activa"
-                        : "Inactiva"
-                    }
-                </span>
+            boton.className =
+                "chip" +
+                (
+                    categoriaActual ===
+                    categoria.nombre
+                    ? " active"
+                    : ""
+                );
 
 
-                <div class="categoria-acciones">
+            boton.dataset.cat =
+                categoria.nombre;
 
-                    <button
-                        class="btn-secundario"
-                        onclick="editarCategoria(${indice})"
-                    >
-                        ✏️ Editar
-                    </button>
 
-                    <button
-                        class="btn-secundario"
-                        onclick="cambiarEstadoCategoria(${indice})"
-                    >
-                        ${
-                            categoria.activa
-                            ? "🔴 Desactivar"
-                            : "🟢 Activar"
-                        }
-                    </button>
+            boton.textContent =
+                categoria.nombre;
 
-                    <button
-                        class="btn-eliminar"
-                        onclick="eliminarCategoria(${indice})"
-                    >
-                        🗑️
-                    </button>
 
-                </div>
+            boton.onclick =
+                function() {
 
-            `;
+                    categoriaActual =
+                        categoria.nombre;
 
-            contenedor.appendChild(item);
+                    actualizarBotonesCategorias();
+
+                    renderProductos();
+
+                };
+
+
+            chips.appendChild(
+                boton
+            );
 
         }
     );
@@ -692,324 +571,24 @@ function mostrarCategorias() {
 
 
 /* ==================================================
-   AGREGAR CATEGORÍA
+   ACTUALIZAR BOTONES
 ================================================== */
 
-async function agregarCategoria() {
+function actualizarBotonesCategorias() {
 
-    const input =
-        document.getElementById(
-            "nuevaCategoria"
+    document
+        .querySelectorAll(".chip")
+        .forEach(
+            boton => {
+
+                boton.classList.toggle(
+                    "active",
+                    boton.dataset.cat ===
+                    categoriaActual
+                );
+
+            }
         );
-
-    const nombre =
-        input.value.trim();
-
-
-    if (!nombre) {
-
-        mostrarEstado(
-            "❌ Escribe el nombre de la categoría.",
-            true
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                "/api/categorias",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        nombre
-                    })
-                }
-            );
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "No se pudo crear la categoría."
-            );
-
-        }
-
-
-        input.value = "";
-
-        await cargarCategorias();
-
-        mostrarEstado(
-            "✅ Categoría agregada correctamente.",
-            false
-        );
-
-
-    } catch (error) {
-
-        mostrarEstado(
-            "❌ " + error.message,
-            true
-        );
-
-    }
-
-}
-
-
-
-/* ==================================================
-   EDITAR CATEGORÍA
-================================================== */
-
-async function editarCategoria(indice) {
-
-    const categoria =
-        categorias[indice];
-
-    const input =
-        document.getElementById(
-            `categoria-nombre-${indice}`
-        );
-
-    const nombre =
-        input.value.trim();
-
-
-    if (!nombre) {
-
-        mostrarEstado(
-            "❌ El nombre no puede estar vacío.",
-            true
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                "/api/categorias",
-                {
-                    method: "PUT",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        id: categoria.id,
-
-                        nombre,
-
-                        activa: categoria.activa
-
-                    })
-                }
-            );
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "No se pudo editar la categoría."
-            );
-
-        }
-
-
-        await cargarCategorias();
-
-        mostrarEstado(
-            "✅ Categoría actualizada correctamente.",
-            false
-        );
-
-
-    } catch (error) {
-
-        mostrarEstado(
-            "❌ " + error.message,
-            true
-        );
-
-    }
-
-}
-
-
-
-/* ==================================================
-   ACTIVAR / DESACTIVAR CATEGORÍA
-================================================== */
-
-async function cambiarEstadoCategoria(indice) {
-
-    const categoria =
-        categorias[indice];
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                "/api/categorias",
-                {
-                    method: "PUT",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        id: categoria.id,
-
-                        nombre: categoria.nombre,
-
-                        activa: !categoria.activa
-
-                    })
-                }
-            );
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "No se pudo cambiar el estado."
-            );
-
-        }
-
-
-        await cargarCategorias();
-
-        mostrarEstado(
-            categoria.activa
-                ? "🔴 Categoría desactivada."
-                : "🟢 Categoría activada.",
-            false
-        );
-
-
-    } catch (error) {
-
-        mostrarEstado(
-            "❌ " + error.message,
-            true
-        );
-
-    }
-
-}
-
-
-
-/* ==================================================
-   ELIMINAR CATEGORÍA
-================================================== */
-
-async function eliminarCategoria(indice) {
-
-    const categoria =
-        categorias[indice];
-
-
-    if (
-        !confirm(
-            `¿Seguro que quieres eliminar "${categoria.nombre}"?`
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                "/api/categorias",
-                {
-                    method: "DELETE",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        id: categoria.id
-                    })
-                }
-            );
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "No se pudo eliminar la categoría."
-            );
-
-        }
-
-
-        await cargarCategorias();
-
-        mostrarEstado(
-            "🗑️ Categoría eliminada correctamente.",
-            false
-        );
-
-
-    } catch (error) {
-
-        mostrarEstado(
-            "❌ " + error.message,
-            true
-        );
-
-    }
 
 }
 
@@ -1020,10 +599,6 @@ async function eliminarCategoria(indice) {
 ================================================== */
 
 async function cargarProductos() {
-
-    const contenedor =
-        document.getElementById("productos");
-
 
     try {
 
@@ -1040,28 +615,38 @@ async function cargarProductos() {
         }
 
 
-        productos =
+        const datos =
             await respuesta.json();
 
 
-        if (!Array.isArray(productos)) {
+        productos =
+            Array.isArray(datos)
+            ? datos.filter(
+                producto => producto.activo
+            )
+            : [];
 
-            throw new Error(
-                "Formato de productos incorrecto."
-            );
 
-        }
-
-
-        mostrarProductos();
+        renderProductos();
 
 
     } catch (error) {
 
-        contenedor.innerHTML = `
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
+
+        grid.innerHTML = `
+
             <div class="sin-productos">
-                ❌ ${escapeHtml(error.message)}
+
+                ❌ No se pudieron cargar
+                los productos.
+
             </div>
+
         `;
 
     }
@@ -1074,32 +659,67 @@ async function cargarProductos() {
    MOSTRAR PRODUCTOS
 ================================================== */
 
-function mostrarProductos() {
+function renderProductos() {
 
-    const contenedor =
-        document.getElementById("productos");
+    const texto =
+        buscador.value
+            .trim()
+            .toLowerCase();
 
-    contenedor.innerHTML = "";
+
+    const filtrados =
+        productos.filter(
+            producto => {
+
+                const nombre =
+                    String(
+                        producto.nombre || ""
+                    ).toLowerCase();
 
 
-    if (productos.length === 0) {
+                const descripcion =
+                    String(
+                        producto.descripcion || ""
+                    ).toLowerCase();
 
-        contenedor.innerHTML = `
+
+                const categoria =
+                    String(
+                        producto.categoria || ""
+                    );
+
+
+                const coincideBusqueda =
+                    !texto ||
+                    nombre.includes(texto) ||
+                    descripcion.includes(texto);
+
+
+                const coincideCategoria =
+                    !categoriaActual ||
+                    categoria === categoriaActual;
+
+
+                return (
+                    coincideBusqueda &&
+                    coincideCategoria
+                );
+
+            }
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if (filtrados.length === 0) {
+
+        grid.innerHTML = `
 
             <div class="sin-productos">
 
-                <div style="font-size:40px;">
-                    📦
-                </div>
-
-                <h3>
-                    No hay productos todavía
-                </h3>
-
-                <p>
-                    Pulsa "Agregar producto"
-                    para crear el primero.
-                </p>
+                No hay productos disponibles
+                en esta categoría.
 
             </div>
 
@@ -1110,297 +730,108 @@ function mostrarProductos() {
     }
 
 
-    productos.forEach(
-        (producto, indice) => {
-
-            const tarjeta =
-                document.createElement("div");
-
-            tarjeta.className =
-                "producto";
-
-
-            tarjeta.innerHTML = `
-
-                <div class="producto-cabecera">
-
-                    <div>
-
-                        <div class="producto-numero">
-                            PRODUCTO ${indice + 1}
-                        </div>
-
-                        <h2>
-                            ${
-                                escapeHtml(
-                                    producto.nombre ||
-                                    "Nuevo producto"
-                                )
-                            }
-                        </h2>
-
-                    </div>
-
-
-                    <button
-                        class="btn-eliminar"
-                        onclick="eliminarProducto(${indice})"
-                    >
-                        🗑️ Eliminar
-                    </button>
-
-                </div>
-
-
-                <div class="grid">
-
-
-                    <!-- NOMBRE -->
-
-                    <div class="campo">
-
-                        <label>
-                            Nombre del producto *
-                        </label>
-
-                        <input
-                            type="text"
-                            value="${escapeAttr(
-                                producto.nombre || ""
-                            )}"
-                            placeholder="Ej: Netflix Premium"
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'nombre',
-                                    this.value
-                                )
-                            "
-                        >
-
-                    </div>
-
-
-
-                    <!-- PRECIO -->
-
-                    <div class="campo">
-
-                        <label>
-                            Precio *
-                        </label>
-
-                        <input
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            value="${producto.precio ?? 0}"
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'precio',
-                                    Number(this.value)
-                                )
-                            "
-                        >
-
-                    </div>
-
-
-
-                    <!-- CATEGORÍA -->
-
-                    <div class="campo">
-
-                        <label>
-                            Categoría
-                        </label>
-
-                        <select
-                            onchange="
-                                actualizar(
-                                    ${indice},
-                                    'categoria',
-                                    this.value
-                                )
-                            "
-                        >
-
-                            ${crearOpcionesCategorias(
-                                producto.categoria
-                            )}
-
-                        </select>
-
-                    </div>
-
-
-
-                    <!-- IMAGEN -->
-
-                    <div class="campo">
-
-                        <label>
-                            URL de imagen
-                        </label>
-
-                        <input
-                            type="url"
-                            value="${escapeAttr(
-                                producto.imagen || ""
-                            )}"
-                            placeholder="https://..."
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'imagen',
-                                    this.value
-                                );
-                                actualizarPreview(
-                                    ${indice},
-                                    this.value
-                                )
-                            "
-                        >
-
-
-                        <img
-                            id="preview-${indice}"
-                            class="imagen-preview"
-                            src="${escapeAttr(
-                                producto.imagen || ""
-                            )}"
-                            style="
-                                display:${
-                                    producto.imagen
-                                    ? "block"
-                                    : "none"
-                                };
-                            "
-                            onerror="
-                                this.style.display='none'
-                            "
-                        >
-
-                    </div>
-
-
-
-                    <!-- DESCRIPCIÓN -->
-
-                    <div class="campo ancho">
-
-                        <label>
-                            Descripción
-                        </label>
-
-                        <textarea
-                            class="descripcion"
-                            placeholder="Descripción breve del producto..."
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'descripcion',
-                                    this.value
-                                )
-                            "
-                        >${escapeHtml(
-                            producto.descripcion || ""
-                        )}</textarea>
-
-                    </div>
-
-
-
-                    <!-- DETALLES -->
-
-                    <div class="campo ancho">
-
-                        <label>
-                            Detalles del producto
-                        </label>
-
-                        <textarea
-                            class="detalles"
-                            placeholder="Ej:
-• Duración: 3 meses
-• Activación inmediata
-• Soporte incluido
-• Compatible con TV y móvil"
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'detalles',
-                                    this.value
-                                )
-                            "
-                        >${escapeHtml(
-                            producto.detalles || ""
-                        )}</textarea>
-
-                    </div>
-
-
-
-                    <!-- DETALLES DE SOLICITUD -->
-
-                    <div class="campo ancho">
-
-                        <label>
-                            Detalles de solicitud
-                        </label>
-
-                        <textarea
-                            class="solicitud"
-                            placeholder="Indica qué debe enviar el cliente para realizar la solicitud."
-                            oninput="
-                                actualizar(
-                                    ${indice},
-                                    'detalles_solicitud',
-                                    this.value
-                                )
-                            "
-                        >${escapeHtml(
-                            producto.detalles_solicitud || ""
-                        )}</textarea>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ACTIVO -->
-
-                <div class="activo-contenedor">
-
-                    <input
-                        id="activo-${indice}"
-                        type="checkbox"
-                        ${
-                            producto.activo
-                            ? "checked"
-                            : ""
-                        }
-                        onchange="
-                            actualizar(
-                                ${indice},
-                                'activo',
-                                this.checked
-                            )
+    filtrados.forEach(
+        producto => {
+
+            const card =
+                document.createElement("article");
+
+
+            card.className =
+                "card producto-card";
+
+
+            const imagen =
+                producto.imagen
+                ? `
+
+                    <img
+                        class="imagen-producto"
+                        src="${escapeHtml(
+                            producto.imagen
+                        )}"
+                        alt="${escapeHtml(
+                            producto.nombre
+                        )}"
+                        onerror="
+                            this.style.display='none';
                         "
                     >
 
-                    <label for="activo-${indice}">
-                        Producto activo
-                    </label>
+                `
+                : `
+
+                    <div class="imagen-placeholder">
+                        ${escapeHtml(
+                            String(
+                                producto.nombre || "PR"
+                            )
+                            .slice(0, 2)
+                            .toUpperCase()
+                        )}
+                    </div>
+
+                `;
+
+
+            card.innerHTML = `
+
+                ${imagen}
+
+
+                ${
+                    producto.categoria
+                    ? `
+                        <span class="badge">
+                            ${escapeHtml(
+                                producto.categoria
+                            )}
+                        </span>
+                    `
+                    : ""
+                }
+
+
+                <h3>
+                    ${escapeHtml(
+                        producto.nombre ||
+                        "Producto"
+                    )}
+                </h3>
+
+
+                <p class="producto-descripcion">
+
+                    ${escapeHtml(
+                        producto.descripcion ||
+                        "Producto digital disponible."
+                    )}
+
+                </p>
+
+
+                <div class="producto-precio">
+
+                    $${formatearPrecio(
+                        producto.precio
+                    )}
 
                 </div>
+
+
+                <button
+                    class="btn primary"
+                    onclick="abrirProducto('${escapeHtml(
+                        String(producto.id)
+                    )}')"
+                >
+                    Ver detalles →
+                </button>
 
             `;
 
 
-            contenedor.appendChild(tarjeta);
+            grid.appendChild(card);
 
         }
     );
@@ -1410,49 +841,251 @@ function mostrarProductos() {
 
 
 /* ==================================================
-   OPCIONES DE CATEGORÍAS
+   FORMATO PRECIO
 ================================================== */
 
-function crearOpcionesCategorias(
-    categoriaActual
-) {
+function formatearPrecio(precio) {
 
-    let html = `
+    const numero =
+        Number(precio);
 
-        <option value="">
-            Seleccionar categoría
-        </option>
+
+    if (Number.isNaN(numero)) {
+
+        return "0.00";
+
+    }
+
+
+    return numero.toFixed(2);
+
+}
+
+
+
+/* ==================================================
+   ABRIR PRODUCTO
+================================================== */
+
+function abrirProducto(id) {
+
+    const producto =
+        productos.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!producto) {
+
+        return;
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "modal"
+        );
+
+
+    const contenido =
+        document.getElementById(
+            "modalContenido"
+        );
+
+
+    let imagen = "";
+
+
+    if (producto.imagen) {
+
+        imagen = `
+
+            <img
+                class="modal-imagen"
+                src="${escapeHtml(
+                    producto.imagen
+                )}"
+                alt="${escapeHtml(
+                    producto.nombre
+                )}"
+                onerror="
+                    this.style.display='none';
+                "
+            >
+
+        `;
+
+    }
+
+
+    contenido.innerHTML = `
+
+        ${imagen}
+
+
+        ${
+            producto.categoria
+            ? `
+                <span class="badge">
+                    ${escapeHtml(
+                        producto.categoria
+                    )}
+                </span>
+            `
+            : ""
+        }
+
+
+        <h2>
+
+            ${escapeHtml(
+                producto.nombre ||
+                "Producto"
+            )}
+
+        </h2>
+
+
+        <div class="modal-precio">
+
+            $${formatearPrecio(
+                producto.precio
+            )}
+
+        </div>
+
+
+        ${
+            producto.descripcion
+            ? `
+
+                <div class="modal-bloque">
+
+                    <h4>
+                        Descripción
+                    </h4>
+
+                    <p>
+                        ${escapeHtml(
+                            producto.descripcion
+                        )}
+                    </p>
+
+                </div>
+
+            `
+            : ""
+        }
+
+
+        ${
+            producto.detalles
+            ? `
+
+                <div class="modal-bloque">
+
+                    <h4>
+                        Detalles
+                    </h4>
+
+                    <p>
+                        ${escapeHtml(
+                            producto.detalles
+                        )}
+                    </p>
+
+                </div>
+
+            `
+            : ""
+        }
+
+
+        ${
+            producto.solicitud
+            ? `
+
+                <div class="modal-bloque">
+
+                    <h4>
+                        Detalles de solicitud
+                    </h4>
+
+                    <p>
+                        ${escapeHtml(
+                            producto.solicitud
+                        )}
+                    </p>
+
+                </div>
+
+            `
+            : ""
+        }
+
+
+        <div
+            style="
+                margin-top:25px;
+            "
+        >
+
+            <a
+                class="btn primary"
+                href="https://wa.me/qr/2D6ZXQWJBBC7C1"
+                target="_blank"
+            >
+                Solicitar por WhatsApp
+            </a>
+
+        </div>
 
     `;
 
 
-    categorias.forEach(
-        categoria => {
+    modal.classList.add(
+        "activo"
+    );
+
+}
+
+
+
+/* ==================================================
+   CERRAR MODAL
+================================================== */
+
+function cerrarModal() {
+
+    document
+        .getElementById("modal")
+        .classList.remove(
+            "activo"
+        );
+
+}
+
+
+
+/* ==================================================
+   CERRAR AL HACER CLICK FUERA
+================================================== */
+
+document
+    .getElementById("modal")
+    .addEventListener(
+        "click",
+        function(event) {
 
             if (
-                categoria.activa ||
-                categoria.nombre === categoriaActual
+                event.target ===
+                this
             ) {
 
-                html += `
-
-                    <option
-                        value="${escapeAttr(
-                            categoria.nombre
-                        )}"
-                        ${
-                            categoria.nombre ===
-                            categoriaActual
-                            ? "selected"
-                            : ""
-                        }
-                    >
-                        ${escapeHtml(
-                            categoria.nombre
-                        )}
-                    </option>
-
-                `;
+                cerrarModal();
 
             }
 
@@ -1460,312 +1093,36 @@ function crearOpcionesCategorias(
     );
 
 
-    return html;
-
-}
-
-
 
 /* ==================================================
-   ACTUALIZAR PRODUCTO
+   ESC
 ================================================== */
 
-function actualizar(
-    indice,
-    campo,
-    valor
-) {
-
-    productos[indice][campo] =
-        valor;
-
-}
-
-
-
-/* ==================================================
-   PREVISUALIZAR IMAGEN
-================================================== */
-
-function actualizarPreview(
-    indice,
-    url
-) {
-
-    const imagen =
-        document.getElementById(
-            `preview-${indice}`
-        );
-
-
-    if (!imagen) return;
-
-
-    if (!url) {
-
-        imagen.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    imagen.src = url;
-
-    imagen.style.display =
-        "block";
-
-}
-
-
-
-/* ==================================================
-   AGREGAR PRODUCTO
-================================================== */
-
-function agregarProducto() {
-
-    const nuevoId =
-        "producto-" +
-        Date.now();
-
-
-    productos.push({
-
-        id: nuevoId,
-
-        nombre: "",
-
-        precio: 0,
-
-        categoria: "",
-
-        imagen: "",
-
-        descripcion: "",
-
-        detalles: "",
-
-        detalles_solicitud: "",
-
-        activo: true
-
-    });
-
-
-    mostrarProductos();
-
-
-    mostrarEstado(
-        "➕ Producto nuevo agregado. Completa sus datos y pulsa Guardar cambios.",
-        false
-    );
-
-
-    window.scrollTo({
-
-        top:
-            document.body.scrollHeight,
-
-        behavior:
-            "smooth"
-
-    });
-
-}
-
-
-
-/* ==================================================
-   ELIMINAR PRODUCTO
-================================================== */
-
-function eliminarProducto(indice) {
-
-    const producto =
-        productos[indice];
-
-
-    const nombre =
-        producto.nombre ||
-        "este producto";
-
-
-    if (
-        !confirm(
-            `¿Seguro que quieres eliminar "${nombre}"?`
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    productos.splice(
-        indice,
-        1
-    );
-
-
-    mostrarProductos();
-
-}
-
-
-
-/* ==================================================
-   GUARDAR PRODUCTOS
-================================================== */
-
-async function guardarCambios() {
-
-    mostrarEstado(
-        "💾 Guardando cambios...",
-        false
-    );
-
-
-    try {
-
-        const respuesta =
-            await fetch(
-                "/api/productos",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify(
-                            productos
-                        )
-                }
-            );
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "No se pudieron guardar los cambios."
-            );
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            cerrarModal();
 
         }
 
-
-        mostrarEstado(
-            "✅ Productos guardados correctamente.",
-            false
-        );
-
-
-        await cargarProductos();
-
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-
-    } catch (error) {
-
-        mostrarEstado(
-            "❌ " + error.message,
-            true
-        );
-
     }
-
-}
-
-
-
-/* ==================================================
-   MENSAJES
-================================================== */
-
-function mostrarEstado(
-    mensaje,
-    esError
-) {
-
-    const estado =
-        document.getElementById(
-            "estado"
-        );
-
-
-    estado.style.display =
-        "block";
-
-
-    estado.className =
-        esError
-        ? "estado error"
-        : "estado";
-
-
-    estado.textContent =
-        mensaje;
-
-}
+);
 
 
 
 /* ==================================================
-   SEGURIDAD
+   BUSCADOR
 ================================================== */
 
-function escapeHtml(texto) {
-
-    return String(texto)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function escapeAttr(texto) {
-
-    return escapeHtml(texto);
-
-}
+buscador.addEventListener(
+    "input",
+    renderProductos
+);
 
 
 

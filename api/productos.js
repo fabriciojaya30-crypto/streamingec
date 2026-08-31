@@ -4,10 +4,12 @@ const sql = neon(process.env.POSTGRES_URL);
 
 export default async function handler(req, res) {
     try {
-        // =========================
+
+        // ==========================================
         // OBTENER PRODUCTOS
-        // =========================
+        // ==========================================
         if (req.method === "GET") {
+
             const productos = await sql`
                 SELECT
                     id,
@@ -26,10 +28,12 @@ export default async function handler(req, res) {
             return res.status(200).json(productos);
         }
 
-        // =========================
-        // GUARDAR PRODUCTOS
-        // =========================
+
+        // ==========================================
+        // GUARDAR / ACTUALIZAR PRODUCTOS
+        // ==========================================
         if (req.method === "POST") {
+
             const productos = req.body;
 
             if (!Array.isArray(productos)) {
@@ -39,6 +43,14 @@ export default async function handler(req, res) {
             }
 
             for (const producto of productos) {
+
+                if (
+                    producto.id === undefined ||
+                    producto.id === null
+                ) {
+                    continue;
+                }
+
                 await sql`
                     INSERT INTO productos (
                         id,
@@ -52,7 +64,7 @@ export default async function handler(req, res) {
                         activo
                     )
                     VALUES (
-                        ${producto.id},
+                        ${Number(producto.id)},
                         ${producto.nombre || ""},
                         ${Number(producto.precio) || 0},
                         ${producto.categoria || ""},
@@ -62,6 +74,7 @@ export default async function handler(req, res) {
                         ${producto.solicitud || ""},
                         ${Boolean(producto.activo)}
                     )
+
                     ON CONFLICT (id)
                     DO UPDATE SET
                         nombre = EXCLUDED.nombre,
@@ -81,12 +94,42 @@ export default async function handler(req, res) {
             });
         }
 
+
+        // ==========================================
+        // ELIMINAR PRODUCTO
+        // ==========================================
+        if (req.method === "DELETE") {
+
+            const { id } = req.body || {};
+
+            if (id === undefined || id === null) {
+                return res.status(400).json({
+                    error: "Falta el ID del producto"
+                });
+            }
+
+            await sql`
+                DELETE FROM productos
+                WHERE id = ${Number(id)}
+            `;
+
+            return res.status(200).json({
+                ok: true,
+                mensaje: "Producto eliminado correctamente"
+            });
+        }
+
+
+        // ==========================================
+        // MÉTODO NO PERMITIDO
+        // ==========================================
         return res.status(405).json({
             error: "Método no permitido"
         });
 
     } catch (error) {
-        console.error(error);
+
+        console.error("ERROR PRODUCTOS:", error);
 
         return res.status(500).json({
             error: "Error de conexión con la base de datos",

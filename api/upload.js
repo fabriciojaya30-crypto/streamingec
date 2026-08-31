@@ -1,67 +1,67 @@
+import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import formidable from "formidable";
 import { put } from "@vercel/blob";
+import { requireAdmin } from "./_auth.js";
+
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const EXTENSION_BY_TYPE = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp"
+};
 
 export default async function handler(req, res) {
-    try {
-        if (req.method !== "POST") {
-            return res.status(405).json({
-                error: "Método no permitido"
-            });
-        }
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Método no permitido." });
+  }
 
-        const form = await req.formData();
+  if (!requireAdmin(req, res)) {
+    return;
+  }
 
-        const file = form.get("file");
+  try {
+    const form = formidable({
+      maxFiles: 1,
+      maxFileSize: MAX_FILE_SIZE,
+      filter: ({ mimetype }) => Boolean(EXTENSION_BY_TYPE[mimetype])
+    });
+    const [, files] = await form.parse(req);
+    const file = Array.isArray(files.file) ? files.file[0] : files.file;
 
-        if (!file || typeof file.arrayBuffer !== "function") {
-            return res.status(400).json({
-                error: "No se recibió ningún archivo"
-            });
-        }
-
-        if (!file.type.startsWith("image/")) {
-            return res.status(400).json({
-                error: "El archivo seleccionado no es una imagen"
-            });
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            return res.status(400).json({
-                error: "La imagen supera los 5 MB"
-            });
-        }
-
-        const extension =
-            file.name && file.name.includes(".")
-                ? file.name.substring(file.name.lastIndexOf("."))
-                : ".jpg";
-
-        const nombre =
-            `productos/${Date.now()}-${Math.random()
-                .toString(36)
-                .substring(2, 10)}${extension}`;
-
-        const blob = await put(
-            nombre,
-            file,
-            {
-                access: "public",
-                contentType: file.type
-            }
-        );
-
-        return res.status(200).json({
-            ok: true,
-            url: blob.url,
-            pathname: blob.pathname,
-            contentType: blob.contentType
-        });
-
-    } catch (error) {
-        console.error("ERROR UPLOAD:", error);
-
-        return res.status(500).json({
-            error: "Error al subir la imagen",
-            detalle: error.message
-        });
+    if (!file) {
+      return res.status(400).json({ error: "Selecciona una imagen primero." });
     }
+
+    if (!EXTENSION_BY_TYPE[file.mimetype]) {
+      return res.status(400).json({
+        error: "Solo se permiten imágenes JPG, PNG o WEBP."
+      });
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return res.status(400).json({ error: "La imagen supera los 5 MB." });
+    }
+
+    const contenido = await readFile(file.filepath);
+    const nombre = `productos/${randomUUID()}${EXTENSION_BY_TYPE[file.mimetype]}`;
+    const blob = await put(nombre, contenido, {
+      access: "public",
+      contentType: file.mimetype
+    });
+
+    return res.status(201).json({ ok: true, url: blob.url });
+  } catch (error) {
+    console.error("ERROR UPLOAD:", error);
+    return res.status(500).json({
+      error: "No se pudo subir la imagen.",
+      detalle: error.message
+    });
+  }
 }

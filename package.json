@@ -1,9 +1,11 @@
 {
   "name": "streamingec",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2"
+    "@neondatabase/serverless": "^1.0.2",
+    "@vercel/blob": "^1.0.0",
+    "formidable": "^3.5.2"
   }
 }

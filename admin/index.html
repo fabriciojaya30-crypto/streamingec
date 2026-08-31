@@ -9,365 +9,477 @@
 
 <style>
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    background: #0b0b0b;
-    color: #fff;
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    background:#0b0b0b;
+    color:#fff;
+    font-family:Arial,sans-serif;
 }
 
-header {
-    background: #111;
-    border-bottom: 1px solid #292929;
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+header{
+    background:#111;
+    border-bottom:1px solid #292929;
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: bold;
+.logo{
+    font-size:25px;
+    font-weight:bold;
 }
 
-.logo span {
-    color: #e50914;
+.logo span{
+    color:#e50914;
 }
 
-.admin {
-    color: #aaa;
+.admin{
+    color:#aaa;
 }
 
-.contenedor {
-    max-width: 1200px;
-    margin: auto;
-    padding: 35px 20px;
+.contenedor{
+    max-width:1200px;
+    margin:auto;
+    padding:35px 20px;
 }
 
-h1,
-h2,
-h3 {
-    margin-top: 0;
+h1,h2,h3{
+    margin-top:0;
 }
 
-.subtitulo {
-    color: #999;
+.subtitulo{
+    color:#999;
 }
 
-button {
-    border: 0;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 9px;
-    padding: 11px 16px;
-    font-size: 14px;
+button{
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:9px;
+    padding:11px 16px;
+    font-size:14px;
 }
 
-.btn-rojo {
-    background: #e50914;
-    color: white;
+button:hover{
+    opacity:.88;
 }
 
-.btn-rojo:hover {
-    background: #b20710;
+.btn-rojo{
+    background:#e50914;
+    color:#fff;
 }
 
-.btn-gris {
-    background: #292929;
-    color: white;
+.btn-gris{
+    background:#292929;
+    color:#fff;
 }
 
-.btn-verde {
-    background: #16803c;
-    color: white;
+.btn-verde{
+    background:#16803c;
+    color:#fff;
 }
 
-.btn-eliminar {
-    background: #351414;
-    color: #ff7777;
-    border: 1px solid #5a2222;
+.btn-eliminar{
+    background:#351414;
+    color:#ff7777;
+    border:1px solid #5a2222;
 }
 
-.estado {
-    display: none;
-    padding: 14px;
-    margin: 20px 0;
-    border-radius: 9px;
-    background: #16351f;
-    color: #4ade80;
+.estado{
+    display:none;
+    padding:14px;
+    margin:20px 0;
+    border-radius:9px;
+    background:#16351f;
+    color:#4ade80;
 }
 
-.estado.error {
-    background: #351414;
-    color: #ff7777;
+.estado.error{
+    background:#351414;
+    color:#ff7777;
 }
 
 /* =========================
    SECCIONES
 ========================= */
 
-.seccion {
-    background: #151515;
-    border: 1px solid #292929;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
+.seccion{
+    background:#151515;
+    border:1px solid #292929;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:30px;
 }
 
-.encabezado {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+.encabezado{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
 }
 
 /* =========================
    CATEGORIAS
 ========================= */
 
-.nueva-categoria {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+.nueva-categoria{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
 }
 
-.nueva-categoria input {
-    flex: 1;
+.nueva-categoria input{
+    flex:1;
 }
 
-.categorias {
-    display: grid;
-    gap: 10px;
+.categorias{
+    display:grid;
+    gap:10px;
 }
 
-.categoria {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #0d0d0d;
-    border: 1px solid #292929;
-    border-radius: 10px;
-    padding: 12px;
+.categoria{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:12px;
 }
 
-.categoria.inactiva {
-    opacity: .55;
+.categoria.inactiva{
+    opacity:.55;
 }
 
-.categoria input[type="text"] {
-    flex: 1;
+.categoria input[type="text"]{
+    flex:1;
 }
 
-.estado-cat {
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 12px;
-    background: #16351f;
-    color: #4ade80;
+.estado-cat{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    background:#16351f;
+    color:#4ade80;
 }
 
-.estado-cat.inactiva {
-    background: #351414;
-    color: #ff7777;
+.estado-cat.inactiva{
+    background:#351414;
+    color:#ff7777;
 }
 
-.acciones-cat {
-    display: flex;
-    gap: 7px;
+.acciones-cat{
+    display:flex;
+    gap:7px;
 }
 
 /* =========================
    PRODUCTOS
 ========================= */
 
-.productos {
-    display: grid;
-    gap: 25px;
+.productos{
+    display:grid;
+    gap:12px;
 }
 
-.producto {
-    background: #111;
-    border: 1px solid #292929;
-    border-radius: 15px;
-    padding: 25px;
+.producto{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:14px;
+    overflow:hidden;
 }
 
-.producto-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 22px;
+/* CABECERA CERRADA */
+
+.producto-cabecera{
+    min-height:75px;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    cursor:pointer;
 }
 
-.producto-id {
-    color: #777;
-    font-size: 12px;
+.producto-cabecera:hover{
+    background:#161616;
 }
 
-.producto-header h2 {
-    margin: 5px 0 0;
+.producto-resumen{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    min-width:0;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
+.flecha{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    background:#292929;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-size:16px;
 }
 
-.campo {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+.producto-info{
+    min-width:0;
 }
 
-.ancho {
-    grid-column: 1 / -1;
+.producto-id{
+    color:#777;
+    font-size:11px;
+    margin-bottom:4px;
 }
 
-label {
-    color: #bbb;
-    font-size: 14px;
-    font-weight: bold;
+.producto-nombre{
+    font-size:17px;
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.producto-meta{
+    color:#999;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.producto-meta .activo-texto{
+    color:#4ade80;
+}
+
+.producto-meta .inactivo-texto{
+    color:#ff7777;
+}
+
+.producto-acciones{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+}
+
+/* CONTENIDO */
+
+.producto-contenido{
+    display:none;
+    padding:0 18px 20px;
+    border-top:1px solid #292929;
+}
+
+.producto.abierto .producto-contenido{
+    display:block;
+}
+
+.producto.abierto .flecha{
+    transform:rotate(90deg);
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    padding-top:20px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.ancho{
+    grid-column:1 / -1;
+}
+
+label{
+    color:#bbb;
+    font-size:14px;
+    font-weight:bold;
 }
 
 input,
 textarea,
-select {
-    width: 100%;
-    background: #0b0b0b;
-    color: white;
-    border: 1px solid #363636;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 15px;
-    outline: none;
+select{
+    width:100%;
+    background:#0b0b0b;
+    color:#fff;
+    border:1px solid #363636;
+    border-radius:8px;
+    padding:12px;
+    font-size:15px;
+    outline:none;
 }
 
 input:focus,
 textarea:focus,
-select:focus {
-    border-color: #e50914;
+select:focus{
+    border-color:#e50914;
 }
 
-textarea {
-    resize: vertical;
-    min-height: 100px;
+textarea{
+    resize:vertical;
+    min-height:100px;
 }
 
-.imagen-box {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
+/* IMAGEN */
+
+.imagen-box{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    flex-wrap:wrap;
 }
 
-.preview {
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-    background: #222;
-    border: 1px solid #333;
+.preview{
+    width:150px;
+    height:100px;
+    object-fit:cover;
+    border-radius:10px;
+    background:#222;
+    border:1px solid #333;
 }
 
-.imagen-controles {
-    flex: 1;
-    min-width: 220px;
+.preview-vacia{
+    width:150px;
+    height:100px;
+    border-radius:10px;
+    background:#1b1b1b;
+    border:1px dashed #444;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#666;
+    text-align:center;
+    font-size:12px;
 }
 
-.imagen-controles small {
-    display: block;
-    color: #777;
-    margin-top: 8px;
+.imagen-controles{
+    flex:1;
+    min-width:220px;
 }
 
-.activo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #151515;
-    padding: 14px;
-    border-radius: 9px;
+.imagen-controles small{
+    display:block;
+    color:#777;
+    margin-top:8px;
 }
 
-.activo input {
-    width: 18px;
-    height: 18px;
+.activo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#151515;
+    padding:14px;
+    border-radius:9px;
+    margin-top:18px;
 }
 
-.vacio {
-    text-align: center;
-    color: #888;
-    padding: 40px;
-    border: 1px dashed #333;
-    border-radius: 12px;
+.activo input{
+    width:18px;
+    height:18px;
 }
 
-.cargando {
-    color: #888;
-    padding: 25px;
+.acciones-producto{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+.vacio{
+    text-align:center;
+    color:#888;
+    padding:40px;
+    border:1px dashed #333;
+    border-radius:12px;
+}
+
+.cargando{
+    color:#888;
+    padding:25px;
 }
 
 /* =========================
    BUSCADOR
 ========================= */
 
-.buscador {
-    margin-bottom: 20px;
+.buscador{
+    margin-bottom:15px;
 }
 
 /* =========================
    MOVIL
 ========================= */
 
-@media (max-width: 700px) {
+@media(max-width:700px){
 
-    header {
-        padding: 18px;
+    header{
+        padding:18px;
     }
 
-    .contenedor {
-        padding: 25px 15px;
+    .contenedor{
+        padding:25px 15px;
     }
 
-    .encabezado,
-    .producto-header {
-        flex-direction: column;
-        align-items: stretch;
+    .encabezado{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .grid {
-        grid-template-columns: 1fr;
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    .ancho {
-        grid-column: auto;
+    .ancho{
+        grid-column:auto;
     }
 
-    .nueva-categoria {
-        flex-direction: column;
+    .nueva-categoria{
+        flex-direction:column;
     }
 
-    .categoria {
-        flex-direction: column;
-        align-items: stretch;
+    .categoria{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .acciones-cat button {
-        flex: 1;
+    .acciones-cat{
+        width:100%;
+    }
+
+    .acciones-cat button{
+        flex:1;
+    }
+
+    .producto-cabecera{
+        align-items:flex-start;
+    }
+
+    .producto-acciones{
+        flex-direction:column;
+    }
+
+    .producto-acciones button{
+        padding:8px 10px;
     }
 
 }
 
 </style>
 </head>
-
 
 <body>
 
@@ -383,20 +495,14 @@ textarea {
 
 </header>
 
-
 <main class="contenedor">
-
-
-<!-- ==================================================
-     MENSAJES
-================================================== -->
 
 <div id="estado" class="estado"></div>
 
 
-<!-- ==================================================
+<!-- =========================
      CATEGORIAS
-================================================== -->
+========================= -->
 
 <section class="seccion">
 
@@ -445,10 +551,9 @@ textarea {
 </section>
 
 
-
-<!-- ==================================================
+<!-- =========================
      PRODUCTOS
-================================================== -->
+========================= -->
 
 <section class="seccion">
 
@@ -463,7 +568,6 @@ textarea {
             </p>
 
         </div>
-
 
         <button
             class="btn-rojo"
@@ -497,9 +601,7 @@ textarea {
 
 </section>
 
-
 </main>
-
 
 
 <script>
@@ -509,7 +611,6 @@ textarea {
 ================================================== */
 
 let categorias = [];
-
 let productos = [];
 
 
@@ -517,7 +618,7 @@ let productos = [];
    MENSAJES
 ================================================== */
 
-function mostrarEstado(texto, error = false) {
+function mostrarEstado(texto,error=false){
 
     const elemento =
         document.getElementById("estado");
@@ -534,11 +635,9 @@ function mostrarEstado(texto, error = false) {
     clearTimeout(window.estadoTimer);
 
     window.estadoTimer =
-        setTimeout(() => {
-
-            elemento.style.display = "none";
-
-        }, 4000);
+        setTimeout(()=>{
+            elemento.style.display="none";
+        },4000);
 }
 
 
@@ -546,14 +645,14 @@ function mostrarEstado(texto, error = false) {
    ESCAPE HTML
 ================================================== */
 
-function escapeHtml(valor) {
+function escapeHtml(valor){
 
     return String(valor ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
@@ -561,14 +660,14 @@ function escapeHtml(valor) {
    CATEGORIAS
 ================================================== */
 
-async function cargarCategorias() {
+async function cargarCategorias(){
 
-    try {
+    try{
 
         const respuesta =
             await fetch("/api/categorias");
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 "No se pudieron cargar las categorías."
@@ -579,7 +678,7 @@ async function cargarCategorias() {
         categorias =
             await respuesta.json();
 
-        if (!Array.isArray(categorias)) {
+        if(!Array.isArray(categorias)){
 
             throw new Error(
                 "Formato de categorías incorrecto."
@@ -589,11 +688,9 @@ async function cargarCategorias() {
 
         mostrarCategorias();
 
-    } catch (error) {
+    }catch(error){
 
-        document.getElementById(
-            "categorias"
-        ).innerHTML = `
+        document.getElementById("categorias").innerHTML=`
             <div class="vacio">
                 ❌ ${escapeHtml(error.message)}
             </div>
@@ -604,18 +701,14 @@ async function cargarCategorias() {
 }
 
 
-/* ==================================================
-   MOSTRAR CATEGORIAS
-================================================== */
-
-function mostrarCategorias() {
+function mostrarCategorias(){
 
     const contenedor =
         document.getElementById("categorias");
 
-    if (!categorias.length) {
+    if(!categorias.length){
 
-        contenedor.innerHTML = `
+        contenedor.innerHTML=`
             <div class="vacio">
                 No hay categorías todavía.
             </div>
@@ -626,7 +719,7 @@ function mostrarCategorias() {
 
 
     contenedor.innerHTML =
-        categorias.map((categoria, indice) => {
+        categorias.map((categoria,indice)=>{
 
             return `
 
@@ -646,7 +739,6 @@ function mostrarCategorias() {
                         )}"
                     >
 
-
                     <span
                         class="estado-cat ${
                             categoria.activa
@@ -661,7 +753,6 @@ function mostrarCategorias() {
                         }
                     </span>
 
-
                     <div class="acciones-cat">
 
                         <button
@@ -670,7 +761,6 @@ function mostrarCategorias() {
                         >
                             ✏️ Editar
                         </button>
-
 
                         <button
                             class="btn-gris"
@@ -682,7 +772,6 @@ function mostrarCategorias() {
                                 : "🟢 Activar"
                             }
                         </button>
-
 
                         <button
                             class="btn-eliminar"
@@ -702,11 +791,7 @@ function mostrarCategorias() {
 }
 
 
-/* ==================================================
-   AGREGAR CATEGORIA
-================================================== */
-
-async function agregarCategoria() {
+async function agregarCategoria(){
 
     const input =
         document.getElementById(
@@ -716,8 +801,7 @@ async function agregarCategoria() {
     const nombre =
         input.value.trim();
 
-
-    if (!nombre) {
+    if(!nombre){
 
         mostrarEstado(
             "Escribe el nombre de la categoría.",
@@ -728,20 +812,20 @@ async function agregarCategoria() {
     }
 
 
-    try {
+    try{
 
         const respuesta =
             await fetch(
                 "/api/categorias",
                 {
-                    method: "POST",
+                    method:"POST",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify({
+                    body:JSON.stringify({
                         nombre
                     })
                 }
@@ -752,7 +836,7 @@ async function agregarCategoria() {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.error ||
@@ -762,7 +846,7 @@ async function agregarCategoria() {
         }
 
 
-        input.value = "";
+        input.value="";
 
         await cargarCategorias();
 
@@ -770,11 +854,10 @@ async function agregarCategoria() {
             "✅ Categoría agregada correctamente."
         );
 
-
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -783,11 +866,7 @@ async function agregarCategoria() {
 }
 
 
-/* ==================================================
-   EDITAR CATEGORIA
-================================================== */
-
-async function editarCategoria(indice) {
+async function editarCategoria(indice){
 
     const categoria =
         categorias[indice];
@@ -800,8 +879,7 @@ async function editarCategoria(indice) {
     const nombre =
         input.value.trim();
 
-
-    if (!nombre) {
+    if(!nombre){
 
         mostrarEstado(
             "El nombre no puede estar vacío.",
@@ -812,23 +890,27 @@ async function editarCategoria(indice) {
     }
 
 
-    try {
+    try{
 
         const respuesta =
             await fetch(
                 "/api/categorias",
                 {
-                    method: "PUT",
+                    method:"PUT",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-                        id: categoria.id,
+                    body:JSON.stringify({
+
+                        id:categoria.id,
+
                         nombre,
-                        activa: categoria.activa
+
+                        activa:categoria.activa
+
                     })
                 }
             );
@@ -838,7 +920,7 @@ async function editarCategoria(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.error ||
@@ -854,11 +936,10 @@ async function editarCategoria(indice) {
             "✅ Categoría actualizada."
         );
 
-
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -867,33 +948,32 @@ async function editarCategoria(indice) {
 }
 
 
-/* ==================================================
-   CAMBIAR ESTADO CATEGORIA
-================================================== */
-
-async function cambiarEstadoCategoria(indice) {
+async function cambiarEstadoCategoria(indice){
 
     const categoria =
         categorias[indice];
 
-
-    try {
+    try{
 
         const respuesta =
             await fetch(
                 "/api/categorias",
                 {
-                    method: "PUT",
+                    method:"PUT",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-                        id: categoria.id,
-                        nombre: categoria.nombre,
-                        activa: !categoria.activa
+                    body:JSON.stringify({
+
+                        id:categoria.id,
+
+                        nombre:categoria.nombre,
+
+                        activa:!categoria.activa
+
                     })
                 }
             );
@@ -903,7 +983,7 @@ async function cambiarEstadoCategoria(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.error ||
@@ -921,11 +1001,10 @@ async function cambiarEstadoCategoria(indice) {
             : "🟢 Categoría activada."
         );
 
-
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -934,41 +1013,35 @@ async function cambiarEstadoCategoria(indice) {
 }
 
 
-/* ==================================================
-   ELIMINAR CATEGORIA
-================================================== */
-
-async function eliminarCategoria(indice) {
+async function eliminarCategoria(indice){
 
     const categoria =
         categorias[indice];
 
-
-    if (
-        !confirm(
-            `¿Eliminar la categoría "${categoria.nombre}"?`
-        )
-    ) {
+    if(!confirm(
+        `¿Eliminar la categoría "${categoria.nombre}"?`
+    )){
 
         return;
+
     }
 
 
-    try {
+    try{
 
         const respuesta =
             await fetch(
                 "/api/categorias",
                 {
-                    method: "DELETE",
+                    method:"DELETE",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-                        id: categoria.id
+                    body:JSON.stringify({
+                        id:categoria.id
                     })
                 }
             );
@@ -978,7 +1051,7 @@ async function eliminarCategoria(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.error ||
@@ -994,11 +1067,10 @@ async function eliminarCategoria(indice) {
             "🗑️ Categoría eliminada."
         );
 
-
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -1011,15 +1083,15 @@ async function eliminarCategoria(indice) {
    PRODUCTOS
 ================================================== */
 
-async function cargarProductos() {
+async function cargarProductos(){
 
-    try {
+    try{
 
         const respuesta =
             await fetch("/api/productos");
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 "No se pudieron cargar los productos."
@@ -1032,7 +1104,7 @@ async function cargarProductos() {
             await respuesta.json();
 
 
-        if (!Array.isArray(productos)) {
+        if(!Array.isArray(productos)){
 
             throw new Error(
                 "Formato de productos incorrecto."
@@ -1043,15 +1115,18 @@ async function cargarProductos() {
 
         mostrarProductos();
 
+    }catch(error){
 
-    } catch (error) {
+        document.getElementById("productos").innerHTML=`
 
-        document.getElementById(
-            "productos"
-        ).innerHTML = `
             <div class="vacio">
-                ❌ ${escapeHtml(error.message)}
+
+                ❌ ${escapeHtml(
+                    error.message
+                )}
+
             </div>
+
         `;
 
     }
@@ -1060,40 +1135,47 @@ async function cargarProductos() {
 
 
 /* ==================================================
-   OPCIONES CATEGORIAS
+   OPCIONES DE CATEGORIA
 ================================================== */
 
-function opcionesCategorias(actual) {
+function opcionesCategorias(actual){
 
-    let html = `
+    let html=`
+
         <option value="">
             Seleccionar categoría
         </option>
+
     `;
 
 
-    categorias.forEach(categoria => {
+    categorias.forEach(categoria=>{
 
-        if (
+        if(
             categoria.activa ||
-            categoria.nombre === actual
-        ) {
+            categoria.nombre===actual
+        ){
 
-            html += `
+            html+=`
+
                 <option
                     value="${escapeHtml(
                         categoria.nombre
                     )}"
+
                     ${
-                        categoria.nombre === actual
+                        categoria.nombre===actual
                         ? "selected"
                         : ""
                     }
                 >
+
                     ${escapeHtml(
                         categoria.nombre
                     )}
+
                 </option>
+
             `;
 
         }
@@ -1102,6 +1184,7 @@ function opcionesCategorias(actual) {
 
 
     return html;
+
 }
 
 
@@ -1109,7 +1192,7 @@ function opcionesCategorias(actual) {
    MOSTRAR PRODUCTOS
 ================================================== */
 
-function mostrarProductos() {
+function mostrarProductos(){
 
     const contenedor =
         document.getElementById(
@@ -1117,7 +1200,7 @@ function mostrarProductos() {
         );
 
 
-    const busqueda =
+    const buscar =
         document.getElementById(
             "buscar"
         ).value
@@ -1126,7 +1209,7 @@ function mostrarProductos() {
 
 
     const lista =
-        productos.filter(producto => {
+        productos.filter(producto=>{
 
             return (
 
@@ -1134,7 +1217,7 @@ function mostrarProductos() {
                     producto.nombre || ""
                 )
                 .toLowerCase()
-                .includes(busqueda)
+                .includes(buscar)
 
                 ||
 
@@ -1142,19 +1225,23 @@ function mostrarProductos() {
                     producto.categoria || ""
                 )
                 .toLowerCase()
-                .includes(busqueda)
+                .includes(buscar)
 
             );
 
         });
 
 
-    if (!lista.length) {
+    if(!lista.length){
 
-        contenedor.innerHTML = `
+        contenedor.innerHTML=`
+
             <div class="vacio">
+
                 No hay productos que coincidan.
+
             </div>
+
         `;
 
         return;
@@ -1162,324 +1249,485 @@ function mostrarProductos() {
 
 
     contenedor.innerHTML =
-        lista.map(producto => {
+        lista.map(producto=>{
 
             const indice =
                 productos.indexOf(producto);
+
+
+            const activo =
+                Boolean(producto.activo);
 
 
             return `
 
                 <article
                     class="producto"
-                    data-id="${producto.id}"
+                    data-id="${escapeHtml(
+                        producto.id
+                    )}"
+                    id="producto-${indice}"
                 >
 
 
-                    <div class="producto-header">
+                    <!-- CABECERA -->
 
-                        <div>
+                    <div
+                        class="producto-cabecera"
+                        onclick="alternarProducto(${indice})"
+                    >
 
-                            <div class="producto-id">
-                                PRODUCTO #${escapeHtml(
-                                    producto.id
-                                )}
+                        <div class="producto-resumen">
+
+                            <div class="flecha">
+                                ▶
                             </div>
 
-                            <h2>
-                                ${escapeHtml(
-                                    producto.nombre ||
-                                    "Nuevo producto"
-                                )}
-                            </h2>
 
-                        </div>
+                            <div class="producto-info">
 
-
-                        <button
-                            class="btn-eliminar"
-                            onclick="eliminarProducto(${indice})"
-                        >
-                            🗑️ Eliminar
-                        </button>
-
-                    </div>
+                                <div class="producto-id">
+                                    PRODUCTO #${escapeHtml(
+                                        producto.id
+                                    )}
+                                </div>
 
 
-                    <div class="grid">
+                                <div class="producto-nombre">
+
+                                    ${escapeHtml(
+                                        producto.nombre ||
+                                        "Nuevo producto"
+                                    )}
+
+                                </div>
 
 
-                        <!-- NOMBRE -->
+                                <div class="producto-meta">
 
-                        <div class="campo">
+                                    ${
+                                        escapeHtml(
+                                            producto.categoria ||
+                                            "Sin categoría"
+                                        )
+                                    }
 
-                            <label>
-                                Nombre del producto
-                            </label>
+                                    ·
 
-                            <input
-                                value="${escapeHtml(
-                                    producto.nombre || ""
-                                )}"
-                                oninput="
-                                    actualizar(
-                                        ${indice},
-                                        'nombre',
-                                        this.value
-                                    )
-                                "
-                            >
+                                    $${Number(
+                                        producto.precio || 0
+                                    ).toFixed(2)}
 
-                        </div>
+                                    ·
 
+                                    <span class="${
+                                        activo
+                                        ? "activo-texto"
+                                        : "inactivo-texto"
+                                    }">
 
-                        <!-- PRECIO -->
+                                        ${
+                                            activo
+                                            ? "● Activo"
+                                            : "● Inactivo"
+                                        }
 
-                        <div class="campo">
-
-                            <label>
-                                Precio
-                            </label>
-
-                            <input
-                                type="number"
-                                min="0"
-                                step="0.01"
-                                value="${producto.precio ?? 0}"
-                                oninput="
-                                    actualizar(
-                                        ${indice},
-                                        'precio',
-                                        Number(this.value)
-                                    )
-                                "
-                            >
-
-                        </div>
-
-
-                        <!-- CATEGORIA -->
-
-                        <div class="campo">
-
-                            <label>
-                                Categoría
-                            </label>
-
-                            <select
-                                onchange="
-                                    actualizar(
-                                        ${indice},
-                                        'categoria',
-                                        this.value
-                                    )
-                                "
-                            >
-
-                                ${opcionesCategorias(
-                                    producto.categoria
-                                )}
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- IMAGEN -->
-
-                        <div class="campo">
-
-                            <label>
-                                Imagen del producto
-                            </label>
-
-                            <div class="imagen-box">
-
-                                ${
-                                    producto.imagen
-                                    ?
-
-                                    `
-                                    <img
-                                        id="preview-${indice}"
-                                        class="preview"
-                                        src="${escapeHtml(
-                                            producto.imagen
-                                        )}"
-                                        onerror="
-                                            this.style.display='none'
-                                        "
-                                    >
-                                    `
-
-                                    :
-
-                                    `
-                                    <div
-                                        id="preview-${indice}"
-                                        class="preview"
-                                    ></div>
-                                    `
-                                }
-
-
-                                <div class="imagen-controles">
-
-                                    <input
-                                        type="file"
-                                        id="file-${indice}"
-                                        accept="image/jpeg,image/png,image/webp"
-                                    >
-
-                                    <br><br>
-
-                                    <button
-                                        class="btn-gris"
-                                        onclick="
-                                            subirImagen(${indice})
-                                        "
-                                    >
-                                        📤 Subir imagen
-                                    </button>
-
-                                    <small>
-                                        JPG, PNG o WEBP. Máximo recomendado: 2 MB.
-                                    </small>
+                                    </span>
 
                                 </div>
 
                             </div>
 
+                        </div>
+
+
+                        <div
+                            class="producto-acciones"
+                            onclick="event.stopPropagation()"
+                        >
+
+                            <button
+                                class="btn-eliminar"
+                                onclick="eliminarProducto(${indice})"
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTENIDO -->
+
+                    <div class="producto-contenido">
+
+                        <div class="grid">
+
+
+                            <!-- NOMBRE -->
+
+                            <div class="campo">
+
+                                <label>
+                                    Nombre del producto
+                                </label>
+
+                                <input
+                                    value="${escapeHtml(
+                                        producto.nombre || ""
+                                    )}"
+
+                                    oninput="
+                                        actualizar(
+                                            ${indice},
+                                            'nombre',
+                                            this.value
+                                        )
+                                    "
+                                >
+
+                            </div>
+
+
+                            <!-- PRECIO -->
+
+                            <div class="campo">
+
+                                <label>
+                                    Precio
+                                </label>
+
+                                <input
+                                    type="number"
+                                    min="0"
+                                    step="0.01"
+
+                                    value="${
+                                        producto.precio ?? 0
+                                    }"
+
+                                    oninput="
+                                        actualizar(
+                                            ${indice},
+                                            'precio',
+                                            Number(this.value)
+                                        )
+                                    "
+                                >
+
+                            </div>
+
+
+                            <!-- CATEGORIA -->
+
+                            <div class="campo">
+
+                                <label>
+                                    Categoría
+                                </label>
+
+                                <select
+                                    onchange="
+                                        actualizar(
+                                            ${indice},
+                                            'categoria',
+                                            this.value
+                                        )
+                                    "
+                                >
+
+                                    ${opcionesCategorias(
+                                        producto.categoria
+                                    )}
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- IMAGEN -->
+
+                            <div class="campo">
+
+                                <label>
+                                    Imagen del producto
+                                </label>
+
+
+                                <div class="imagen-box">
+
+                                    ${
+                                        producto.imagen
+
+                                        ?
+
+                                        `
+                                        <img
+                                            id="preview-${indice}"
+                                            class="preview"
+                                            src="${escapeHtml(
+                                                producto.imagen
+                                            )}"
+
+                                            onerror="
+                                                this.style.display='none'
+                                            "
+                                        >
+                                        `
+
+                                        :
+
+                                        `
+                                        <div
+                                            id="preview-${indice}"
+                                            class="preview-vacia"
+                                        >
+                                            Sin imagen
+                                        </div>
+                                        `
+                                    }
+
+
+                                    <div class="imagen-controles">
+
+                                        <input
+                                            type="file"
+
+                                            id="file-${indice}"
+
+                                            accept="
+                                                image/jpeg,
+                                                image/png,
+                                                image/webp
+                                            "
+                                        >
+
+
+                                        <br><br>
+
+
+                                        <button
+                                            class="btn-gris"
+
+                                            onclick="
+                                                subirImagen(${indice})
+                                            "
+                                        >
+                                            📤 Subir imagen
+                                        </button>
+
+
+                                        <small>
+                                            JPG, PNG o WEBP.
+                                            Máximo recomendado: 2 MB.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+                                <input
+                                    type="hidden"
+                                    id="imagen-${indice}"
+
+                                    value="${escapeHtml(
+                                        producto.imagen || ""
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <!-- DESCRIPCION -->
+
+                            <div class="campo ancho">
+
+                                <label>
+                                    Descripción
+                                </label>
+
+                                <textarea
+                                    oninput="
+                                        actualizar(
+                                            ${indice},
+                                            'descripcion',
+                                            this.value
+                                        )
+                                    "
+                                >${escapeHtml(
+                                    producto.descripcion || ""
+                                )}</textarea>
+
+                            </div>
+
+
+                            <!-- DETALLES -->
+
+                            <div class="campo ancho">
+
+                                <label>
+                                    Detalles del producto
+                                </label>
+
+                                <textarea
+                                    oninput="
+                                        actualizar(
+                                            ${indice},
+                                            'detalles',
+                                            this.value
+                                        )
+                                    "
+                                >${escapeHtml(
+                                    producto.detalles || ""
+                                )}</textarea>
+
+                            </div>
+
+
+                            <!-- SOLICITUD -->
+
+                            <div class="campo ancho">
+
+                                <label>
+                                    Detalles de solicitud
+                                </label>
+
+                                <textarea
+                                    oninput="
+                                        actualizar(
+                                            ${indice},
+                                            'solicitud',
+                                            this.value
+                                        )
+                                    "
+                                >${escapeHtml(
+                                    producto.solicitud || ""
+                                )}</textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- ACTIVO -->
+
+                        <div class="activo">
 
                             <input
-                                type="hidden"
-                                id="imagen-${indice}"
-                                value="${escapeHtml(
-                                    producto.imagen || ""
-                                )}"
+                                id="activo-${indice}"
+
+                                type="checkbox"
+
+                                ${
+                                    activo
+                                    ? "checked"
+                                    : ""
+                                }
+
+                                onchange="
+                                    actualizar(
+                                        ${indice},
+                                        'activo',
+                                        this.checked
+                                    )
+                                "
                             >
 
-                        </div>
-
-
-                        <!-- DESCRIPCION -->
-
-                        <div class="campo ancho">
-
-                            <label>
-                                Descripción
+                            <label
+                                for="activo-${indice}"
+                            >
+                                Producto activo
                             </label>
 
-                            <textarea
-                                oninput="
-                                    actualizar(
-                                        ${indice},
-                                        'descripcion',
-                                        this.value
-                                    )
-                                "
-                            >${escapeHtml(
-                                producto.descripcion || ""
-                            )}</textarea>
-
                         </div>
 
 
-                        <!-- DETALLES -->
+                        <!-- ACCIONES -->
 
-                        <div class="campo ancho">
+                        <div class="acciones-producto">
 
-                            <label>
-                                Detalles del producto
-                            </label>
+                            <button
+                                class="btn-verde"
 
-                            <textarea
-                                oninput="
-                                    actualizar(
-                                        ${indice},
-                                        'detalles',
-                                        this.value
-                                    )
+                                onclick="
+                                    guardarProducto(${indice})
                                 "
-                            >${escapeHtml(
-                                producto.detalles || ""
-                            )}</textarea>
+                            >
+                                💾 Guardar este producto
+                            </button>
+
+
+                            <button
+                                class="btn-gris"
+
+                                onclick="
+                                    alternarProducto(${indice})
+                                "
+                            >
+                                🔼 Cerrar
+                            </button>
 
                         </div>
-
-
-                        <!-- SOLICITUD -->
-
-                        <div class="campo ancho">
-
-                            <label>
-                                Detalles de solicitud
-                            </label>
-
-                            <textarea
-                                oninput="
-                                    actualizar(
-                                        ${indice},
-                                        'solicitud',
-                                        this.value
-                                    )
-                                "
-                            >${escapeHtml(
-                                producto.solicitud || ""
-                            )}</textarea>
-
-                        </div>
-
 
                     </div>
-
-
-                    <!-- ACTIVO -->
-
-                    <div class="activo">
-
-                        <input
-                            id="activo-${indice}"
-                            type="checkbox"
-                            ${
-                                producto.activo
-                                ? "checked"
-                                : ""
-                            }
-                            onchange="
-                                actualizar(
-                                    ${indice},
-                                    'activo',
-                                    this.checked
-                                )
-                            "
-                        >
-
-                        <label
-                            for="activo-${indice}"
-                        >
-                            Producto activo
-                        </label>
-
-                    </div>
-
-
-                    <br>
-
-
-                    <button
-                        class="btn-verde"
-                        onclick="guardarProducto(${indice})"
-                    >
-                        💾 Guardar este producto
-                    </button>
-
 
                 </article>
 
             `;
 
         }).join("");
+
+}
+
+
+/* ==================================================
+   ABRIR / CERRAR PRODUCTO
+================================================== */
+
+function alternarProducto(indice){
+
+    const elemento =
+        document.getElementById(
+            `producto-${indice}`
+        );
+
+
+    if(!elemento){
+
+        return;
+
+    }
+
+
+    const estabaAbierto =
+        elemento.classList.contains(
+            "abierto"
+        );
+
+
+    // Cerramos todos
+
+    document
+        .querySelectorAll(".producto.abierto")
+        .forEach(item=>{
+            item.classList.remove(
+                "abierto"
+            );
+        });
+
+
+    // Si estaba cerrado, lo abrimos
+
+    if(!estabaAbierto){
+
+        elemento.classList.add(
+            "abierto"
+        );
+
+    }
 
 }
 
@@ -1492,7 +1740,7 @@ function actualizar(
     indice,
     campo,
     valor
-) {
+){
 
     productos[indice][campo] =
         valor;
@@ -1504,7 +1752,7 @@ function actualizar(
    SUBIR IMAGEN
 ================================================== */
 
-async function subirImagen(indice) {
+async function subirImagen(indice){
 
     const input =
         document.getElementById(
@@ -1516,7 +1764,7 @@ async function subirImagen(indice) {
         input.files[0];
 
 
-    if (!archivo) {
+    if(!archivo){
 
         mostrarEstado(
             "Selecciona primero una imagen.",
@@ -1524,10 +1772,11 @@ async function subirImagen(indice) {
         );
 
         return;
+
     }
 
 
-    if (!archivo.type.startsWith("image/")) {
+    if(!archivo.type.startsWith("image/")){
 
         mostrarEstado(
             "El archivo no es una imagen.",
@@ -1535,29 +1784,43 @@ async function subirImagen(indice) {
         );
 
         return;
+
     }
 
 
-    try {
+    if(archivo.size > 5 * 1024 * 1024){
 
         mostrarEstado(
-            "⏳ Preparando imagen..."
+            "La imagen supera los 5 MB.",
+            true
         );
 
+        return;
 
-        const imagenOptimizada =
-            await optimizarImagen(
-                archivo
-            );
+    }
 
 
-        const nombre =
-            productos[indice].nombre ||
-            "producto";
-
+    try{
 
         mostrarEstado(
             "⬆️ Subiendo imagen..."
+        );
+
+
+        /*
+         * IMPORTANTE:
+         * Aquí usamos FormData.
+         * El endpoint /api/upload espera
+         * multipart/form-data.
+         */
+
+        const formulario =
+            new FormData();
+
+
+        formulario.append(
+            "file",
+            archivo
         );
 
 
@@ -1565,21 +1828,9 @@ async function subirImagen(indice) {
             await fetch(
                 "/api/upload",
                 {
-                    method: "POST",
+                    method:"POST",
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        imagen:
-                            imagenOptimizada,
-
-                        nombre
-
-                    })
+                    body:formulario
                 }
             );
 
@@ -1588,12 +1839,21 @@ async function subirImagen(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.detalle ||
                 resultado.error ||
                 "No se pudo subir la imagen."
+            );
+
+        }
+
+
+        if(!resultado.url){
+
+            throw new Error(
+                "El servidor no devolvió la URL de la imagen."
             );
 
         }
@@ -1616,6 +1876,7 @@ async function subirImagen(indice) {
 
 
         preview.outerHTML = `
+
             <img
                 id="preview-${indice}"
                 class="preview"
@@ -1623,6 +1884,7 @@ async function subirImagen(indice) {
                     resultado.url
                 )}"
             >
+
         `;
 
 
@@ -1631,12 +1893,16 @@ async function subirImagen(indice) {
         );
 
 
-    } catch (error) {
+    }catch(error){
 
-        console.error(error);
+        console.error(
+            "ERROR IMAGEN:",
+            error
+        );
+
 
         mostrarEstado(
-            "❌ Error al subir imagen: " +
+            "❌ Error al subir imagen: "+
             error.message,
             true
         );
@@ -1647,179 +1913,47 @@ async function subirImagen(indice) {
 
 
 /* ==================================================
-   OPTIMIZAR IMAGEN
-================================================== */
-
-function optimizarImagen(archivo) {
-
-    return new Promise(
-        (resolve, reject) => {
-
-            const lector =
-                new FileReader();
-
-
-            lector.onload = evento => {
-
-                const imagen =
-                    new Image();
-
-
-                imagen.onload = () => {
-
-                    const maximo =
-                        1600;
-
-
-                    let ancho =
-                        imagen.width;
-
-                    let alto =
-                        imagen.height;
-
-
-                    if (
-                        ancho > maximo ||
-                        alto > maximo
-                    ) {
-
-                        if (
-                            ancho > alto
-                        ) {
-
-                            alto =
-                                Math.round(
-                                    alto *
-                                    maximo /
-                                    ancho
-                                );
-
-                            ancho =
-                                maximo;
-
-                        } else {
-
-                            ancho =
-                                Math.round(
-                                    ancho *
-                                    maximo /
-                                    alto
-                                );
-
-                            alto =
-                                maximo;
-
-                        }
-
-                    }
-
-
-                    const canvas =
-                        document.createElement(
-                            "canvas"
-                        );
-
-
-                    canvas.width =
-                        ancho;
-
-                    canvas.height =
-                        alto;
-
-
-                    const ctx =
-                        canvas.getContext(
-                            "2d"
-                        );
-
-
-                    ctx.drawImage(
-                        imagen,
-                        0,
-                        0,
-                        ancho,
-                        alto
-                    );
-
-
-                    resolve(
-                        canvas.toDataURL(
-                            "image/jpeg",
-                            0.82
-                        )
-                    );
-
-                };
-
-
-                imagen.onerror =
-                    reject;
-
-
-                imagen.src =
-                    evento.target.result;
-
-            };
-
-
-            lector.onerror =
-                reject;
-
-
-            lector.readAsDataURL(
-                archivo
-            );
-
-        }
-    );
-
-}
-
-
-/* ==================================================
    AGREGAR PRODUCTO
 ================================================== */
 
-function agregarProducto() {
+function agregarProducto(){
 
     const ids =
         productos
-            .map(p =>
-                Number(p.id)
-            )
-            .filter(n =>
+            .map(p=>Number(p.id))
+            .filter(n=>
                 Number.isFinite(n)
             );
 
 
     const nuevoId =
         ids.length
-        ? Math.max(...ids) + 1
+        ? Math.max(...ids)+1
         : 1;
 
 
     productos.push({
 
-        id: nuevoId,
+        id:nuevoId,
 
-        nombre: "",
+        nombre:"",
 
-        precio: 0,
+        precio:0,
 
         categoria:
             categorias.find(
-                c => c.activa
+                c=>c.activa
             )?.nombre || "",
 
-        imagen: "",
+        imagen:"",
 
-        descripcion: "",
+        descripcion:"",
 
-        detalles: "",
+        detalles:"",
 
-        solicitud: "",
+        solicitud:"",
 
-        activo: true
+        activo:true
 
     });
 
@@ -1827,24 +1961,29 @@ function agregarProducto() {
     mostrarProductos();
 
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
         const elemento =
-            document.querySelector(
-                `[data-id="${nuevoId}"]`
+            document.getElementById(
+                `producto-${productos.length-1}`
             );
 
 
-        if (elemento) {
+        if(elemento){
+
+            elemento.classList.add(
+                "abierto"
+            );
+
 
             elemento.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
+                behavior:"smooth",
+                block:"center"
             });
 
         }
 
-    }, 100);
+    },100);
 
 
     mostrarEstado(
@@ -1858,13 +1997,13 @@ function agregarProducto() {
    GUARDAR PRODUCTO
 ================================================== */
 
-async function guardarProducto(indice) {
+async function guardarProducto(indice){
 
     const producto =
         productos[indice];
 
 
-    try {
+    try{
 
         mostrarEstado(
             "💾 Guardando producto..."
@@ -1875,14 +2014,14 @@ async function guardarProducto(indice) {
             await fetch(
                 "/api/productos",
                 {
-                    method: "POST",
+                    method:"POST",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify([
+                    body:JSON.stringify([
                         producto
                     ])
                 }
@@ -1893,7 +2032,7 @@ async function guardarProducto(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.detalle ||
@@ -1912,10 +2051,10 @@ async function guardarProducto(indice) {
         );
 
 
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -1928,37 +2067,41 @@ async function guardarProducto(indice) {
    ELIMINAR PRODUCTO
 ================================================== */
 
-async function eliminarProducto(indice) {
+async function eliminarProducto(indice){
 
     const producto =
         productos[indice];
 
 
-    if (
-        !confirm(
-            `¿Seguro que quieres eliminar "${producto.nombre || "este producto"}"?`
-        )
-    ) {
+    if(!confirm(
+        `¿Seguro que quieres eliminar "${producto.nombre || "este producto"}"?`
+    )){
 
         return;
+
     }
 
 
-    try {
+    /*
+     * El endpoint /api/productos que tenemos
+     * actualmente debe aceptar DELETE.
+     */
+
+    try{
 
         const respuesta =
             await fetch(
                 "/api/productos",
                 {
-                    method: "DELETE",
+                    method:"DELETE",
 
-                    headers: {
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-                        id: producto.id
+                    body:JSON.stringify({
+                        id:producto.id
                     })
                 }
             );
@@ -1968,7 +2111,7 @@ async function eliminarProducto(indice) {
             await respuesta.json();
 
 
-        if (!respuesta.ok) {
+        if(!respuesta.ok){
 
             throw new Error(
                 resultado.detalle ||
@@ -1993,10 +2136,10 @@ async function eliminarProducto(indice) {
         );
 
 
-    } catch (error) {
+    }catch(error){
 
         mostrarEstado(
-            "❌ " + error.message,
+            "❌ "+error.message,
             true
         );
 
@@ -2009,14 +2152,13 @@ async function eliminarProducto(indice) {
    INICIAR
 ================================================== */
 
-async function iniciar() {
+async function iniciar(){
 
     await cargarCategorias();
 
     await cargarProductos();
 
 }
-
 
 iniciar();
 

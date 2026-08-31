@@ -6,6 +6,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "@vercel/blob": "^2.8.0",
+    "@vercel/oidc": "^3.8.5",
     "formidable": "^3.5.2"
   }
 }

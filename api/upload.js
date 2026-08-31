@@ -8,7 +8,8 @@ export default async function handler(req, res) {
             });
         }
 
-        const contentType = req.headers["content-type"] || "";
+        const contentType =
+            req.headers["content-type"] || "";
 
         if (!contentType.includes("multipart/form-data")) {
             return res.status(400).json({
@@ -24,7 +25,10 @@ export default async function handler(req, res) {
 
         const body = Buffer.concat(chunks);
 
-        const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/);
+        const boundaryMatch =
+            contentType.match(
+                /boundary=(?:"([^"]+)"|([^;]+))/
+            );
 
         if (!boundaryMatch) {
             return res.status(400).json({
@@ -32,48 +36,99 @@ export default async function handler(req, res) {
             });
         }
 
-        const boundary = boundaryMatch[1] || boundaryMatch[2];
+        const boundary =
+            boundaryMatch[1] ||
+            boundaryMatch[2];
 
-        const parts = body
-            .toString("binary")
-            .split(`--${boundary}`);
+        const parts =
+            body
+                .toString("binary")
+                .split(`--${boundary}`);
 
         let fileBuffer = null;
-        let fileName = "imagen";
+        let fileName = "imagen.jpg";
+        let mimeType = "image/jpeg";
 
         for (const part of parts) {
-            if (!part.includes("Content-Disposition")) continue;
 
-            const nameMatch = part.match(
-                /filename="([^"]*)"/
-            );
+            if (
+                !part.includes(
+                    "Content-Disposition"
+                )
+            ) {
+                continue;
+            }
 
-            if (!nameMatch) continue;
+            const nameMatch =
+                part.match(
+                    /filename="([^"]*)"/
+                );
 
-            fileName = nameMatch[1] || "imagen";
+            if (!nameMatch) {
+                continue;
+            }
 
-            const separator = "\r\n\r\n";
-            const index = part.indexOf(separator);
+            fileName =
+                nameMatch[1] ||
+                "imagen.jpg";
 
-            if (index === -1) continue;
+            const typeMatch =
+                part.match(
+                    /Content-Type:\s*([^\r\n]+)/i
+                );
 
-            const data = part.slice(index + separator.length);
+            if (typeMatch) {
+                mimeType =
+                    typeMatch[1].trim();
+            }
 
-            const cleanData = data.replace(/\r\n--$/, "");
+            const separator =
+                "\r\n\r\n";
 
-            fileBuffer = Buffer.from(cleanData, "binary");
+            const index =
+                part.indexOf(
+                    separator
+                );
+
+            if (index === -1) {
+                continue;
+            }
+
+            let data =
+                part.slice(
+                    index + separator.length
+                );
+
+            data =
+                data.replace(
+                    /\r\n--$/,
+                    ""
+                );
+
+            fileBuffer =
+                Buffer.from(
+                    data,
+                    "binary"
+                );
 
             break;
         }
 
-        if (!fileBuffer || fileBuffer.length === 0) {
+        if (
+            !fileBuffer ||
+            fileBuffer.length === 0
+        ) {
             return res.status(400).json({
-                error: "No se recibió ninguna imagen"
+                error:
+                    "No se recibió ninguna imagen"
             });
         }
 
-        const extension = fileName.includes(".")
-            ? fileName.substring(fileName.lastIndexOf("."))
+        const extension =
+            fileName.includes(".")
+            ? fileName.substring(
+                fileName.lastIndexOf(".")
+            )
             : ".jpg";
 
         const uniqueName =
@@ -81,14 +136,15 @@ export default async function handler(req, res) {
                 .toString(36)
                 .substring(2, 10)}${extension}`;
 
-        const blob = await put(
-            uniqueName,
-            fileBuffer,
-            {
-                access: "public",
-                contentType: contentType.split(";")[0]
-            }
-        );
+        const blob =
+            await put(
+                uniqueName,
+                fileBuffer,
+                {
+                    access: "public",
+                    contentType: mimeType
+                }
+            );
 
         return res.status(200).json({
             ok: true,
@@ -97,11 +153,19 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error("ERROR UPLOAD:", error);
+
+        console.error(
+            "ERROR UPLOAD:",
+            error
+        );
 
         return res.status(500).json({
-            error: "Error al subir la imagen",
-            detalle: error.message
+            error:
+                "Error al subir la imagen",
+
+            detalle:
+                error.message
         });
+
     }
 }

@@ -1,20 +1,31 @@
 import { neon } from "@neondatabase/serverless";
+import { requireAdmin } from "./_auth.js";
 
-const sql = neon(process.env.POSTGRES_URL);
+function getSql() {
+  if (!process.env.POSTGRES_URL) {
+    throw new Error("Falta configurar POSTGRES_URL en Vercel.");
+  }
+
+  return neon(process.env.POSTGRES_URL);
+}
+
+function nombreValido(nombre) {
+  const limpio = String(nombre ?? "").trim();
+
+  if (!limpio) {
+    throw new Error("El nombre de la categoría es obligatorio.");
+  }
+
+  return limpio;
+}
 
 export default async function handler(req, res) {
   try {
+    const sql = getSql();
 
-    // =========================
-    // OBTENER CATEGORÍAS
-    // =========================
     if (req.method === "GET") {
-
       const categorias = await sql`
-        SELECT
-          id,
-          nombre,
-          activa
+        SELECT id, nombre, activa
         FROM categorias
         ORDER BY id ASC
       `;
@@ -22,135 +33,71 @@ export default async function handler(req, res) {
       return res.status(200).json(categorias);
     }
 
+    if (!requireAdmin(req, res)) {
+      return;
+    }
 
-    // =========================
-    // CREAR CATEGORÍA
-    // =========================
     if (req.method === "POST") {
-
-      const { nombre } = req.body;
-
-      if (!nombre || !nombre.trim()) {
-
-        return res.status(400).json({
-          error: "El nombre de la categoría es obligatorio."
-        });
-
+      let nombre;
+      try {
+        nombre = nombreValido(req.body?.nombre);
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
       }
 
-      const categoria = await sql`
-        INSERT INTO categorias (
-          nombre,
-          activa
-        )
-        VALUES (
-          ${nombre.trim()},
-          TRUE
-        )
+      const creada = await sql`
+        INSERT INTO categorias (nombre, activa)
+        VALUES (${nombre}, TRUE)
         RETURNING id, nombre, activa
       `;
 
-      return res.status(201).json({
-        ok: true,
-        categoria: categoria[0]
-      });
+      return res.status(201).json({ ok: true, categoria: creada[0] });
     }
 
-
-    // =========================
-    // EDITAR CATEGORÍA
-    // =========================
     if (req.method === "PUT") {
-
-      const { id, nombre, activa } = req.body;
-
-      if (!id) {
-
-        return res.status(400).json({
-          error: "Falta el ID de la categoría."
-        });
-
+      const id = req.body?.id;
+      let nombre;
+      try {
+        nombre = nombreValido(req.body?.nombre);
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
       }
 
-      if (!nombre || !nombre.trim()) {
-
-        return res.status(400).json({
-          error: "El nombre de la categoría es obligatorio."
-        });
-
+      if (id == null || id === "") {
+        return res.status(400).json({ error: "Falta el ID de la categoría." });
       }
 
-      const categoria = await sql`
+      const actualizada = await sql`
         UPDATE categorias
-        SET
-          nombre = ${nombre.trim()},
-          activa = ${Boolean(activa)}
+        SET nombre = ${nombre}, activa = ${Boolean(req.body?.activa)}
         WHERE id = ${id}
         RETURNING id, nombre, activa
       `;
 
-      if (categoria.length === 0) {
-
-        return res.status(404).json({
-          error: "Categoría no encontrada."
-        });
-
+      if (!actualizada.length) {
+        return res.status(404).json({ error: "Categoría no encontrada." });
       }
 
-      return res.status(200).json({
-        ok: true,
-        categoria: categoria[0]
-      });
+      return res.status(200).json({ ok: true, categoria: actualizada[0] });
     }
 
-
-    // =========================
-    // ELIMINAR CATEGORÍA
-    // =========================
     if (req.method === "DELETE") {
+      const id = req.body?.id;
 
-      const { id } = req.body;
-
-      if (!id) {
-
-        return res.status(400).json({
-          error: "Falta el ID de la categoría."
-        });
-
+      if (id == null || id === "") {
+        return res.status(400).json({ error: "Falta el ID de la categoría." });
       }
 
-      await sql`
-        DELETE FROM categorias
-        WHERE id = ${id}
-      `;
-
-      return res.status(200).json({
-        ok: true,
-        mensaje: "Categoría eliminada correctamente."
-      });
+      await sql`DELETE FROM categorias WHERE id = ${id}`;
+      return res.status(200).json({ ok: true });
     }
 
-
-    // =========================
-    // MÉTODO NO PERMITIDO
-    // =========================
-
-    return res.status(405).json({
-      error: "Método no permitido."
-    });
-
-
+    return res.status(405).json({ error: "Método no permitido." });
   } catch (error) {
-
-    console.error(
-      "Error API categorías:",
-      error
-    );
-
+    console.error("ERROR CATEGORIAS:", error);
     return res.status(500).json({
-      error: "Error de conexión con la base de datos.",
+      error: "No se pudo procesar las categorías.",
       detalle: error.message
     });
-
   }
 }

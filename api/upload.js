@@ -11,6 +11,7 @@ export const config = {
 };
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
 const EXTENSION_BY_TYPE = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
@@ -18,8 +19,11 @@ const EXTENSION_BY_TYPE = {
 };
 
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido." });
+    return res.status(405).json({
+      error: "Método no permitido."
+    });
   }
 
   if (!requireAdmin(req, res)) {
@@ -27,16 +31,24 @@ export default async function handler(req, res) {
   }
 
   try {
+
     const form = formidable({
       maxFiles: 1,
       maxFileSize: MAX_FILE_SIZE,
-      filter: ({ mimetype }) => Boolean(EXTENSION_BY_TYPE[mimetype])
+      filter: ({ mimetype }) =>
+        Boolean(EXTENSION_BY_TYPE[mimetype])
     });
+
     const [, files] = await form.parse(req);
-    const file = Array.isArray(files.file) ? files.file[0] : files.file;
+
+    const file = Array.isArray(files.file)
+      ? files.file[0]
+      : files.file;
 
     if (!file) {
-      return res.status(400).json({ error: "Selecciona una imagen primero." });
+      return res.status(400).json({
+        error: "Selecciona una imagen primero."
+      });
     }
 
     if (!EXTENSION_BY_TYPE[file.mimetype]) {
@@ -46,19 +58,54 @@ export default async function handler(req, res) {
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return res.status(400).json({ error: "La imagen supera los 5 MB." });
+      return res.status(400).json({
+        error: "La imagen supera los 5 MB."
+      });
     }
 
-    const contenido = await readFile(file.filepath);
-    const nombre = `productos/${randomUUID()}${EXTENSION_BY_TYPE[file.mimetype]}`;
-    const blob = await put(nombre, contenido, {
-      access: "public",
-      contentType: file.mimetype
+    if (!process.env.VERCEL_OIDC_TOKEN) {
+      throw new Error(
+        "No está disponible VERCEL_OIDC_TOKEN."
+      );
+    }
+
+    if (!process.env.BLOB_STORE_ID) {
+      throw new Error(
+        "No está disponible BLOB_STORE_ID."
+      );
+    }
+
+    const contenido =
+      await readFile(file.filepath);
+
+    const nombre =
+      `productos/${randomUUID()}${EXTENSION_BY_TYPE[file.mimetype]}`;
+
+    const blob = await put(
+      nombre,
+      contenido,
+      {
+        access: "public",
+        contentType: file.mimetype,
+        oidcToken:
+          process.env.VERCEL_OIDC_TOKEN,
+        storeId:
+          process.env.BLOB_STORE_ID
+      }
+    );
+
+    return res.status(201).json({
+      ok: true,
+      url: blob.url
     });
 
-    return res.status(201).json({ ok: true, url: blob.url });
   } catch (error) {
-    console.error("ERROR UPLOAD:", error);
+
+    console.error(
+      "ERROR UPLOAD:",
+      error
+    );
+
     return res.status(500).json({
       error: "No se pudo subir la imagen.",
       detalle: error.message

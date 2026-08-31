@@ -1,12 +1,20 @@
 import { put } from "@vercel/blob";
 
+export const config = {
+    api: {
+        bodyParser: false
+    }
+};
+
 export default async function handler(req, res) {
+
+    if (req.method !== "POST") {
+        return res.status(405).json({
+            error: "Método no permitido"
+        });
+    }
+
     try {
-        if (req.method !== "POST") {
-            return res.status(405).json({
-                error: "Método no permitido"
-            });
-        }
 
         const contentType =
             req.headers["content-type"] || "";
@@ -17,6 +25,21 @@ export default async function handler(req, res) {
             });
         }
 
+        const boundaryMatch =
+            contentType.match(
+                /boundary=(?:"([^"]+)"|([^;]+))/
+            );
+
+        if (!boundaryMatch) {
+            return res.status(400).json({
+                error: "No se encontró el boundary"
+            });
+        }
+
+        const boundary =
+            boundaryMatch[1] ||
+            boundaryMatch[2];
+
         const chunks = [];
 
         for await (const chunk of req) {
@@ -25,98 +48,125 @@ export default async function handler(req, res) {
 
         const body = Buffer.concat(chunks);
 
-        const boundaryMatch =
-            contentType.match(
-                /boundary=(?:"([^"]+)"|([^;]+))/
+        const separator =
+            Buffer.from(
+                `--${boundary}`
             );
 
-        if (!boundaryMatch) {
-            return res.status(400).json({
-                error: "No se encontró el boundary del formulario"
-            });
+        const partes = [];
+
+        let inicio = 0;
+
+        while (true) {
+
+            const posicion =
+                body.indexOf(
+                    separator,
+                    inicio
+                );
+
+            if (posicion === -1) {
+                break;
+            }
+
+            partes.push(
+                body.slice(
+                    inicio,
+                    posicion
+                )
+            );
+
+            inicio =
+                posicion +
+                separator.length;
         }
 
-        const boundary =
-            boundaryMatch[1] ||
-            boundaryMatch[2];
+        let archivo = null;
+        let nombreArchivo = "imagen.jpg";
+        let tipoArchivo = "image/jpeg";
 
-        const parts =
-            body
-                .toString("binary")
-                .split(`--${boundary}`);
+        for (const parte of partes) {
 
-        let fileBuffer = null;
-        let fileName = "imagen.jpg";
-        let mimeType = "image/jpeg";
-
-        for (const part of parts) {
+            const texto =
+                parte.toString(
+                    "latin1"
+                );
 
             if (
-                !part.includes(
+                !texto.includes(
                     "Content-Disposition"
                 )
             ) {
                 continue;
             }
 
-            const nameMatch =
-                part.match(
+            const nombreMatch =
+                texto.match(
                     /filename="([^"]*)"/
                 );
 
-            if (!nameMatch) {
+            if (!nombreMatch) {
                 continue;
             }
 
-            fileName =
-                nameMatch[1] ||
+            nombreArchivo =
+                nombreMatch[1] ||
                 "imagen.jpg";
 
-            const typeMatch =
-                part.match(
+            const tipoMatch =
+                texto.match(
                     /Content-Type:\s*([^\r\n]+)/i
                 );
 
-            if (typeMatch) {
-                mimeType =
-                    typeMatch[1].trim();
+            if (tipoMatch) {
+                tipoArchivo =
+                    tipoMatch[1].trim();
             }
 
-            const separator =
-                "\r\n\r\n";
-
-            const index =
-                part.indexOf(
-                    separator
+            const encabezadoFin =
+                Buffer.from(
+                    "\r\n\r\n"
                 );
 
-            if (index === -1) {
+            const inicioDatos =
+                parte.indexOf(
+                    encabezadoFin
+                );
+
+            if (inicioDatos === -1) {
                 continue;
             }
 
-            let data =
-                part.slice(
-                    index + separator.length
+            let datos =
+                parte.slice(
+                    inicioDatos +
+                    encabezadoFin.length
                 );
 
-            data =
-                data.replace(
-                    /\r\n--$/,
-                    ""
-                );
+            if (
+                datos
+                    .subarray(
+                        datos.length - 2
+                    )
+                    .equals(
+                        Buffer.from("\r\n")
+                    )
+            ) {
+                datos =
+                    datos.subarray(
+                        0,
+                        datos.length - 2
+                    );
+            }
 
-            fileBuffer =
-                Buffer.from(
-                    data,
-                    "binary"
-                );
+            archivo = datos;
 
             break;
         }
 
         if (
-            !fileBuffer ||
-            fileBuffer.length === 0
+            !archivo ||
+            archivo.length === 0
         ) {
             return res.status(400).json({
                 error:
@@ -124,25 +174,46 @@ export default async function handler(req, res) {
             });
         }
 
-        const extension =
-            fileName.includes(".")
-            ? fileName.substring(
-                fileName.lastIndexOf(".")
+        if (
+            !tipoArchivo.startsWith(
+                "image/"
             )
-            : ".jpg";
+        ) {
+            return res.status(400).json({
+                error:
+                    "El archivo enviado no es una imagen"
+            });
+        }
 
-        const uniqueName =
+        if (
+            archivo.length >
+            5 * 1024 * 1024
+        ) {
+            return res.status(400).json({
+                error:
+                    "La imagen supera los 5 MB"
+            });
+        }
+
+        const extension =
+            nombreArchivo.includes(".")
+                ? nombreArchivo.substring(
+                    nombreArchivo.lastIndexOf(".")
+                )
+                : ".jpg";
+
+        const nombreUnico =
             `productos/${Date.now()}-${Math.random()
                 .toString(36)
                 .substring(2, 10)}${extension}`;
 
         const blob =
             await put(
-                uniqueName,
-                fileBuffer,
+                nombreUnico,
+                archivo,
                 {
                     access: "public",
-                    contentType: mimeType
+                    contentType: tipoArchivo
                 }
             );
 
@@ -162,10 +233,8 @@ export default async function handler(req, res) {
         return res.status(500).json({
             error:
                 "Error al subir la imagen",
-
             detalle:
                 error.message
         });
-
     }
 }

@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
-    "@vercel/blob": "^1.0.0",
+  "@vercel/blob": "^2.8.0"
     "formidable": "^3.5.2"
   }
 }

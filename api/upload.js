@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import formidable from "formidable";
 import { put } from "@vercel/blob";
+import { getVercelOidcToken } from "@vercel/oidc";
 import { requireAdmin } from "./_auth.js";
 
 export const config = {
@@ -19,7 +20,6 @@ const EXTENSION_BY_TYPE = {
 };
 
 export default async function handler(req, res) {
-
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Método no permitido."
@@ -31,7 +31,6 @@ export default async function handler(req, res) {
   }
 
   try {
-
     const form = formidable({
       maxFiles: 1,
       maxFileSize: MAX_FILE_SIZE,
@@ -63,11 +62,12 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!process.env.VERCEL_OIDC_TOKEN) {
-      throw new Error(
-        "No está disponible VERCEL_OIDC_TOKEN."
-      );
-    }
+    const contenido = await readFile(file.filepath);
+
+    const nombre =
+      `productos/${randomUUID()}${EXTENSION_BY_TYPE[file.mimetype]}`;
+
+    const oidcToken = await getVercelOidcToken();
 
     if (!process.env.BLOB_STORE_ID) {
       throw new Error(
@@ -75,22 +75,14 @@ export default async function handler(req, res) {
       );
     }
 
-    const contenido =
-      await readFile(file.filepath);
-
-    const nombre =
-      `productos/${randomUUID()}${EXTENSION_BY_TYPE[file.mimetype]}`;
-
     const blob = await put(
       nombre,
       contenido,
       {
         access: "public",
         contentType: file.mimetype,
-        oidcToken:
-          process.env.VERCEL_OIDC_TOKEN,
-        storeId:
-          process.env.BLOB_STORE_ID
+        oidcToken,
+        storeId: process.env.BLOB_STORE_ID
       }
     );
 
@@ -100,7 +92,6 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-
     console.error(
       "ERROR UPLOAD:",
       error

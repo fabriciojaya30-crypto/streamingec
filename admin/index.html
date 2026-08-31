@@ -2,263 +2,472 @@
 <html lang="es">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>Administrador - Streaming EC</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<style>
 
-    <title>Administración - Streaming EC</title>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
+body {
+    margin: 0;
+    background: #0b0b0b;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+header {
+    background: #111;
+    border-bottom: 1px solid #292929;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        body {
-            margin: 0;
-            background: #090909;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
 
-        .container {
-            width: min(1200px, 94%);
-            margin: 40px auto;
-        }
+.logo span {
+    color: #e50914;
+}
 
-        h1 {
-            font-size: 34px;
-            margin-bottom: 8px;
-        }
+.admin {
+    color: #aaa;
+}
 
-        .subtitulo {
-            color: #999;
-            margin-bottom: 30px;
-        }
+.contenedor {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px;
+}
 
-        .barra {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
+h1,
+h2,
+h3 {
+    margin-top: 0;
+}
 
-        input,
-        select,
-        textarea {
-            width: 100%;
-            background: #111;
-            color: #fff;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 14px;
-            font-size: 15px;
-        }
+.subtitulo {
+    color: #999;
+}
 
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
+button {
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 9px;
+    padding: 11px 16px;
+    font-size: 14px;
+}
 
-        .buscador {
-            flex: 1;
-            min-width: 250px;
-        }
+.btn-rojo {
+    background: #e50914;
+    color: white;
+}
 
-        button {
-            border: 0;
-            border-radius: 10px;
-            padding: 13px 18px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-        }
+.btn-rojo:hover {
+    background: #b20710;
+}
 
-        .btn-nuevo {
-            background: #e50914;
-        }
+.btn-gris {
+    background: #292929;
+    color: white;
+}
 
-        .btn-guardar {
-            background: #16803c;
-        }
+.btn-verde {
+    background: #16803c;
+    color: white;
+}
 
-        .btn-editar {
-            background: #333;
-        }
+.btn-eliminar {
+    background: #351414;
+    color: #ff7777;
+    border: 1px solid #5a2222;
+}
 
-        .btn-eliminar {
-            background: #7f1d1d;
-        }
+.estado {
+    display: none;
+    padding: 14px;
+    margin: 20px 0;
+    border-radius: 9px;
+    background: #16351f;
+    color: #4ade80;
+}
 
-        .btn-subir {
-            background: #444;
-        }
+.estado.error {
+    background: #351414;
+    color: #ff7777;
+}
 
-        .estado {
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-        }
+/* =========================
+   SECCIONES
+========================= */
 
-        .estado.ok {
-            display: block;
-            background: #123d22;
-            color: #63e58c;
-        }
+.seccion {
+    background: #151515;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
 
-        .estado.error {
-            display: block;
-            background: #451515;
-            color: #ff7777;
-        }
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-        .producto {
-            background: #151515;
-            border: 1px solid #292929;
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 20px;
-        }
+/* =========================
+   CATEGORIAS
+========================= */
 
-        .producto-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+.nueva-categoria {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
-        .producto-id {
-            color: #888;
-            font-size: 13px;
-        }
+.nueva-categoria input {
+    flex: 1;
+}
 
-        .producto-header h2 {
-            margin: 5px 0;
-            font-size: 23px;
-        }
+.categorias {
+    display: grid;
+    gap: 10px;
+}
 
-        .acciones {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+.categoria {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 10px;
+    padding: 12px;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
+.categoria.inactiva {
+    opacity: .55;
+}
 
-        .campo {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
+.categoria input[type="text"] {
+    flex: 1;
+}
 
-        .campo label {
-            font-weight: bold;
-            color: #ccc;
-        }
+.estado-cat {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #16351f;
+    color: #4ade80;
+}
 
-        .campo-completo {
-            grid-column: 1 / -1;
-        }
+.estado-cat.inactiva {
+    background: #351414;
+    color: #ff7777;
+}
 
-        .imagen-box {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+.acciones-cat {
+    display: flex;
+    gap: 7px;
+}
 
-        .preview {
-            width: 100px;
-            height: 100px;
-            border-radius: 12px;
-            object-fit: cover;
-            background: #222;
-            border: 1px solid #333;
-        }
+/* =========================
+   PRODUCTOS
+========================= */
 
-        .upload-info {
-            flex: 1;
-            min-width: 220px;
-        }
+.productos {
+    display: grid;
+    gap: 25px;
+}
 
-        .activo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.producto {
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 25px;
+}
 
-        .activo input {
-            width: auto;
-        }
+.producto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
 
-        .sin-resultados {
-            text-align: center;
-            color: #888;
-            padding: 50px;
-        }
+.producto-id {
+    color: #777;
+    font-size: 12px;
+}
 
-        .contador {
-            color: #888;
-            margin-bottom: 15px;
-        }
+.producto-header h2 {
+    margin: 5px 0 0;
+}
 
-        @media (max-width: 700px) {
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
 
-            .grid {
-                grid-template-columns: 1fr;
-            }
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
 
-            .campo-completo {
-                grid-column: auto;
-            }
+.ancho {
+    grid-column: 1 / -1;
+}
 
-            .container {
-                width: 94%;
-            }
+label {
+    color: #bbb;
+    font-size: 14px;
+    font-weight: bold;
+}
 
-        }
+input,
+textarea,
+select {
+    width: 100%;
+    background: #0b0b0b;
+    color: white;
+    border: 1px solid #363636;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+    outline: none;
+}
 
-    </style>
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #e50914;
+}
 
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.imagen-box {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.preview {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #222;
+    border: 1px solid #333;
+}
+
+.imagen-controles {
+    flex: 1;
+    min-width: 220px;
+}
+
+.imagen-controles small {
+    display: block;
+    color: #777;
+    margin-top: 8px;
+}
+
+.activo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #151515;
+    padding: 14px;
+    border-radius: 9px;
+}
+
+.activo input {
+    width: 18px;
+    height: 18px;
+}
+
+.vacio {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    border: 1px dashed #333;
+    border-radius: 12px;
+}
+
+.cargando {
+    color: #888;
+    padding: 25px;
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador {
+    margin-bottom: 20px;
+}
+
+/* =========================
+   MOVIL
+========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 18px;
+    }
+
+    .contenedor {
+        padding: 25px 15px;
+    }
+
+    .encabezado,
+    .producto-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ancho {
+        grid-column: auto;
+    }
+
+    .nueva-categoria {
+        flex-direction: column;
+    }
+
+    .categoria {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acciones-cat button {
+        flex: 1;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-<div class="container">
+<header>
 
-    <h1>⚙️ Panel de Administración</h1>
+    <div class="logo">
+        Streaming <span>EC</span>
+    </div>
 
-    <div class="subtitulo">
-        Administra categorías y productos de Streaming EC.
+    <div class="admin">
+        ⚙️ Administrador
+    </div>
+
+</header>
+
+
+<main class="contenedor">
+
+
+<!-- ==================================================
+     MENSAJES
+================================================== -->
+
+<div id="estado" class="estado"></div>
+
+
+<!-- ==================================================
+     CATEGORIAS
+================================================== -->
+
+<section class="seccion">
+
+    <div class="encabezado">
+
+        <div>
+            <h2>🏷️ Categorías</h2>
+
+            <p class="subtitulo">
+                Agrega y administra las categorías de tu tienda.
+            </p>
+        </div>
+
     </div>
 
 
-    <div id="estado" class="estado"></div>
-
-
-    <div class="barra">
+    <div class="nueva-categoria">
 
         <input
-            id="buscar"
-            class="buscador"
-            type="search"
-            placeholder="🔎 Buscar producto..."
+            id="nuevaCategoria"
+            type="text"
+            placeholder="Ej: Streaming"
         >
 
         <button
-            class="btn-nuevo"
-            onclick="nuevoProducto()"
+            class="btn-rojo"
+            onclick="agregarCategoria()"
+        >
+            ➕ Agregar categoría
+        </button>
+
+    </div>
+
+
+    <div
+        id="categorias"
+        class="categorias"
+    >
+
+        <div class="cargando">
+            Cargando categorías...
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     PRODUCTOS
+================================================== -->
+
+<section class="seccion">
+
+    <div class="encabezado">
+
+        <div>
+
+            <h1>📦 Productos</h1>
+
+            <p class="subtitulo">
+                Administra todos los productos publicados.
+            </p>
+
+        </div>
+
+
+        <button
+            class="btn-rojo"
+            onclick="agregarProducto()"
         >
             ➕ Agregar producto
         </button>
@@ -266,113 +475,149 @@
     </div>
 
 
-    <div id="contador" class="contador">
-        Cargando productos...
+    <input
+        id="buscar"
+        class="buscador"
+        type="search"
+        placeholder="🔎 Buscar producto..."
+        oninput="mostrarProductos()"
+    >
+
+
+    <div
+        id="productos"
+        class="productos"
+    >
+
+        <div class="cargando">
+            Cargando productos...
+        </div>
+
     </div>
 
+</section>
 
-    <div id="productos"></div>
 
-</div>
+</main>
+
 
 
 <script>
 
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let categorias = [];
+
 let productos = [];
 
 
-// ==========================================
-// MOSTRAR MENSAJE
-// ==========================================
+/* ==================================================
+   MENSAJES
+================================================== */
 
-function mensaje(texto, tipo = "ok") {
+function mostrarEstado(texto, error = false) {
 
-    const estado = document.getElementById("estado");
+    const elemento =
+        document.getElementById("estado");
 
-    estado.textContent = texto;
+    elemento.textContent = texto;
 
-    estado.className = "estado " + tipo;
+    elemento.className =
+        error
+        ? "estado error"
+        : "estado";
 
-    setTimeout(() => {
-        estado.className = "estado";
-    }, 4000);
+    elemento.style.display = "block";
+
+    clearTimeout(window.estadoTimer);
+
+    window.estadoTimer =
+        setTimeout(() => {
+
+            elemento.style.display = "none";
+
+        }, 4000);
 }
 
 
-// ==========================================
-// CARGAR PRODUCTOS
-// ==========================================
+/* ==================================================
+   ESCAPE HTML
+================================================== */
 
-async function cargarProductos() {
+function escapeHtml(valor) {
+
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* ==================================================
+   CATEGORIAS
+================================================== */
+
+async function cargarCategorias() {
 
     try {
 
-        const respuesta = await fetch("/api/productos");
+        const respuesta =
+            await fetch("/api/categorias");
 
         if (!respuesta.ok) {
-            throw new Error("No se pudieron cargar los productos");
+
+            throw new Error(
+                "No se pudieron cargar las categorías."
+            );
+
         }
 
-        productos = await respuesta.json();
+        categorias =
+            await respuesta.json();
 
-        renderProductos();
+        if (!Array.isArray(categorias)) {
+
+            throw new Error(
+                "Formato de categorías incorrecto."
+            );
+
+        }
+
+        mostrarCategorias();
 
     } catch (error) {
 
-        console.error(error);
+        document.getElementById(
+            "categorias"
+        ).innerHTML = `
+            <div class="vacio">
+                ❌ ${escapeHtml(error.message)}
+            </div>
+        `;
 
-        document.getElementById("contador").textContent =
-            "Error al cargar productos";
-
-        mensaje(
-            "No se pudieron cargar los productos",
-            "error"
-        );
     }
+
 }
 
 
-// ==========================================
-// MOSTRAR PRODUCTOS
-// ==========================================
+/* ==================================================
+   MOSTRAR CATEGORIAS
+================================================== */
 
-function renderProductos() {
+function mostrarCategorias() {
 
     const contenedor =
-        document.getElementById("productos");
+        document.getElementById("categorias");
 
-    const busqueda =
-        document
-            .getElementById("buscar")
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    const filtrados = productos.filter(producto => {
-
-        return (
-            String(producto.nombre || "")
-                .toLowerCase()
-                .includes(busqueda)
-            ||
-            String(producto.categoria || "")
-                .toLowerCase()
-                .includes(busqueda)
-        );
-
-    });
-
-
-    document.getElementById("contador").textContent =
-        `${filtrados.length} producto(s)`;
-
-
-    if (!filtrados.length) {
+    if (!categorias.length) {
 
         contenedor.innerHTML = `
-            <div class="sin-resultados">
-                No hay productos que coincidan con la búsqueda.
+            <div class="vacio">
+                No hay categorías todavía.
             </div>
         `;
 
@@ -380,294 +625,902 @@ function renderProductos() {
     }
 
 
-    contenedor.innerHTML = filtrados
-        .map(productoHTML)
-        .join("");
+    contenedor.innerHTML =
+        categorias.map((categoria, indice) => {
+
+            return `
+
+                <div
+                    class="categoria ${
+                        categoria.activa
+                        ? ""
+                        : "inactiva"
+                    }"
+                >
+
+                    <input
+                        id="cat-${indice}"
+                        type="text"
+                        value="${escapeHtml(
+                            categoria.nombre
+                        )}"
+                    >
+
+
+                    <span
+                        class="estado-cat ${
+                            categoria.activa
+                            ? ""
+                            : "inactiva"
+                        }"
+                    >
+                        ${
+                            categoria.activa
+                            ? "Activa"
+                            : "Inactiva"
+                        }
+                    </span>
+
+
+                    <div class="acciones-cat">
+
+                        <button
+                            class="btn-gris"
+                            onclick="editarCategoria(${indice})"
+                        >
+                            ✏️ Editar
+                        </button>
+
+
+                        <button
+                            class="btn-gris"
+                            onclick="cambiarEstadoCategoria(${indice})"
+                        >
+                            ${
+                                categoria.activa
+                                ? "🔴 Desactivar"
+                                : "🟢 Activar"
+                            }
+                        </button>
+
+
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminarCategoria(${indice})"
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
 }
 
 
-// ==========================================
-// HTML DE PRODUCTO
-// ==========================================
+/* ==================================================
+   AGREGAR CATEGORIA
+================================================== */
 
-function productoHTML(producto) {
+async function agregarCategoria() {
 
-    const activo =
-        Boolean(producto.activo);
+    const input =
+        document.getElementById(
+            "nuevaCategoria"
+        );
 
-    return `
-
-        <div
-            class="producto"
-            data-id="${producto.id}"
-        >
-
-            <div class="producto-header">
-
-                <div>
-
-                    <div class="producto-id">
-                        PRODUCTO #${producto.id}
-                    </div>
-
-                    <h2>
-                        ${escapeHTML(
-                            producto.nombre || "Sin nombre"
-                        )}
-                    </h2>
-
-                </div>
+    const nombre =
+        input.value.trim();
 
 
-                <div class="acciones">
+    if (!nombre) {
 
-                    <button
-                        class="btn-guardar"
-                        onclick="guardarProducto(${producto.id})"
-                    >
-                        💾 Guardar
-                    </button>
+        mostrarEstado(
+            "Escribe el nombre de la categoría.",
+            true
+        );
 
-                    <button
-                        class="${
-                            activo
-                                ? "btn-editar"
-                                : "btn-guardar"
-                        }"
-                        onclick="cambiarActivo(${producto.id})"
-                    >
-                        ${
-                            activo
-                                ? "🔴 Desactivar"
-                                : "🟢 Activar"
-                        }
-                    </button>
+        return;
+    }
 
-                    <button
-                        class="btn-eliminar"
-                        onclick="eliminarProducto(${producto.id})"
-                    >
-                        🗑️ Eliminar
-                    </button>
 
-                </div>
+    try {
 
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        nombre
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo crear la categoría."
+            );
+
+        }
+
+
+        input.value = "";
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "✅ Categoría agregada correctamente."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   EDITAR CATEGORIA
+================================================== */
+
+async function editarCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+    const input =
+        document.getElementById(
+            `cat-${indice}`
+        );
+
+    const nombre =
+        input.value.trim();
+
+
+    if (!nombre) {
+
+        mostrarEstado(
+            "El nombre no puede estar vacío.",
+            true
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id,
+                        nombre,
+                        activa: categoria.activa
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo editar la categoría."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "✅ Categoría actualizada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   CAMBIAR ESTADO CATEGORIA
+================================================== */
+
+async function cambiarEstadoCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id,
+                        nombre: categoria.nombre,
+                        activa: !categoria.activa
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo cambiar el estado."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            categoria.activa
+            ? "🔴 Categoría desactivada."
+            : "🟢 Categoría activada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   ELIMINAR CATEGORIA
+================================================== */
+
+async function eliminarCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+
+    if (
+        !confirm(
+            `¿Eliminar la categoría "${categoria.nombre}"?`
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo eliminar."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "🗑️ Categoría eliminada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   PRODUCTOS
+================================================== */
+
+async function cargarProductos() {
+
+    try {
+
+        const respuesta =
+            await fetch("/api/productos");
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudieron cargar los productos."
+            );
+
+        }
+
+
+        productos =
+            await respuesta.json();
+
+
+        if (!Array.isArray(productos)) {
+
+            throw new Error(
+                "Formato de productos incorrecto."
+            );
+
+        }
+
+
+        mostrarProductos();
+
+
+    } catch (error) {
+
+        document.getElementById(
+            "productos"
+        ).innerHTML = `
+            <div class="vacio">
+                ❌ ${escapeHtml(error.message)}
             </div>
+        `;
+
+    }
+
+}
 
 
-            <div class="grid">
+/* ==================================================
+   OPCIONES CATEGORIAS
+================================================== */
+
+function opcionesCategorias(actual) {
+
+    let html = `
+        <option value="">
+            Seleccionar categoría
+        </option>
+    `;
 
 
-                <div class="campo">
+    categorias.forEach(categoria => {
 
-                    <label>
-                        Nombre del producto
-                    </label>
+        if (
+            categoria.activa ||
+            categoria.nombre === actual
+        ) {
 
-                    <input
-                        id="nombre-${producto.id}"
-                        value="${escapeAttr(
-                            producto.nombre || ""
-                        )}"
-                    >
+            html += `
+                <option
+                    value="${escapeHtml(
+                        categoria.nombre
+                    )}"
+                    ${
+                        categoria.nombre === actual
+                        ? "selected"
+                        : ""
+                    }
+                >
+                    ${escapeHtml(
+                        categoria.nombre
+                    )}
+                </option>
+            `;
 
-                </div>
+        }
 
-
-                <div class="campo">
-
-                    <label>
-                        Precio
-                    </label>
-
-                    <input
-                        id="precio-${producto.id}"
-                        type="number"
-                        step="0.01"
-                        value="${Number(
-                            producto.precio || 0
-                        )}"
-                    >
-
-                </div>
+    });
 
 
-                <div class="campo">
-
-                    <label>
-                        Categoría
-                    </label>
-
-                    <input
-                        id="categoria-${producto.id}"
-                        value="${escapeAttr(
-                            producto.categoria || ""
-                        )}"
-                    >
-
-                </div>
+    return html;
+}
 
 
-                <div class="campo">
+/* ==================================================
+   MOSTRAR PRODUCTOS
+================================================== */
 
-                    <label>
-                        Estado
-                    </label>
+function mostrarProductos() {
 
-                    <div class="activo">
+    const contenedor =
+        document.getElementById(
+            "productos"
+        );
 
-                        <input
-                            id="activo-${producto.id}"
-                            type="checkbox"
-                            ${
-                                activo
-                                    ? "checked"
-                                    : ""
-                            }
+
+    const busqueda =
+        document.getElementById(
+            "buscar"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const lista =
+        productos.filter(producto => {
+
+            return (
+
+                String(
+                    producto.nombre || ""
+                )
+                .toLowerCase()
+                .includes(busqueda)
+
+                ||
+
+                String(
+                    producto.categoria || ""
+                )
+                .toLowerCase()
+                .includes(busqueda)
+
+            );
+
+        });
+
+
+    if (!lista.length) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay productos que coincidan.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        lista.map(producto => {
+
+            const indice =
+                productos.indexOf(producto);
+
+
+            return `
+
+                <article
+                    class="producto"
+                    data-id="${producto.id}"
+                >
+
+
+                    <div class="producto-header">
+
+                        <div>
+
+                            <div class="producto-id">
+                                PRODUCTO #${escapeHtml(
+                                    producto.id
+                                )}
+                            </div>
+
+                            <h2>
+                                ${escapeHtml(
+                                    producto.nombre ||
+                                    "Nuevo producto"
+                                )}
+                            </h2>
+
+                        </div>
+
+
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminarProducto(${indice})"
                         >
-
-                        <span>
-                            ${
-                                activo
-                                    ? "Producto activo"
-                                    : "Producto desactivado"
-                            }
-                        </span>
+                            🗑️ Eliminar
+                        </button>
 
                     </div>
 
-                </div>
+
+                    <div class="grid">
 
 
-                <div class="campo campo-completo">
+                        <!-- NOMBRE -->
 
-                    <label>
-                        Imagen del producto
-                    </label>
+                        <div class="campo">
 
-                    <div class="imagen-box">
-
-                        ${
-                            producto.imagen
-                                ? `
-                                    <img
-                                        id="preview-${producto.id}"
-                                        class="preview"
-                                        src="${escapeAttr(
-                                            producto.imagen
-                                        )}"
-                                    >
-                                `
-                                : `
-                                    <div
-                                        id="preview-${producto.id}"
-                                        class="preview"
-                                    ></div>
-                                `
-                        }
-
-
-                        <div class="upload-info">
+                            <label>
+                                Nombre del producto
+                            </label>
 
                             <input
-                                type="file"
-                                id="file-${producto.id}"
-                                accept="image/*"
+                                value="${escapeHtml(
+                                    producto.nombre || ""
+                                )}"
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'nombre',
+                                        this.value
+                                    )
+                                "
                             >
 
-                            <br><br>
+                        </div>
 
-                            <button
-                                class="btn-subir"
-                                onclick="subirImagen(${producto.id})"
+
+                        <!-- PRECIO -->
+
+                        <div class="campo">
+
+                            <label>
+                                Precio
+                            </label>
+
+                            <input
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                value="${producto.precio ?? 0}"
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'precio',
+                                        Number(this.value)
+                                    )
+                                "
                             >
-                                📤 Subir imagen
-                            </button>
+
+                        </div>
+
+
+                        <!-- CATEGORIA -->
+
+                        <div class="campo">
+
+                            <label>
+                                Categoría
+                            </label>
+
+                            <select
+                                onchange="
+                                    actualizar(
+                                        ${indice},
+                                        'categoria',
+                                        this.value
+                                    )
+                                "
+                            >
+
+                                ${opcionesCategorias(
+                                    producto.categoria
+                                )}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- IMAGEN -->
+
+                        <div class="campo">
+
+                            <label>
+                                Imagen del producto
+                            </label>
+
+                            <div class="imagen-box">
+
+                                ${
+                                    producto.imagen
+                                    ?
+
+                                    `
+                                    <img
+                                        id="preview-${indice}"
+                                        class="preview"
+                                        src="${escapeHtml(
+                                            producto.imagen
+                                        )}"
+                                        onerror="
+                                            this.style.display='none'
+                                        "
+                                    >
+                                    `
+
+                                    :
+
+                                    `
+                                    <div
+                                        id="preview-${indice}"
+                                        class="preview"
+                                    ></div>
+                                    `
+                                }
+
+
+                                <div class="imagen-controles">
+
+                                    <input
+                                        type="file"
+                                        id="file-${indice}"
+                                        accept="image/jpeg,image/png,image/webp"
+                                    >
+
+                                    <br><br>
+
+                                    <button
+                                        class="btn-gris"
+                                        onclick="
+                                            subirImagen(${indice})
+                                        "
+                                    >
+                                        📤 Subir imagen
+                                    </button>
+
+                                    <small>
+                                        JPG, PNG o WEBP. Máximo recomendado: 2 MB.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
 
                             <input
                                 type="hidden"
-                                id="imagen-${producto.id}"
-                                value="${escapeAttr(
+                                id="imagen-${indice}"
+                                value="${escapeHtml(
                                     producto.imagen || ""
                                 )}"
                             >
 
                         </div>
 
+
+                        <!-- DESCRIPCION -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Descripción
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'descripcion',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.descripcion || ""
+                            )}</textarea>
+
+                        </div>
+
+
+                        <!-- DETALLES -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Detalles del producto
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'detalles',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.detalles || ""
+                            )}</textarea>
+
+                        </div>
+
+
+                        <!-- SOLICITUD -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Detalles de solicitud
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'solicitud',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.solicitud || ""
+                            )}</textarea>
+
+                        </div>
+
+
                     </div>
 
-                </div>
+
+                    <!-- ACTIVO -->
+
+                    <div class="activo">
+
+                        <input
+                            id="activo-${indice}"
+                            type="checkbox"
+                            ${
+                                producto.activo
+                                ? "checked"
+                                : ""
+                            }
+                            onchange="
+                                actualizar(
+                                    ${indice},
+                                    'activo',
+                                    this.checked
+                                )
+                            "
+                        >
+
+                        <label
+                            for="activo-${indice}"
+                        >
+                            Producto activo
+                        </label>
+
+                    </div>
 
 
-                <div class="campo campo-completo">
-
-                    <label>
-                        Descripción
-                    </label>
-
-                    <textarea
-                        id="descripcion-${producto.id}"
-                    >${escapeHTML(
-                        producto.descripcion || ""
-                    )}</textarea>
-
-                </div>
+                    <br>
 
 
-                <div class="campo campo-completo">
-
-                    <label>
-                        Detalles
-                    </label>
-
-                    <textarea
-                        id="detalles-${producto.id}"
-                    >${escapeHTML(
-                        producto.detalles || ""
-                    )}</textarea>
-
-                </div>
+                    <button
+                        class="btn-verde"
+                        onclick="guardarProducto(${indice})"
+                    >
+                        💾 Guardar este producto
+                    </button>
 
 
-                <div class="campo campo-completo">
+                </article>
 
-                    <label>
-                        Solicitud
-                    </label>
+            `;
 
-                    <textarea
-                        id="solicitud-${producto.id}"
-                    >${escapeHTML(
-                        producto.solicitud || ""
-                    )}</textarea>
+        }).join("");
 
-                </div>
-
-
-            </div>
-
-        </div>
-
-    `;
 }
 
 
-// ==========================================
-// SUBIR IMAGEN
-// ==========================================
+/* ==================================================
+   ACTUALIZAR
+================================================== */
 
-async function subirImagen(id) {
+function actualizar(
+    indice,
+    campo,
+    valor
+) {
+
+    productos[indice][campo] =
+        valor;
+
+}
+
+
+/* ==================================================
+   SUBIR IMAGEN
+================================================== */
+
+async function subirImagen(indice) {
 
     const input =
-        document.getElementById(`file-${id}`);
+        document.getElementById(
+            `file-${indice}`
+        );
 
-    const archivo = input.files[0];
+
+    const archivo =
+        input.files[0];
+
 
     if (!archivo) {
 
-        mensaje(
+        mostrarEstado(
             "Selecciona primero una imagen.",
-            "error"
+            true
         );
 
         return;
@@ -676,21 +1529,9 @@ async function subirImagen(id) {
 
     if (!archivo.type.startsWith("image/")) {
 
-        mensaje(
-            "El archivo seleccionado no es una imagen.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    // Evitamos enviar archivos enormes
-    if (archivo.size > 4 * 1024 * 1024) {
-
-        mensaje(
-            "La imagen debe pesar menos de 4 MB.",
-            "error"
+        mostrarEstado(
+            "El archivo no es una imagen.",
+            true
         );
 
         return;
@@ -699,34 +1540,48 @@ async function subirImagen(id) {
 
     try {
 
-        mensaje("Subiendo imagen...");
+        mostrarEstado(
+            "⏳ Preparando imagen..."
+        );
 
 
-        const base64 = await archivoABase64(archivo);
+        const imagenOptimizada =
+            await optimizarImagen(
+                archivo
+            );
 
 
         const nombre =
-            document.getElementById(
-                `nombre-${id}`
-            ).value;
+            productos[indice].nombre ||
+            "producto";
 
 
-        const respuesta = await fetch(
-            "/api/upload",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    imagen: base64,
-                    nombre
-                })
-            }
+        mostrarEstado(
+            "⬆️ Subiendo imagen..."
         );
+
+
+        const respuesta =
+            await fetch(
+                "/api/upload",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        imagen:
+                            imagenOptimizada,
+
+                        nombre
+
+                    })
+                }
+            );
 
 
         const resultado =
@@ -738,138 +1593,283 @@ async function subirImagen(id) {
             throw new Error(
                 resultado.detalle ||
                 resultado.error ||
-                "Error al subir imagen"
+                "No se pudo subir la imagen."
             );
+
         }
 
 
+        productos[indice].imagen =
+            resultado.url;
+
+
         document.getElementById(
-            `imagen-${id}`
-        ).value = resultado.url;
+            `imagen-${indice}`
+        ).value =
+            resultado.url;
 
 
         const preview =
             document.getElementById(
-                `preview-${id}`
+                `preview-${indice}`
             );
 
 
-        if (preview.tagName === "IMG") {
-
-            preview.src = resultado.url;
-
-        } else {
-
-            preview.outerHTML = `
-                <img
-                    id="preview-${id}"
-                    class="preview"
-                    src="${escapeAttr(
-                        resultado.url
-                    )}"
-                >
-            `;
-
-        }
+        preview.outerHTML = `
+            <img
+                id="preview-${indice}"
+                class="preview"
+                src="${escapeHtml(
+                    resultado.url
+                )}"
+            >
+        `;
 
 
-        mensaje(
-            "Imagen subida correctamente."
+        mostrarEstado(
+            "✅ Imagen subida correctamente."
         );
+
 
     } catch (error) {
 
         console.error(error);
 
-        mensaje(
-            "Error al subir: " + error.message,
-            "error"
+        mostrarEstado(
+            "❌ Error al subir imagen: " +
+            error.message,
+            true
         );
+
     }
+
 }
 
 
-// ==========================================
-// ARCHIVO A BASE64
-// ==========================================
+/* ==================================================
+   OPTIMIZAR IMAGEN
+================================================== */
 
-function archivoABase64(archivo) {
+function optimizarImagen(archivo) {
 
-    return new Promise((resolve, reject) => {
+    return new Promise(
+        (resolve, reject) => {
 
-        const lector =
-            new FileReader();
+            const lector =
+                new FileReader();
 
-        lector.onload = () =>
-            resolve(lector.result);
 
-        lector.onerror = reject;
+            lector.onload = evento => {
 
-        lector.readAsDataURL(archivo);
+                const imagen =
+                    new Image();
+
+
+                imagen.onload = () => {
+
+                    const maximo =
+                        1600;
+
+
+                    let ancho =
+                        imagen.width;
+
+                    let alto =
+                        imagen.height;
+
+
+                    if (
+                        ancho > maximo ||
+                        alto > maximo
+                    ) {
+
+                        if (
+                            ancho > alto
+                        ) {
+
+                            alto =
+                                Math.round(
+                                    alto *
+                                    maximo /
+                                    ancho
+                                );
+
+                            ancho =
+                                maximo;
+
+                        } else {
+
+                            ancho =
+                                Math.round(
+                                    ancho *
+                                    maximo /
+                                    alto
+                                );
+
+                            alto =
+                                maximo;
+
+                        }
+
+                    }
+
+
+                    const canvas =
+                        document.createElement(
+                            "canvas"
+                        );
+
+
+                    canvas.width =
+                        ancho;
+
+                    canvas.height =
+                        alto;
+
+
+                    const ctx =
+                        canvas.getContext(
+                            "2d"
+                        );
+
+
+                    ctx.drawImage(
+                        imagen,
+                        0,
+                        0,
+                        ancho,
+                        alto
+                    );
+
+
+                    resolve(
+                        canvas.toDataURL(
+                            "image/jpeg",
+                            0.82
+                        )
+                    );
+
+                };
+
+
+                imagen.onerror =
+                    reject;
+
+
+                imagen.src =
+                    evento.target.result;
+
+            };
+
+
+            lector.onerror =
+                reject;
+
+
+            lector.readAsDataURL(
+                archivo
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   AGREGAR PRODUCTO
+================================================== */
+
+function agregarProducto() {
+
+    const ids =
+        productos
+            .map(p =>
+                Number(p.id)
+            )
+            .filter(n =>
+                Number.isFinite(n)
+            );
+
+
+    const nuevoId =
+        ids.length
+        ? Math.max(...ids) + 1
+        : 1;
+
+
+    productos.push({
+
+        id: nuevoId,
+
+        nombre: "",
+
+        precio: 0,
+
+        categoria:
+            categorias.find(
+                c => c.activa
+            )?.nombre || "",
+
+        imagen: "",
+
+        descripcion: "",
+
+        detalles: "",
+
+        solicitud: "",
+
+        activo: true
 
     });
+
+
+    mostrarProductos();
+
+
+    setTimeout(() => {
+
+        const elemento =
+            document.querySelector(
+                `[data-id="${nuevoId}"]`
+            );
+
+
+        if (elemento) {
+
+            elemento.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+    }, 100);
+
+
+    mostrarEstado(
+        "➕ Producto nuevo creado. Completa sus datos y guárdalo."
+    );
+
 }
 
 
-// ==========================================
-// GUARDAR PRODUCTO
-// ==========================================
+/* ==================================================
+   GUARDAR PRODUCTO
+================================================== */
 
-async function guardarProducto(id) {
+async function guardarProducto(indice) {
 
     const producto =
-        productos.find(
-            p => Number(p.id) === Number(id)
-        );
-
-
-    if (!producto) return;
-
-
-    producto.nombre =
-        document.getElementById(
-            `nombre-${id}`
-        ).value;
-
-    producto.precio =
-        Number(
-            document.getElementById(
-                `precio-${id}`
-            ).value
-        ) || 0;
-
-    producto.categoria =
-        document.getElementById(
-            `categoria-${id}`
-        ).value;
-
-    producto.imagen =
-        document.getElementById(
-            `imagen-${id}`
-        ).value;
-
-    producto.descripcion =
-        document.getElementById(
-            `descripcion-${id}`
-        ).value;
-
-    producto.detalles =
-        document.getElementById(
-            `detalles-${id}`
-        ).value;
-
-    producto.solicitud =
-        document.getElementById(
-            `solicitud-${id}`
-        ).value;
-
-    producto.activo =
-        document.getElementById(
-            `activo-${id}`
-        ).checked;
+        productos[indice];
 
 
     try {
+
+        mostrarEstado(
+            "💾 Guardando producto..."
+        );
+
 
         const respuesta =
             await fetch(
@@ -898,75 +1898,50 @@ async function guardarProducto(id) {
             throw new Error(
                 resultado.detalle ||
                 resultado.error ||
-                "Error al guardar"
+                "No se pudo guardar."
             );
+
         }
 
 
-        mensaje(
-            "Producto guardado correctamente."
+        await cargarProductos();
+
+
+        mostrarEstado(
+            "✅ Producto guardado correctamente."
         );
 
-
-        renderProductos();
 
     } catch (error) {
 
-        console.error(error);
-
-        mensaje(
-            error.message,
-            "error"
+        mostrarEstado(
+            "❌ " + error.message,
+            true
         );
+
     }
+
 }
 
 
-// ==========================================
-// ACTIVAR / DESACTIVAR
-// ==========================================
+/* ==================================================
+   ELIMINAR PRODUCTO
+================================================== */
 
-async function cambiarActivo(id) {
-
-    const producto =
-        productos.find(
-            p => Number(p.id) === Number(id)
-        );
-
-
-    if (!producto) return;
-
-
-    producto.activo =
-        !Boolean(producto.activo);
-
-
-    await guardarProducto(id);
-}
-
-
-// ==========================================
-// ELIMINAR
-// ==========================================
-
-async function eliminarProducto(id) {
+async function eliminarProducto(indice) {
 
     const producto =
-        productos.find(
-            p => Number(p.id) === Number(id)
-        );
+        productos[indice];
 
 
-    if (!producto) return;
+    if (
+        !confirm(
+            `¿Seguro que quieres eliminar "${producto.nombre || "este producto"}"?`
+        )
+    ) {
 
-
-    const confirmar =
-        confirm(
-            `¿Seguro que quieres eliminar "${producto.nombre}"?`
-        );
-
-
-    if (!confirmar) return;
+        return;
+    }
 
 
     try {
@@ -983,7 +1958,7 @@ async function eliminarProducto(id) {
                     },
 
                     body: JSON.stringify({
-                        id
+                        id: producto.id
                     })
                 }
             );
@@ -998,145 +1973,54 @@ async function eliminarProducto(id) {
             throw new Error(
                 resultado.detalle ||
                 resultado.error ||
-                "No se pudo eliminar"
+                "No se pudo eliminar."
             );
+
         }
 
 
-        productos =
-            productos.filter(
-                p => Number(p.id) !== Number(id)
-            );
-
-
-        renderProductos();
-
-
-        mensaje(
-            "Producto eliminado correctamente."
+        productos.splice(
+            indice,
+            1
         );
+
+
+        mostrarProductos();
+
+
+        mostrarEstado(
+            "🗑️ Producto eliminado correctamente."
+        );
+
 
     } catch (error) {
 
-        console.error(error);
-
-        mensaje(
-            error.message,
-            "error"
+        mostrarEstado(
+            "❌ " + error.message,
+            true
         );
+
     }
-}
-
-
-// ==========================================
-// NUEVO PRODUCTO
-// ==========================================
-
-async function nuevoProducto() {
-
-    const ids =
-        productos.map(
-            p => Number(p.id) || 0
-        );
-
-
-    const nuevoId =
-        ids.length
-            ? Math.max(...ids) + 1
-            : 1;
-
-
-    const nuevo = {
-
-        id: nuevoId,
-
-        nombre: "Nuevo producto",
-
-        precio: 0,
-
-        categoria: "",
-
-        imagen: "",
-
-        descripcion: "",
-
-        detalles: "",
-
-        solicitud: "",
-
-        activo: true
-
-    };
-
-
-    productos.push(nuevo);
-
-
-    renderProductos();
-
-
-    setTimeout(() => {
-
-        const elemento =
-            document.querySelector(
-                `[data-id="${nuevoId}"]`
-            );
-
-        if (elemento) {
-
-            elemento.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-
-        }
-
-    }, 100);
 
 }
 
 
-// ==========================================
-// ESCAPAR HTML
-// ==========================================
+/* ==================================================
+   INICIAR
+================================================== */
 
-function escapeHTML(valor) {
+async function iniciar() {
 
-    return String(valor || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    await cargarCategorias();
+
+    await cargarProductos();
+
 }
 
 
-function escapeAttr(valor) {
-
-    return escapeHTML(valor);
-}
-
-
-// ==========================================
-// BUSCADOR
-// ==========================================
-
-document
-    .getElementById("buscar")
-    .addEventListener(
-        "input",
-        renderProductos
-    );
-
-
-// ==========================================
-// INICIAR
-// ==========================================
-
-cargarProductos();
+iniciar();
 
 </script>
 
 </body>
-
 </html>

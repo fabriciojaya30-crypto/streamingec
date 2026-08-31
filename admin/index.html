@@ -1,10 +1,1521 @@
-async function subirImagen(id) {
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administrador - Streaming EC</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0b0b0b;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #111;
+    border-bottom: 1px solid #292929;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #e50914;
+}
+
+.admin {
+    color: #aaa;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 0;
+}
+
+.subtitulo {
+    color: #999;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 9px;
+    padding: 11px 16px;
+    font-size: 14px;
+}
+
+.btn-rojo {
+    background: #e50914;
+    color: white;
+}
+
+.btn-rojo:hover {
+    background: #b20710;
+}
+
+.btn-gris {
+    background: #292929;
+    color: white;
+}
+
+.btn-verde {
+    background: #16803c;
+    color: white;
+}
+
+.btn-eliminar {
+    background: #351414;
+    color: #ff7777;
+    border: 1px solid #5a2222;
+}
+
+.estado {
+    display: none;
+    padding: 14px;
+    margin: 20px 0;
+    border-radius: 9px;
+    background: #16351f;
+    color: #4ade80;
+}
+
+.estado.error {
+    background: #351414;
+    color: #ff7777;
+}
+
+/* =========================
+   SECCIONES
+========================= */
+
+.seccion {
+    background: #151515;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   CATEGORIAS
+========================= */
+
+.nueva-categoria {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.nueva-categoria input {
+    flex: 1;
+}
+
+.categorias {
+    display: grid;
+    gap: 10px;
+}
+
+.categoria {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0d0d0d;
+    border: 1px solid #292929;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.categoria.inactiva {
+    opacity: .55;
+}
+
+.categoria input[type="text"] {
+    flex: 1;
+}
+
+.estado-cat {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #16351f;
+    color: #4ade80;
+}
+
+.estado-cat.inactiva {
+    background: #351414;
+    color: #ff7777;
+}
+
+.acciones-cat {
+    display: flex;
+    gap: 7px;
+}
+
+/* =========================
+   PRODUCTOS
+========================= */
+
+.productos {
+    display: grid;
+    gap: 25px;
+}
+
+.producto {
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.producto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.producto-id {
+    color: #777;
+    font-size: 12px;
+}
+
+.producto-header h2 {
+    margin: 5px 0 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.ancho {
+    grid-column: 1 / -1;
+}
+
+label {
+    color: #bbb;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    background: #0b0b0b;
+    color: white;
+    border: 1px solid #363636;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #e50914;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.imagen-box {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.preview {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #222;
+    border: 1px solid #333;
+}
+
+.imagen-controles {
+    flex: 1;
+    min-width: 220px;
+}
+
+.imagen-controles small {
+    display: block;
+    color: #777;
+    margin-top: 8px;
+}
+
+.activo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #151515;
+    padding: 14px;
+    border-radius: 9px;
+}
+
+.activo input {
+    width: 18px;
+    height: 18px;
+}
+
+.vacio {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    border: 1px dashed #333;
+    border-radius: 12px;
+}
+
+.cargando {
+    color: #888;
+    padding: 25px;
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador {
+    margin-bottom: 20px;
+}
+
+/* =========================
+   MOVIL
+========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 18px;
+    }
+
+    .contenedor {
+        padding: 25px 15px;
+    }
+
+    .encabezado,
+    .producto-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ancho {
+        grid-column: auto;
+    }
+
+    .nueva-categoria {
+        flex-direction: column;
+    }
+
+    .categoria {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acciones-cat button {
+        flex: 1;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Streaming <span>EC</span>
+    </div>
+
+    <div class="admin">
+        ⚙️ Administrador
+    </div>
+
+</header>
+
+
+<main class="contenedor">
+
+
+<!-- ==================================================
+     MENSAJES
+================================================== -->
+
+<div id="estado" class="estado"></div>
+
+
+<!-- ==================================================
+     CATEGORIAS
+================================================== -->
+
+<section class="seccion">
+
+    <div class="encabezado">
+
+        <div>
+            <h2>🏷️ Categorías</h2>
+
+            <p class="subtitulo">
+                Agrega y administra las categorías de tu tienda.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="nueva-categoria">
+
+        <input
+            id="nuevaCategoria"
+            type="text"
+            placeholder="Ej: Streaming"
+        >
+
+        <button
+            class="btn-rojo"
+            onclick="agregarCategoria()"
+        >
+            ➕ Agregar categoría
+        </button>
+
+    </div>
+
+
+    <div
+        id="categorias"
+        class="categorias"
+    >
+
+        <div class="cargando">
+            Cargando categorías...
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     PRODUCTOS
+================================================== -->
+
+<section class="seccion">
+
+    <div class="encabezado">
+
+        <div>
+
+            <h1>📦 Productos</h1>
+
+            <p class="subtitulo">
+                Administra todos los productos publicados.
+            </p>
+
+        </div>
+
+
+        <button
+            class="btn-rojo"
+            onclick="agregarProducto()"
+        >
+            ➕ Agregar producto
+        </button>
+
+    </div>
+
+
+    <input
+        id="buscar"
+        class="buscador"
+        type="search"
+        placeholder="🔎 Buscar producto..."
+        oninput="mostrarProductos()"
+    >
+
+
+    <div
+        id="productos"
+        class="productos"
+    >
+
+        <div class="cargando">
+            Cargando productos...
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let categorias = [];
+
+let productos = [];
+
+
+/* ==================================================
+   MENSAJES
+================================================== */
+
+function mostrarEstado(texto, error = false) {
+
+    const elemento =
+        document.getElementById("estado");
+
+    elemento.textContent = texto;
+
+    elemento.className =
+        error
+        ? "estado error"
+        : "estado";
+
+    elemento.style.display = "block";
+
+    clearTimeout(window.estadoTimer);
+
+    window.estadoTimer =
+        setTimeout(() => {
+
+            elemento.style.display = "none";
+
+        }, 4000);
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHtml(valor) {
+
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* ==================================================
+   CATEGORIAS
+================================================== */
+
+async function cargarCategorias() {
+
+    try {
+
+        const respuesta =
+            await fetch("/api/categorias");
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudieron cargar las categorías."
+            );
+
+        }
+
+        categorias =
+            await respuesta.json();
+
+        if (!Array.isArray(categorias)) {
+
+            throw new Error(
+                "Formato de categorías incorrecto."
+            );
+
+        }
+
+        mostrarCategorias();
+
+    } catch (error) {
+
+        document.getElementById(
+            "categorias"
+        ).innerHTML = `
+            <div class="vacio">
+                ❌ ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   MOSTRAR CATEGORIAS
+================================================== */
+
+function mostrarCategorias() {
+
+    const contenedor =
+        document.getElementById("categorias");
+
+    if (!categorias.length) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay categorías todavía.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        categorias.map((categoria, indice) => {
+
+            return `
+
+                <div
+                    class="categoria ${
+                        categoria.activa
+                        ? ""
+                        : "inactiva"
+                    }"
+                >
+
+                    <input
+                        id="cat-${indice}"
+                        type="text"
+                        value="${escapeHtml(
+                            categoria.nombre
+                        )}"
+                    >
+
+
+                    <span
+                        class="estado-cat ${
+                            categoria.activa
+                            ? ""
+                            : "inactiva"
+                        }"
+                    >
+                        ${
+                            categoria.activa
+                            ? "Activa"
+                            : "Inactiva"
+                        }
+                    </span>
+
+
+                    <div class="acciones-cat">
+
+                        <button
+                            class="btn-gris"
+                            onclick="editarCategoria(${indice})"
+                        >
+                            ✏️ Editar
+                        </button>
+
+
+                        <button
+                            class="btn-gris"
+                            onclick="cambiarEstadoCategoria(${indice})"
+                        >
+                            ${
+                                categoria.activa
+                                ? "🔴 Desactivar"
+                                : "🟢 Activar"
+                            }
+                        </button>
+
+
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminarCategoria(${indice})"
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ==================================================
+   AGREGAR CATEGORIA
+================================================== */
+
+async function agregarCategoria() {
 
     const input =
-        document.getElementById(`file-${id}`);
+        document.getElementById(
+            "nuevaCategoria"
+        );
+
+    const nombre =
+        input.value.trim();
+
+
+    if (!nombre) {
+
+        mostrarEstado(
+            "Escribe el nombre de la categoría.",
+            true
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        nombre
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo crear la categoría."
+            );
+
+        }
+
+
+        input.value = "";
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "✅ Categoría agregada correctamente."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   EDITAR CATEGORIA
+================================================== */
+
+async function editarCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+    const input =
+        document.getElementById(
+            `cat-${indice}`
+        );
+
+    const nombre =
+        input.value.trim();
+
+
+    if (!nombre) {
+
+        mostrarEstado(
+            "El nombre no puede estar vacío.",
+            true
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id,
+                        nombre,
+                        activa: categoria.activa
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo editar la categoría."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "✅ Categoría actualizada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   CAMBIAR ESTADO CATEGORIA
+================================================== */
+
+async function cambiarEstadoCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id,
+                        nombre: categoria.nombre,
+                        activa: !categoria.activa
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo cambiar el estado."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            categoria.activa
+            ? "🔴 Categoría desactivada."
+            : "🟢 Categoría activada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   ELIMINAR CATEGORIA
+================================================== */
+
+async function eliminarCategoria(indice) {
+
+    const categoria =
+        categorias[indice];
+
+
+    if (
+        !confirm(
+            `¿Eliminar la categoría "${categoria.nombre}"?`
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/categorias",
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: categoria.id
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.error ||
+                "No se pudo eliminar."
+            );
+
+        }
+
+
+        await cargarCategorias();
+
+        mostrarEstado(
+            "🗑️ Categoría eliminada."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   PRODUCTOS
+================================================== */
+
+async function cargarProductos() {
+
+    try {
+
+        const respuesta =
+            await fetch("/api/productos");
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudieron cargar los productos."
+            );
+
+        }
+
+
+        productos =
+            await respuesta.json();
+
+
+        if (!Array.isArray(productos)) {
+
+            throw new Error(
+                "Formato de productos incorrecto."
+            );
+
+        }
+
+
+        mostrarProductos();
+
+
+    } catch (error) {
+
+        document.getElementById(
+            "productos"
+        ).innerHTML = `
+            <div class="vacio">
+                ❌ ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   OPCIONES CATEGORIAS
+================================================== */
+
+function opcionesCategorias(actual) {
+
+    let html = `
+        <option value="">
+            Seleccionar categoría
+        </option>
+    `;
+
+
+    categorias.forEach(categoria => {
+
+        if (
+            categoria.activa ||
+            categoria.nombre === actual
+        ) {
+
+            html += `
+                <option
+                    value="${escapeHtml(
+                        categoria.nombre
+                    )}"
+                    ${
+                        categoria.nombre === actual
+                        ? "selected"
+                        : ""
+                    }
+                >
+                    ${escapeHtml(
+                        categoria.nombre
+                    )}
+                </option>
+            `;
+
+        }
+
+    });
+
+
+    return html;
+}
+
+
+/* ==================================================
+   MOSTRAR PRODUCTOS
+================================================== */
+
+function mostrarProductos() {
+
+    const contenedor =
+        document.getElementById(
+            "productos"
+        );
+
+
+    const busqueda =
+        document.getElementById(
+            "buscar"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const lista =
+        productos.filter(producto => {
+
+            return (
+
+                String(
+                    producto.nombre || ""
+                )
+                .toLowerCase()
+                .includes(busqueda)
+
+                ||
+
+                String(
+                    producto.categoria || ""
+                )
+                .toLowerCase()
+                .includes(busqueda)
+
+            );
+
+        });
+
+
+    if (!lista.length) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay productos que coincidan.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        lista.map(producto => {
+
+            const indice =
+                productos.indexOf(producto);
+
+
+            return `
+
+                <article
+                    class="producto"
+                    data-id="${producto.id}"
+                >
+
+
+                    <div class="producto-header">
+
+                        <div>
+
+                            <div class="producto-id">
+                                PRODUCTO #${escapeHtml(
+                                    producto.id
+                                )}
+                            </div>
+
+                            <h2>
+                                ${escapeHtml(
+                                    producto.nombre ||
+                                    "Nuevo producto"
+                                )}
+                            </h2>
+
+                        </div>
+
+
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminarProducto(${indice})"
+                        >
+                            🗑️ Eliminar
+                        </button>
+
+                    </div>
+
+
+                    <div class="grid">
+
+
+                        <!-- NOMBRE -->
+
+                        <div class="campo">
+
+                            <label>
+                                Nombre del producto
+                            </label>
+
+                            <input
+                                value="${escapeHtml(
+                                    producto.nombre || ""
+                                )}"
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'nombre',
+                                        this.value
+                                    )
+                                "
+                            >
+
+                        </div>
+
+
+                        <!-- PRECIO -->
+
+                        <div class="campo">
+
+                            <label>
+                                Precio
+                            </label>
+
+                            <input
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                value="${producto.precio ?? 0}"
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'precio',
+                                        Number(this.value)
+                                    )
+                                "
+                            >
+
+                        </div>
+
+
+                        <!-- CATEGORIA -->
+
+                        <div class="campo">
+
+                            <label>
+                                Categoría
+                            </label>
+
+                            <select
+                                onchange="
+                                    actualizar(
+                                        ${indice},
+                                        'categoria',
+                                        this.value
+                                    )
+                                "
+                            >
+
+                                ${opcionesCategorias(
+                                    producto.categoria
+                                )}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- IMAGEN -->
+
+                        <div class="campo">
+
+                            <label>
+                                Imagen del producto
+                            </label>
+
+                            <div class="imagen-box">
+
+                                ${
+                                    producto.imagen
+                                    ?
+
+                                    `
+                                    <img
+                                        id="preview-${indice}"
+                                        class="preview"
+                                        src="${escapeHtml(
+                                            producto.imagen
+                                        )}"
+                                        onerror="
+                                            this.style.display='none'
+                                        "
+                                    >
+                                    `
+
+                                    :
+
+                                    `
+                                    <div
+                                        id="preview-${indice}"
+                                        class="preview"
+                                    ></div>
+                                    `
+                                }
+
+
+                                <div class="imagen-controles">
+
+                                    <input
+                                        type="file"
+                                        id="file-${indice}"
+                                        accept="image/jpeg,image/png,image/webp"
+                                    >
+
+                                    <br><br>
+
+                                    <button
+                                        class="btn-gris"
+                                        onclick="
+                                            subirImagen(${indice})
+                                        "
+                                    >
+                                        📤 Subir imagen
+                                    </button>
+
+                                    <small>
+                                        JPG, PNG o WEBP. Máximo recomendado: 2 MB.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <input
+                                type="hidden"
+                                id="imagen-${indice}"
+                                value="${escapeHtml(
+                                    producto.imagen || ""
+                                )}"
+                            >
+
+                        </div>
+
+
+                        <!-- DESCRIPCION -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Descripción
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'descripcion',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.descripcion || ""
+                            )}</textarea>
+
+                        </div>
+
+
+                        <!-- DETALLES -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Detalles del producto
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'detalles',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.detalles || ""
+                            )}</textarea>
+
+                        </div>
+
+
+                        <!-- SOLICITUD -->
+
+                        <div class="campo ancho">
+
+                            <label>
+                                Detalles de solicitud
+                            </label>
+
+                            <textarea
+                                oninput="
+                                    actualizar(
+                                        ${indice},
+                                        'solicitud',
+                                        this.value
+                                    )
+                                "
+                            >${escapeHtml(
+                                producto.solicitud || ""
+                            )}</textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ACTIVO -->
+
+                    <div class="activo">
+
+                        <input
+                            id="activo-${indice}"
+                            type="checkbox"
+                            ${
+                                producto.activo
+                                ? "checked"
+                                : ""
+                            }
+                            onchange="
+                                actualizar(
+                                    ${indice},
+                                    'activo',
+                                    this.checked
+                                )
+                            "
+                        >
+
+                        <label
+                            for="activo-${indice}"
+                        >
+                            Producto activo
+                        </label>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <button
+                        class="btn-verde"
+                        onclick="guardarProducto(${indice})"
+                    >
+                        💾 Guardar este producto
+                    </button>
+
+
+                </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ==================================================
+   ACTUALIZAR
+================================================== */
+
+function actualizar(
+    indice,
+    campo,
+    valor
+) {
+
+    productos[indice][campo] =
+        valor;
+
+}
+
+
+/* ==================================================
+   SUBIR IMAGEN
+================================================== */
+
+async function subirImagen(indice) {
+
+    const input =
+        document.getElementById(
+            `file-${indice}`
+        );
 
     if (!input) {
-        alert("No se encontró el selector de imagen.");
+        mostrarEstado(
+            "❌ No se encontró el selector de imagen.",
+            true
+        );
         return;
     }
 
@@ -40,23 +1551,22 @@ async function subirImagen(id) {
             "⬆️ Subiendo imagen..."
         );
 
-        // IMPORTANTE:
-        // El backend /api/upload.js
-        // espera multipart/form-data
         const formulario = new FormData();
 
         formulario.append(
             "file",
-            archivo
+            archivo,
+            archivo.name
         );
 
-        const respuesta = await fetch(
-            "/api/upload",
-            {
-                method: "POST",
-                body: formulario
-            }
-        );
+        const respuesta =
+            await fetch(
+                "/api/upload",
+                {
+                    method: "POST",
+                    body: formulario
+                }
+            );
 
         const texto = await respuesta.text();
 
@@ -84,21 +1594,12 @@ async function subirImagen(id) {
             );
         }
 
-        // Guardar URL en el producto
-        const producto =
-            productos.find(
-                p => Number(p.id) === Number(id)
-            );
+        productos[indice].imagen =
+            resultado.url;
 
-        if (producto) {
-            producto.imagen =
-                resultado.url;
-        }
-
-        // Guardar URL en el campo oculto
         const campoImagen =
             document.getElementById(
-                `imagen-${id}`
+                `imagen-${indice}`
             );
 
         if (campoImagen) {
@@ -106,37 +1607,28 @@ async function subirImagen(id) {
                 resultado.url;
         }
 
-        // Mostrar vista previa
         const preview =
             document.getElementById(
-                `preview-${id}`
+                `preview-${indice}`
             );
 
         if (preview) {
-
             if (preview.tagName === "IMG") {
-
-                preview.src =
-                    resultado.url;
-
+                preview.src = resultado.url;
             } else {
-
                 preview.outerHTML = `
                     <img
-                        id="preview-${id}"
+                        id="preview-${indice}"
                         class="preview"
-                        src="${escapeAttr(
-                            resultado.url
-                        )}"
+                        src="${escapeHtml(resultado.url)}"
                         alt="Imagen del producto"
                     >
                 `;
-
             }
         }
 
         mostrarEstado(
-            "✅ Imagen subida correctamente."
+            "✅ Imagen subida correctamente. Ahora pulsa Guardar producto."
         );
 
     } catch (error) {
@@ -152,4 +1644,385 @@ async function subirImagen(id) {
             true
         );
     }
+
 }
+
+
+/* ==================================================
+   OPTIMIZAR IMAGEN
+================================================== */
+
+function optimizarImagen(archivo) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const lector =
+                new FileReader();
+
+
+            lector.onload = evento => {
+
+                const imagen =
+                    new Image();
+
+
+                imagen.onload = () => {
+
+                    const maximo =
+                        1600;
+
+
+                    let ancho =
+                        imagen.width;
+
+                    let alto =
+                        imagen.height;
+
+
+                    if (
+                        ancho > maximo ||
+                        alto > maximo
+                    ) {
+
+                        if (
+                            ancho > alto
+                        ) {
+
+                            alto =
+                                Math.round(
+                                    alto *
+                                    maximo /
+                                    ancho
+                                );
+
+                            ancho =
+                                maximo;
+
+                        } else {
+
+                            ancho =
+                                Math.round(
+                                    ancho *
+                                    maximo /
+                                    alto
+                                );
+
+                            alto =
+                                maximo;
+
+                        }
+
+                    }
+
+
+                    const canvas =
+                        document.createElement(
+                            "canvas"
+                        );
+
+
+                    canvas.width =
+                        ancho;
+
+                    canvas.height =
+                        alto;
+
+
+                    const ctx =
+                        canvas.getContext(
+                            "2d"
+                        );
+
+
+                    ctx.drawImage(
+                        imagen,
+                        0,
+                        0,
+                        ancho,
+                        alto
+                    );
+
+
+                    resolve(
+                        canvas.toDataURL(
+                            "image/jpeg",
+                            0.82
+                        )
+                    );
+
+                };
+
+
+                imagen.onerror =
+                    reject;
+
+
+                imagen.src =
+                    evento.target.result;
+
+            };
+
+
+            lector.onerror =
+                reject;
+
+
+            lector.readAsDataURL(
+                archivo
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   AGREGAR PRODUCTO
+================================================== */
+
+function agregarProducto() {
+
+    const ids =
+        productos
+            .map(p =>
+                Number(p.id)
+            )
+            .filter(n =>
+                Number.isFinite(n)
+            );
+
+
+    const nuevoId =
+        ids.length
+        ? Math.max(...ids) + 1
+        : 1;
+
+
+    productos.push({
+
+        id: nuevoId,
+
+        nombre: "",
+
+        precio: 0,
+
+        categoria:
+            categorias.find(
+                c => c.activa
+            )?.nombre || "",
+
+        imagen: "",
+
+        descripcion: "",
+
+        detalles: "",
+
+        solicitud: "",
+
+        activo: true
+
+    });
+
+
+    mostrarProductos();
+
+
+    setTimeout(() => {
+
+        const elemento =
+            document.querySelector(
+                `[data-id="${nuevoId}"]`
+            );
+
+
+        if (elemento) {
+
+            elemento.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+    }, 100);
+
+
+    mostrarEstado(
+        "➕ Producto nuevo creado. Completa sus datos y guárdalo."
+    );
+
+}
+
+
+/* ==================================================
+   GUARDAR PRODUCTO
+================================================== */
+
+async function guardarProducto(indice) {
+
+    const producto =
+        productos[indice];
+
+
+    try {
+
+        mostrarEstado(
+            "💾 Guardando producto..."
+        );
+
+
+        const respuesta =
+            await fetch(
+                "/api/productos",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify([
+                        producto
+                    ])
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.detalle ||
+                resultado.error ||
+                "No se pudo guardar."
+            );
+
+        }
+
+
+        await cargarProductos();
+
+
+        mostrarEstado(
+            "✅ Producto guardado correctamente."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   ELIMINAR PRODUCTO
+================================================== */
+
+async function eliminarProducto(indice) {
+
+    const producto =
+        productos[indice];
+
+
+    if (
+        !confirm(
+            `¿Seguro que quieres eliminar "${producto.nombre || "este producto"}"?`
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/productos",
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: producto.id
+                    })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.detalle ||
+                resultado.error ||
+                "No se pudo eliminar."
+            );
+
+        }
+
+
+        productos.splice(
+            indice,
+            1
+        );
+
+
+        mostrarProductos();
+
+
+        mostrarEstado(
+            "🗑️ Producto eliminado correctamente."
+        );
+
+
+    } catch (error) {
+
+        mostrarEstado(
+            "❌ " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   INICIAR
+================================================== */
+
+async function iniciar() {
+
+    await cargarCategorias();
+
+    await cargarProductos();
+
+}
+
+
+iniciar();
+
+</script>
+
+</body>
+</html>

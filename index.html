@@ -6,24 +6,584 @@
   <meta name="description" content="Streaming, cursos, software y servicios digitales premium en Ecuador.">
   <title>Streaming EC | Servicios digitales</title>
   <style>
-    :root { --bg:#080809; --surface:#141416; --surface-2:#1c1c20; --line:#313136; --text:#f7f7f8; --muted:#a8a8b1; --red:#dc192b; --red-dark:#981321; }
-    * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; background:var(--bg); color:var(--text); font:16px/1.5 Arial, sans-serif; }
-    .container { width:min(1120px, calc(100% - 36px)); margin:auto; } header { position:sticky; top:0; z-index:10; background:#0c0c0ef2; border-bottom:1px solid #25252a; backdrop-filter:blur(12px); }
-    .nav { height:68px; display:flex; align-items:center; justify-content:space-between; gap:16px; } .brand { display:flex; gap:9px; align-items:center; text-decoration:none; color:var(--text); font-weight:800; font-size:19px; } .brand img { width:39px; height:39px; border-radius:9px; object-fit:cover; } .brand strong { color:#f12a3c; }
-    nav { display:flex; align-items:center; gap:18px; } nav a { color:#dddde2; text-decoration:none; font-size:14px; } nav a:hover { color:#fff; } .whatsapp { padding:9px 12px; background:#159c4b; color:#fff; border-radius:8px; font-weight:bold; }
-    .hero { padding:82px 0 72px; background:radial-gradient(circle at 74% 16%, #5e101d 0, transparent 31%), linear-gradient(180deg,#111114,#080809); border-bottom:1px solid #27272c; } .badge { display:inline-block; border:1px solid #8d2530; color:#ff9da7; background:#321418; border-radius:99px; padding:5px 10px; font-size:12px; font-weight:bold; letter-spacing:.08em; } h1 { max-width:700px; margin:15px 0; font-size:clamp(38px,7vw,69px); line-height:1.02; letter-spacing:-.05em; } h1 span { color:#ee2638; } .hero p { max-width:600px; color:#c1c1c8; font-size:18px; } .cta { display:inline-block; margin-top:10px; padding:13px 18px; background:var(--red); color:white; text-decoration:none; font-weight:bold; border-radius:9px; } .cta:hover { background:var(--red-dark); }
-    section.catalog { padding:55px 0 70px; } .section-heading { display:flex; justify-content:space-between; gap:18px; align-items:end; margin-bottom:18px; } h2 { margin:0; font-size:28px; } .sub { margin:4px 0 0; color:var(--muted); }
-    .search { width:min(100%, 360px); padding:11px 12px; color:#fff; background:#131316; border:1px solid #3a3a40; border-radius:9px; font:inherit; } .chips { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0; } .chip { padding:8px 12px; border:1px solid #45454d; background:transparent; color:#dadade; border-radius:999px; cursor:pointer; font-weight:bold; } .chip.active { border-color:var(--red); background:#4c1720; color:#fff; }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; } .product { display:flex; flex-direction:column; min-width:0; padding:14px; border:1px solid var(--line); background:var(--surface); border-radius:13px; } .product-image, .fallback { width:100%; aspect-ratio:16/10; border-radius:8px; object-fit:cover; background:#24242a; } .fallback { display:grid; place-items:center; color:#a7a7b0; font-size:22px; font-weight:bold; } .category { margin-top:14px; color:#ff98a2; font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:.06em; } .product h3 { margin:4px 0; font-size:19px; } .description { color:#b7b7bf; font-size:14px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; } .price { margin-top:auto; padding-top:15px; font-size:20px; font-weight:bold; } .view { width:100%; margin-top:12px; padding:10px; border:1px solid #53535b; background:transparent; color:white; border-radius:8px; font-weight:bold; cursor:pointer; } .view:hover { background:#2a2a30; }
-    .empty { padding:34px; border:1px dashed #44444a; border-radius:12px; color:var(--muted); text-align:center; } footer { border-top:1px solid #28282d; color:#96969e; padding:26px 0; text-align:center; }
-    dialog { width:min(650px, calc(100% - 30px)); max-height:85vh; overflow:auto; border:1px solid #494950; border-radius:15px; color:#f9f9fb; background:#17171b; padding:0; } dialog::backdrop { background:#000b; } .dialog-body { padding:24px; } .close { float:right; border:0; width:36px; height:36px; border-radius:8px; background:#34343a; color:white; font-size:19px; cursor:pointer; } .dialog-image { width:100%; max-height:300px; object-fit:cover; border-radius:10px; margin:13px 0; } .dialog-copy { white-space:pre-wrap; color:#d1d1d7; } .buy { display:inline-block; margin-top:18px; padding:11px 15px; background:#159c4b; color:#fff; text-decoration:none; font-weight:bold; border-radius:8px; }
-    @media (max-width:760px) { .nav { height:62px; } nav a:not(.whatsapp) { display:none; } .hero { padding:63px 0 55px; } .hero p { font-size:16px; } .section-heading { align-items:stretch; flex-direction:column; } .search { width:100%; } .grid { grid-template-columns:1fr; } }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --black:#080808;
+      --black-2:#111111;
+      --white:#ffffff;
+      --soft:#f7f7f8;
+      --line:#e8e8eb;
+      --text:#151518;
+      --muted:#707078;
+      --red:#dc192b;
+      --red-dark:#a80f1e;
+      --green:#159c4b;
+    }
+
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      background:var(--white);
+      color:var(--text);
+      font:15px/1.5 'Inter', Arial, sans-serif;
+    }
+
+    .container {
+      width:min(1160px, calc(100% - 32px));
+      margin:auto;
+    }
+
+    header {
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(8,8,8,.94);
+      border-bottom:1px solid #222;
+      backdrop-filter:blur(14px);
+    }
+
+    .nav {
+      min-height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand {
+      display:flex;
+      gap:9px;
+      align-items:center;
+      text-decoration:none;
+      color:#fff;
+      font-weight:800;
+      font-size:18px;
+      letter-spacing:-.02em;
+    }
+
+    .brand img {
+      width:38px;
+      height:38px;
+      border-radius:9px;
+      object-fit:cover;
+    }
+
+    .brand strong { color:#ef2639; }
+
+    nav {
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    nav a {
+      color:#d9d9dd;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    nav a:hover { color:#fff; }
+
+    .whatsapp {
+      padding:9px 13px;
+      background:var(--green);
+      color:#fff !important;
+      border-radius:8px;
+      font-weight:700;
+    }
+
+    /* HERO NEGRO */
+    .hero {
+      padding:86px 0 82px;
+      background:
+        radial-gradient(circle at 82% 20%, rgba(220,25,43,.22), transparent 28%),
+        linear-gradient(180deg,#080808,#101010);
+      color:#fff;
+      border-bottom:1px solid #1f1f1f;
+    }
+
+    .hero .container { max-width:1160px; }
+
+    .badge {
+      display:inline-block;
+      border:1px solid #444;
+      color:#e9e9ec;
+      background:#171717;
+      border-radius:99px;
+      padding:6px 11px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.09em;
+    }
+
+    h1 {
+      max-width:780px;
+      margin:18px 0 16px;
+      font-size:clamp(39px,6.3vw,70px);
+      line-height:1.02;
+      letter-spacing:-.055em;
+    }
+
+    h1 span { color:#ee2638; }
+
+    .hero p {
+      max-width:620px;
+      margin:0;
+      color:#bdbdc4;
+      font-size:17px;
+    }
+
+    .cta {
+      display:inline-block;
+      margin-top:24px;
+      padding:13px 19px;
+      background:var(--red);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      border-radius:9px;
+      transition:.2s ease;
+    }
+
+    .cta:hover {
+      background:var(--red-dark);
+      transform:translateY(-1px);
+    }
+
+    /* BENEFICIOS */
+    .benefits {
+      background:#fff;
+      border-bottom:1px solid var(--line);
+    }
+
+    .benefits-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:0;
+    }
+
+    .benefit {
+      padding:25px 20px;
+      border-right:1px solid var(--line);
+    }
+
+    .benefit:first-child { padding-left:0; }
+    .benefit:last-child {
+      border-right:0;
+      padding-right:0;
+    }
+
+    .benefit-icon {
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      margin-bottom:10px;
+      border-radius:10px;
+      background:#f2f2f3;
+      font-size:18px;
+    }
+
+    .benefit h3 {
+      margin:0 0 3px;
+      font-size:14px;
+      font-weight:800;
+      color:#111;
+    }
+
+    .benefit p {
+      margin:0;
+      color:#77777f;
+      font-size:12px;
+    }
+
+    /* CATALOGO BLANCO */
+    section.catalog {
+      padding:58px 0 76px;
+      background:#fff;
+    }
+
+    .section-heading {
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      align-items:end;
+      margin-bottom:22px;
+    }
+
+    h2 {
+      margin:0;
+      font-size:29px;
+      line-height:1.15;
+      letter-spacing:-.035em;
+    }
+
+    .sub {
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .search {
+      width:min(100%,360px);
+      padding:12px 14px;
+      color:#222;
+      background:#fff;
+      border:1px solid #dcdce0;
+      border-radius:9px;
+      font:inherit;
+      outline:none;
+    }
+
+    .search:focus {
+      border-color:#999;
+      box-shadow:0 0 0 3px #0000000d;
+    }
+
+    .chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:0 0 25px;
+    }
+
+    .chip {
+      padding:8px 13px;
+      border:1px solid #dedee2;
+      background:#fff;
+      color:#4b4b52;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:700;
+      transition:.18s ease;
+    }
+
+    .chip:hover { border-color:#aaa; }
+
+    .chip.active {
+      border-color:#111;
+      background:#111;
+      color:#fff;
+    }
+
+    /* PRODUCTOS */
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .product {
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      padding:10px;
+      border:1px solid #e5e5e8;
+      background:#fff;
+      border-radius:13px;
+      overflow:hidden;
+      box-shadow:0 5px 18px rgba(0,0,0,.045);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+
+    .product:hover {
+      transform:translateY(-3px);
+      box-shadow:0 10px 26px rgba(0,0,0,.08);
+    }
+
+    .product-image,
+    .fallback {
+      width:100%;
+      aspect-ratio:1/1;
+      border-radius:9px;
+      object-fit:cover;
+      background:#f0f0f2;
+    }
+
+    .fallback {
+      display:grid;
+      place-items:center;
+      color:#777;
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .category {
+      margin:12px 3px 0;
+      color:#8a8a91;
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.07em;
+    }
+
+    .product h3 {
+      margin:4px 3px 0;
+      font-size:15px;
+      line-height:1.3;
+      color:#161619;
+    }
+
+    .description {
+      margin:6px 3px 0;
+      color:#77777e;
+      font-size:12px;
+      overflow:hidden;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+    }
+
+    .price {
+      margin:10px 3px 0;
+      padding-top:3px;
+      font-size:18px;
+      font-weight:800;
+      color:#111;
+    }
+
+    .view {
+      width:100%;
+      margin-top:10px;
+      padding:10px;
+      border:1px solid #dedee2;
+      background:#111;
+      color:#fff;
+      border-radius:8px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .view:hover { background:#2a2a2d; }
+
+    .empty {
+      padding:34px;
+      border:1px dashed #cfcfd4;
+      border-radius:12px;
+      color:var(--muted);
+      text-align:center;
+      grid-column:1/-1;
+    }
+
+    footer {
+      border-top:1px solid var(--line);
+      background:#fff;
+      color:#888890;
+      padding:28px 0;
+      text-align:center;
+      font-size:12px;
+    }
+
+    /* DETALLE */
+    dialog {
+      width:min(650px, calc(100% - 30px));
+      max-height:85vh;
+      overflow:auto;
+      border:1px solid #ddd;
+      border-radius:15px;
+      color:#17171a;
+      background:#fff;
+      padding:0;
+    }
+
+    dialog::backdrop { background:#000b; }
+
+    .dialog-body { padding:24px; }
+
+    .close {
+      float:right;
+      border:0;
+      width:36px;
+      height:36px;
+      border-radius:8px;
+      background:#eeeef0;
+      color:#222;
+      font-size:19px;
+      cursor:pointer;
+    }
+
+    .dialog-image {
+      width:100%;
+      max-height:300px;
+      object-fit:cover;
+      border-radius:10px;
+      margin:13px 0;
+    }
+
+    .dialog-copy {
+      white-space:pre-wrap;
+      color:#55555d;
+    }
+
+    .buy {
+      display:inline-block;
+      margin-top:18px;
+      padding:11px 15px;
+      background:var(--green);
+      color:#fff;
+      text-decoration:none;
+      font-weight:bold;
+      border-radius:8px;
+    }
+
+    @media (max-width:950px) {
+      .grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .benefits-grid { grid-template-columns:repeat(2,1fr); }
+      .benefit:nth-child(2) { border-right:0; }
+      .benefit:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+      .benefit:nth-child(3) { padding-left:0; }
+    }
+
+    @media (max-width:760px) {
+      .container { width:min(100% - 24px, 600px); }
+
+      .nav { min-height:60px; }
+      nav { gap:8px; }
+      nav a:not(.whatsapp) { display:none; }
+
+      .brand { font-size:16px; }
+      .brand img { width:35px; height:35px; }
+
+      .hero {
+        padding:55px 0 52px;
+      }
+
+      h1 {
+        font-size:clamp(38px,11vw,54px);
+        letter-spacing:-.06em;
+      }
+
+      .hero p { font-size:15px; }
+
+      .benefits-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .benefit {
+        padding:18px 12px;
+      }
+
+      .benefit:first-child,
+      .benefit:nth-child(3) {
+        padding-left:0;
+      }
+
+      .benefit:last-child,
+      .benefit:nth-child(2) {
+        padding-right:0;
+      }
+
+      .benefit h3 { font-size:12px; }
+      .benefit p { font-size:10px; }
+
+      section.catalog {
+        padding:42px 0 55px;
+      }
+
+      .section-heading {
+        align-items:stretch;
+        flex-direction:column;
+        gap:14px;
+      }
+
+      h2 { font-size:24px; }
+      .search { width:100%; }
+
+      .chips {
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        padding-bottom:4px;
+        scrollbar-width:none;
+      }
+
+      .chips::-webkit-scrollbar { display:none; }
+      .chip { flex:0 0 auto; }
+
+      /* 2 PRODUCTOS POR FILA EN CELULAR */
+      .grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+      }
+
+      .product {
+        padding:7px;
+        border-radius:11px;
+      }
+
+      .product-image,
+      .fallback {
+        border-radius:8px;
+      }
+
+      .category {
+        margin-top:9px;
+        font-size:8px;
+      }
+
+      .product h3 {
+        margin-top:3px;
+        font-size:13px;
+      }
+
+      .description {
+        font-size:10px;
+        line-height:1.35;
+        -webkit-line-clamp:2;
+      }
+
+      .price {
+        margin-top:7px;
+        font-size:16px;
+      }
+
+      .view {
+        margin-top:8px;
+        padding:9px 5px;
+        font-size:10px;
+      }
+    }
+
+    @media (max-width:390px) {
+      .grid { gap:9px; }
+      .product h3 { font-size:12px; }
+      .price { font-size:15px; }
+    }
   </style>
 </head>
 <body>
   <header><div class="container nav"><a class="brand" href="index.html"><img src="logo.jpg" alt="Logo Streaming EC"><span>Streaming <strong>EC</strong></span></a><nav><a href="#catalogo">Catálogo</a><a href="cursos.html">Cursos</a><a class="whatsapp" href="https://wa.me/qr/2D6ZXQWJBBC7C1" target="_blank" rel="noopener">WhatsApp</a></nav></div></header>
   <main>
     <section class="hero"><div class="container"><span class="badge">TIENDA DIGITAL</span><h1>SERVICIOS PREMIUM A BAJO COSTO</h1><p>Tus servicios digitales favoritos a precios más accesibles. Compra fácil, rápido y seguro.</p><a class="cta" href="#catalogo">Ver catálogo →</a></div></section>
+    <section class="benefits" aria-label="Beneficios de compra">
+      <div class="container benefits-grid">
+        <div class="benefit">
+          <div class="benefit-icon">🔒</div>
+          <h3>Pago Seguro</h3>
+          <p>Compra con confianza y tranquilidad.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">⚡</div>
+          <h3>Entrega Inmediata</h3>
+          <p>Recibe tu producto de forma rápida.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">💬</div>
+          <h3>Soporte Garantizado</h3>
+          <p>Estamos disponibles para ayudarte.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">★</div>
+          <h3>Calidad Premium</h3>
+          <p>Servicios seleccionados para ti.</p>
+        </div>
+      </div>
+    </section>
     <section id="catalogo" class="catalog"><div class="container"><div class="section-heading"><div><h2>Productos destacados</h2><p class="sub">Elige una categoría o busca lo que necesitas.</p></div><input id="search" class="search" type="search" placeholder="Buscar Netflix, cursos, software…"></div><div id="chips" class="chips"></div><div id="products" class="grid" aria-live="polite"><p class="empty">Cargando productos…</p></div></div></section>
   </main>
   <footer><div class="container">© 2026 Streaming EC</div></footer>

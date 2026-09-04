@@ -26,6 +26,16 @@
     .notice code { padding:2px 5px; border-radius:5px; color:#42310e; background:#f4ead5; font:700 12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace; }
     .status { display:none; position:sticky; top:84px; z-index:4; margin:14px 0; padding:13px 15px; border:1px solid #b8e0ca; border-radius:13px; color:#13623e; background:#edf9f2; box-shadow:0 10px 28px rgba(20,96,61,.09); font-weight:700; }
     .status.error { color:#9d2536; border-color:#f0bdc4; background:#fff0f2; }
+    .header-actions { display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
+    .pending-chip { display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border:1px solid #d9dade; border-radius:999px; color:#4c4f55; background:#fff; font-size:11px; font-weight:800; white-space:nowrap; }
+    .pending-chip::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(22,120,74,.1); }
+    .pending-chip.dirty { color:#8b6417; border-color:#ead8ac; background:#fffaf0; }
+    .pending-chip.dirty::before { background:#d5971b; box-shadow:0 0 0 3px rgba(213,151,27,.12); }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 24px; }
+    .metric { padding:18px; border:1px solid #e5e6e8; border-radius:17px; background:#fff; box-shadow:0 9px 28px rgba(27,31,36,.045); }
+    .metric-label { display:block; color:var(--muted); font-size:11px; font-weight:800; letter-spacing:.055em; text-transform:uppercase; }
+    .metric-value { display:block; margin-top:6px; color:var(--ink); font-size:28px; font-weight:800; line-height:1; letter-spacing:-.05em; }
+    .metric small { display:block; margin-top:7px; color:#93969c; font-size:11px; }
     .card { margin-top:24px; padding:26px; border:1px solid rgba(224,225,228,.95); border-radius:22px; background:var(--panel); box-shadow:var(--shadow); }
     .section-head { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-bottom:18px; }
     .auth { display:flex; align-items:center; gap:7px; padding:6px; border:1px solid var(--line); border-radius:15px; background:#fff; box-shadow:0 8px 24px rgba(25,28,32,.055); }
@@ -38,6 +48,7 @@
     button { border:1px solid #292a2e; border-radius:10px; padding:10px 14px; color:#fff; background:#1c1d20; box-shadow:0 5px 12px rgba(18,19,21,.11); font:700 13px/1.25 'Manrope','Segoe UI',sans-serif; cursor:pointer; transition:transform .16s ease,box-shadow .16s ease,background .16s ease; }
     button:hover { transform:translateY(-1px); background:#050506; box-shadow:0 8px 18px rgba(18,19,21,.16); }
     button:active { transform:translateY(0); }
+    button:disabled { transform:none; border-color:#e0e1e3; color:#a0a3a8; background:#f0f1f2; box-shadow:none; cursor:not-allowed; }
     button.primary { border-color:#191a1d; background:#191a1d; }
     button.save { border-color:var(--green); background:var(--green); }
     button.save:hover { background:#0d623a; }
@@ -51,10 +62,16 @@
     .pill { padding:5px 9px; border:1px solid #c9e8d6; border-radius:999px; color:#12663e; background:var(--green-soft); font-size:11px; font-weight:800; white-space:nowrap; }
     .pill.off { border-color:#f0cbd0; color:#ac3142; background:#fff0f2; }
     .toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:16px; margin:0 0 18px; }
-    .search { width:320px; max-width:100%; background:#fff; }
+    .product-tools { position:sticky; top:86px; z-index:3; display:grid; grid-template-columns:minmax(210px,1.5fr) repeat(3,minmax(135px,.7fr)); gap:9px; margin:0 0 14px; padding:11px; border:1px solid #e4e5e8; border-radius:16px; background:rgba(255,255,255,.94); box-shadow:0 10px 26px rgba(27,31,36,.06); backdrop-filter:blur(16px); }
+    .search { width:100%; max-width:100%; background:#fff; }
+    .tools-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .results-count { color:var(--muted); font-size:12px; font-weight:700; }
+    .compact-actions { display:flex; gap:7px; flex-wrap:wrap; }
+    .compact-actions button { padding:8px 10px; font-size:11px; }
     details.product { margin-top:12px; overflow:hidden; border:1px solid #e4e5e8; border-radius:17px; background:#fff; box-shadow:0 6px 20px rgba(28,31,35,.035); transition:border-color .18s ease,box-shadow .18s ease; }
     details.product:hover { border-color:#d0d2d6; }
     details.product[open] { border-color:#cfd1d5; box-shadow:0 14px 34px rgba(26,29,33,.075); }
+    details.product.is-dirty { border-color:#e8d19b; box-shadow:0 12px 30px rgba(158,110,16,.08); }
     details.product > summary { display:flex; list-style:none; align-items:center; justify-content:space-between; gap:14px; padding:17px 18px; cursor:pointer; }
     details.product > summary::-webkit-details-marker { display:none; }
     details.product > summary::before { content:'›'; width:29px; height:29px; flex:0 0 29px; display:grid; place-items:center; border-radius:9px; color:#35373b; background:#f1f2f3; font-size:25px; line-height:1; transform:rotate(0deg); transition:transform .16s ease,background .16s ease; }
@@ -66,6 +83,8 @@
     .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
     .field { min-width:0; }
     .field.wide { grid-column:1/-1; }
+    .field-error { display:block; margin:6px 2px 0; color:#b52a3d; font-size:11px; font-weight:700; }
+    input.invalid,textarea.invalid,select.invalid { border-color:#d8586b; background:#fff8f9; box-shadow:0 0 0 3px rgba(216,88,107,.09); }
     label { display:block; margin-bottom:7px; color:#4d5056; font-size:12px; font-weight:800; letter-spacing:.01em; }
     .image-editor { display:grid; grid-template-columns:132px minmax(0,1fr); gap:15px; align-items:start; }
     .preview { width:132px; height:106px; border:1px solid #dfe1e4; border-radius:12px; object-fit:cover; background:#f0f1f2; box-shadow:0 7px 18px rgba(24,27,31,.07); }
@@ -73,12 +92,19 @@
     .file-row { display:flex; gap:9px; align-items:center; flex-wrap:wrap; }
     .file-row input { flex:1; min-width:180px; padding:7px; }
     .bottom { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-top:20px; padding-top:18px; border-top:1px solid #e3e4e6; }
+    .catalog-preview { display:grid; grid-template-columns:112px minmax(0,1fr); gap:15px; align-items:center; margin-top:2px; padding:15px; border:1px solid #e1e2e5; border-radius:16px; background:#fff; }
+    .catalog-preview-image { width:112px; height:112px; overflow:hidden; display:grid; place-items:center; border-radius:13px; color:#8c8f95; background:#f1f2f3; font-size:11px; font-weight:700; }
+    .catalog-preview-image img { width:100%; height:100%; object-fit:cover; }
+    .catalog-preview-eyebrow { color:var(--red); font-size:10px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+    .catalog-preview h3 { margin:4px 0 6px; font-size:18px; line-height:1.25; }
+    .catalog-preview-price { font-size:20px; font-weight:800; }
+    .catalog-preview-status { margin-left:8px; color:var(--muted); font-size:11px; font-weight:700; }
     .toggle { display:flex; align-items:center; gap:8px; margin:0; color:#3d4045; }
     .toggle input { width:auto; accent-color:#191a1d; }
     .warning { margin:0 0 14px; padding:10px 12px; border:1px solid #f0c6cd; border-radius:10px; color:#a82c3e; background:#fff0f2; font-size:12px; font-weight:700; }
     .hidden { display:none; }
-    @media (max-width:900px) { main { width:min(100% - 28px,760px); padding-top:30px; } main > .section-head { align-items:stretch; flex-direction:column; } .auth { width:100%; } .auth input { flex:1; width:auto; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .category { grid-template-columns:minmax(160px,1fr) auto auto; } .category > span:last-child { grid-column:1/-1; text-align:right; } }
-    @media (max-width:620px) { header { min-height:64px; padding:10px 14px; } header .small { display:none; } .brand { font-size:18px; } .brand img { width:38px; height:38px; } main { width:min(100% - 22px,560px); padding:26px 0 52px; } h1 { font-size:30px; } .section-head,.bottom { align-items:stretch; flex-direction:column; } .auth { align-items:stretch; flex-direction:column; padding:9px; } .auth input { width:100%; } .card { padding:17px; border-radius:18px; } .grid { grid-template-columns:1fr; } .category { grid-template-columns:1fr 1fr; } .category input { grid-column:1/-1; } .category > span:last-child { grid-column:auto; text-align:right; } .add-row { grid-template-columns:1fr; padding:10px; } .image-editor { grid-template-columns:1fr; } .preview { width:100%; height:180px; } .toolbar { align-items:stretch; flex-direction:column; } .search { width:100%; } .bottom > div { display:grid; grid-template-columns:1fr 1fr; gap:8px; } }
+    @media (max-width:900px) { main { width:min(100% - 28px,760px); padding-top:30px; } main > .section-head { align-items:stretch; flex-direction:column; } .header-actions { align-items:stretch; justify-content:flex-start; } .auth { flex:1; } .auth input { flex:1; width:auto; } .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } .product-tools { position:static; grid-template-columns:repeat(2,minmax(0,1fr)); } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .category { grid-template-columns:minmax(160px,1fr) auto auto; } .category > span:last-child { grid-column:1/-1; text-align:right; } }
+    @media (max-width:620px) { header { min-height:64px; padding:10px 14px; } header .small { display:none; } .brand { font-size:18px; } .brand img { width:38px; height:38px; } main { width:min(100% - 22px,560px); padding:26px 0 52px; } h1 { font-size:30px; } .section-head,.bottom { align-items:stretch; flex-direction:column; } .header-actions { width:100%; } .pending-chip { justify-content:center; } .auth { align-items:stretch; flex-direction:column; padding:9px; } .auth input { width:100%; } .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .metric { padding:14px; } .metric-value { font-size:24px; } .card { padding:17px; border-radius:18px; } .product-tools { grid-template-columns:1fr; } .tools-bottom { align-items:stretch; flex-direction:column; } .grid { grid-template-columns:1fr; } .category { grid-template-columns:1fr 1fr; } .category input { grid-column:1/-1; } .category > span:last-child { grid-column:auto; text-align:right; } .add-row { grid-template-columns:1fr; padding:10px; } .image-editor { grid-template-columns:1fr; } .preview { width:100%; height:180px; } .toolbar { align-items:stretch; flex-direction:column; } .search { width:100%; } .catalog-preview { grid-template-columns:86px minmax(0,1fr); } .catalog-preview-image { width:86px; height:86px; } .bottom > div { display:grid; grid-template-columns:1fr 1fr; gap:8px; } }
   </style>
 </head>
 <body>
@@ -89,10 +115,17 @@
   <main>
     <div class="section-head">
       <div><h1>Administra tu catálogo</h1><p class="muted">Crea, edita, activa o elimina categorías y productos.</p></div>
-      <div class="auth"><input id="adminKey" type="password" autocomplete="current-password" placeholder="Clave de administración"><button id="saveKey" class="outline" type="button">Guardar clave</button></div>
+      <div class="header-actions"><span id="pendingChanges" class="pending-chip">Todo guardado</span><div class="auth"><input id="adminKey" type="password" autocomplete="current-password" placeholder="Clave de administración"><button id="saveKey" class="outline" type="button">Guardar clave</button></div></div>
     </div>
     <div id="status" class="status" role="status"></div>
     <p class="notice">Por seguridad, las acciones de guardar, subir o eliminar requieren la clave configurada como <code>ADMIN_API_KEY</code> en Vercel. La clave se conserva solo en esta sesión del navegador.</p>
+
+    <section class="metrics" aria-label="Resumen del catálogo">
+      <div class="metric"><span class="metric-label">Productos</span><strong id="metricProducts" class="metric-value">0</strong><small>Total en el catálogo</small></div>
+      <div class="metric"><span class="metric-label">Activos</span><strong id="metricActive" class="metric-value">0</strong><small>Visibles en la tienda</small></div>
+      <div class="metric"><span class="metric-label">Inactivos</span><strong id="metricInactive" class="metric-value">0</strong><small>Ocultos temporalmente</small></div>
+      <div class="metric"><span class="metric-label">Categorías</span><strong id="metricCategories" class="metric-value">0</strong><small id="metricCategoriesDetail">0 activas</small></div>
+    </section>
 
     <section class="card">
       <div class="section-head"><div><h2>Categorías</h2><p class="muted">Las activas aparecen como filtros en la página principal.</p></div></div>
@@ -101,15 +134,22 @@
     </section>
 
     <section class="card">
-      <div class="toolbar"><div><h2>Productos</h2><p class="muted">Abre cada tarjeta con la flecha para editarla.</p></div><div><input id="search" class="search" type="search" placeholder="Buscar producto o categoría"></div></div>
-      <button class="primary" data-action="add-product" type="button">+ Agregar producto</button>
+      <div class="toolbar"><div><h2>Productos</h2><p class="muted">Busca, filtra y abre cada tarjeta para editarla.</p></div><button class="primary" data-action="add-product" type="button">+ Agregar producto</button></div>
+      <div class="product-tools" aria-label="Filtros de productos">
+        <input id="search" class="search" type="search" placeholder="Buscar producto o categoría" aria-label="Buscar productos">
+        <select id="filterCategory" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select>
+        <select id="filterStatus" aria-label="Filtrar por estado"><option value="">Todos los estados</option><option value="active">Activos</option><option value="inactive">Inactivos</option></select>
+        <select id="sortProducts" aria-label="Ordenar productos"><option value="default">Orden actual</option><option value="name">Nombre A–Z</option><option value="price-asc">Precio menor</option><option value="price-desc">Precio mayor</option></select>
+      </div>
+      <div class="tools-bottom"><span id="resultsCount" class="results-count">0 productos</span><div class="compact-actions"><button class="outline" data-action="expand-all" type="button">Expandir visibles</button><button class="outline" data-action="collapse-all" type="button">Cerrar todos</button></div></div>
       <div id="productList"><p class="muted">Cargando productos…</p></div>
     </section>
   </main>
   <script>
-    const state = { categorias: [], productos: [] };
+    const state = { categorias: [], productos: [], dirtyProducts: new Set(), dirtyCategories: new Set() };
     const statusBox = document.querySelector('#status');
     const keyInput = document.querySelector('#adminKey');
+    const pendingChanges = document.querySelector('#pendingChanges');
     keyInput.value = sessionStorage.getItem('streamingec-admin-key') || '';
 
     const escapeHtml = value => String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -119,52 +159,266 @@
     function headers(json = true) { const key = getKey(); if (!key) return null; const values = { 'x-admin-key': key }; if (json) values['Content-Type'] = 'application/json'; return values; }
     async function writeApi(path, options = {}) { const requestHeaders = headers(options.json !== false); if (!requestHeaders) throw new Error('Falta la clave de administración.'); const response = await fetch(path, { ...options, headers: { ...requestHeaders, ...(options.headers || {}) } }); if (!response.ok) throw new Error(await errorMessage(response)); return response.json(); }
 
-    async function loadData() {
+    const categoryKey = (category, index) => String(category.id ?? `category-${index}`);
+    const productKey = (product, index) => String(product.id || product._clientId || `product-${index}`);
+    const hasPendingChanges = () => state.dirtyProducts.size > 0 || state.dirtyCategories.size > 0;
+    function updateDashboard() {
+      const active = state.productos.filter(product => product.activo).length;
+      const activeCategories = state.categorias.filter(category => category.activa).length;
+      document.querySelector('#metricProducts').textContent = state.productos.length;
+      document.querySelector('#metricActive').textContent = active;
+      document.querySelector('#metricInactive').textContent = state.productos.length - active;
+      document.querySelector('#metricCategories').textContent = state.categorias.length;
+      document.querySelector('#metricCategoriesDetail').textContent = `${activeCategories} ${activeCategories === 1 ? 'activa' : 'activas'}`;
+      const pending = state.dirtyProducts.size + state.dirtyCategories.size;
+      pendingChanges.textContent = pending ? `${pending} ${pending === 1 ? 'cambio pendiente' : 'cambios pendientes'}` : 'Todo guardado';
+      pendingChanges.classList.toggle('dirty', pending > 0);
+    }
+    function renderProductFilters() {
+      const select = document.querySelector('#filterCategory');
+      const selected = select.value;
+      select.innerHTML = `<option value="">Todas las categorías</option>${state.categorias.map(category => `<option value="${escapeHtml(category.nombre)}">${escapeHtml(category.nombre)}</option>`).join('')}`;
+      if ([...select.options].some(option => option.value === selected)) select.value = selected;
+    }
+    function mergeRemoteProducts(remoteProducts) {
+      const pending = new Map(state.productos.map((product, index) => [productKey(product, index), product]).filter(([key]) => state.dirtyProducts.has(key)));
+      const merged = remoteProducts.map(product => pending.get(String(product.id)) || { ...product, _clientId: String(product.id) });
+      state.productos.filter((product, index) => !product.id && state.dirtyProducts.has(productKey(product, index))).forEach(product => merged.unshift(product));
+      return merged;
+    }
+    function mergeRemoteCategories(remoteCategories) {
+      const pending = new Map(state.categorias.map((category, index) => [categoryKey(category, index), category]).filter(([key]) => state.dirtyCategories.has(key)));
+      return remoteCategories.map(category => pending.get(String(category.id)) || category);
+    }
+
+    async function loadData({ preserveDirty = false } = {}) {
       try {
         const [categoryResponse, productResponse] = await Promise.all([fetch('/api/categorias'), fetch('/api/productos')]);
         if (!categoryResponse.ok) throw new Error(await errorMessage(categoryResponse));
         if (!productResponse.ok) throw new Error(await errorMessage(productResponse));
-        state.categorias = await categoryResponse.json();
-        state.productos = await productResponse.json();
-        renderCategories(); renderProducts();
+        const remoteCategories = await categoryResponse.json();
+        const remoteProducts = await productResponse.json();
+        state.categorias = preserveDirty ? mergeRemoteCategories(remoteCategories) : remoteCategories;
+        state.productos = preserveDirty ? mergeRemoteProducts(remoteProducts) : remoteProducts.map(product => ({ ...product, _clientId: String(product.id) }));
+        if (!preserveDirty) { state.dirtyProducts.clear(); state.dirtyCategories.clear(); }
+        renderCategories(); renderProductFilters(); renderProducts(); updateDashboard();
       } catch (error) { showStatus(`No se pudo cargar el panel: ${error.message}`, true); }
     }
 
     function renderCategories() {
       const target = document.querySelector('#categoryList');
       if (!state.categorias.length) { target.innerHTML = '<p class="muted">Aún no hay categorías.</p>'; return; }
-      target.innerHTML = state.categorias.map((category, index) => `<div class="category"><input data-category="${index}" value="${escapeHtml(category.nombre)}" aria-label="Nombre de categoría"><span class="pill${category.activa ? '' : ' off'}">${category.activa ? 'Activa' : 'Inactiva'}</span><button data-action="save-category" data-index="${index}" type="button">Guardar</button><span><button data-action="toggle-category" data-index="${index}" type="button">${category.activa ? 'Desactivar' : 'Activar'}</button> <button class="danger" data-action="delete-category" data-index="${index}" type="button" aria-label="Eliminar ${escapeHtml(category.nombre)}">Eliminar</button></span></div>`).join('');
+      target.innerHTML = state.categorias.map((category, index) => {
+        const dirty = state.dirtyCategories.has(categoryKey(category, index));
+        return `<div class="category"><input data-category="${index}" value="${escapeHtml(category.nombre)}" aria-label="Nombre de categoría"><span class="pill${category.activa ? '' : ' off'}">${category.activa ? 'Activa' : 'Inactiva'}</span><button class="save" data-action="save-category" data-index="${index}" type="button" ${dirty ? '' : 'disabled'}>${dirty ? 'Guardar cambio' : 'Guardado'}</button><span><button data-action="toggle-category" data-index="${index}" type="button">${category.activa ? 'Desactivar' : 'Activar'}</button> <button class="danger" data-action="delete-category" data-index="${index}" type="button" aria-label="Eliminar ${escapeHtml(category.nombre)}">Eliminar</button></span></div>`;
+      }).join('');
     }
 
     function categoryOptions(selected) { return `<option value="">Seleccionar categoría</option>${state.categorias.filter(c => c.activa || c.nombre === selected).map(c => `<option value="${escapeHtml(c.nombre)}" ${c.nombre === selected ? 'selected' : ''}>${escapeHtml(c.nombre)}</option>`).join('')}`; }
-    function visibleProducts() { const query = document.querySelector('#search').value.trim().toLowerCase(); return state.productos.map((product, index) => ({ product, index })).filter(({ product }) => !query || [product.nombre, product.categoria, product.descripcion].some(value => String(value || '').toLowerCase().includes(query))); }
+    function visibleProducts() {
+      const query = document.querySelector('#search').value.trim().toLowerCase();
+      const category = document.querySelector('#filterCategory').value;
+      const status = document.querySelector('#filterStatus').value;
+      const sort = document.querySelector('#sortProducts').value;
+      const records = state.productos.map((product, index) => ({ product, index })).filter(({ product }) => {
+        const matchesQuery = !query || [product.nombre, product.categoria, product.descripcion].some(value => String(value || '').toLowerCase().includes(query));
+        const matchesCategory = !category || product.categoria === category;
+        const matchesStatus = !status || (status === 'active' ? product.activo : !product.activo);
+        return matchesQuery && matchesCategory && matchesStatus;
+      });
+      if (sort === 'name') records.sort((a, b) => String(a.product.nombre || '').localeCompare(String(b.product.nombre || ''), 'es'));
+      if (sort === 'price-asc') records.sort((a, b) => Number(a.product.precio || 0) - Number(b.product.precio || 0));
+      if (sort === 'price-desc') records.sort((a, b) => Number(b.product.precio || 0) - Number(a.product.precio || 0));
+      return records;
+    }
 
     function renderProducts() {
       const target = document.querySelector('#productList');
       const records = visibleProducts();
-      if (!records.length) { target.innerHTML = '<p class="muted">No hay productos que coincidan.</p>'; return; }
+      document.querySelector('#resultsCount').textContent = `${records.length} ${records.length === 1 ? 'producto visible' : 'productos visibles'} de ${state.productos.length}`;
+      if (!records.length) { target.innerHTML = '<p class="muted">No hay productos que coincidan con estos filtros.</p>'; return; }
       target.innerHTML = records.map(({ product, index }) => {
         const name = String(product.nombre || '').trim();
+        const dirty = product.isNew || state.dirtyProducts.has(productKey(product, index));
         const warning = !name ? '<p class="warning">Este producto no tiene nombre. Corrígelo o elimínalo para que no aparezca en la tienda.</p>' : '';
         const image = product.imagen ? `<img class="preview" data-preview="${index}" src="${escapeHtml(product.imagen)}" alt="Vista previa" onerror="this.outerHTML='<div class=&quot;preview empty-preview&quot; data-preview=&quot;${index}&quot;>Imagen no disponible</div>'">` : `<div class="preview empty-preview" data-preview="${index}">Sin imagen</div>`;
-        return `<details class="product" ${product.isNew ? 'open' : ''}><summary><div class="summary-main"><div class="summary-title">${escapeHtml(name || 'Producto sin nombre')}</div><div class="summary-meta">${escapeHtml(product.categoria || 'Sin categoría')} · $${Number(product.precio || 0).toFixed(2)} · ${product.activo ? 'Activo' : 'Inactivo'}</div></div><span class="pill${product.activo ? '' : ' off'}">${product.isNew ? 'Nuevo' : (product.id ? 'Guardado' : 'Revisar')}</span></summary><div class="product-body">${warning}<div class="grid"><div class="field"><label>Nombre</label><input data-product="${index}" data-field="nombre" value="${escapeHtml(product.nombre)}"></div><div class="field"><label>Precio (USD)</label><input data-product="${index}" data-field="precio" type="number" min="0" step="0.01" value="${escapeHtml(product.precio ?? '')}"></div><div class="field"><label>Categoría</label><select data-product="${index}" data-field="categoria">${categoryOptions(product.categoria)}</select></div><div class="field wide"><label>Imagen</label><div class="image-editor">${image}<div><input data-file="${index}" type="file" accept="image/jpeg,image/png,image/webp"><div class="file-row"><button data-action="upload-image" data-index="${index}" type="button">Subir imagen</button><small class="muted">JPG, PNG o WEBP; máximo 5 MB.</small></div><label style="margin-top:10px">URL de imagen (opcional)</label><input data-product="${index}" data-field="imagen" value="${escapeHtml(product.imagen)}" placeholder="https://…"></div></div></div><div class="field wide"><label>Descripción</label><textarea data-product="${index}" data-field="descripcion">${escapeHtml(product.descripcion)}</textarea></div><div class="field wide"><label>Detalles del producto</label><textarea data-product="${index}" data-field="detalles">${escapeHtml(product.detalles)}</textarea></div><div class="field wide"><label>Detalles de solicitud</label><textarea data-product="${index}" data-field="solicitud">${escapeHtml(product.solicitud)}</textarea></div></div><div class="bottom"><label class="toggle"><input data-product="${index}" data-field="activo" type="checkbox" ${product.activo ? 'checked' : ''}> Producto activo</label><div><button class="save" data-action="save-product" data-index="${index}" type="button">Guardar producto</button> <button class="danger" data-action="delete-product" data-index="${index}" type="button">Eliminar</button></div></div></div></details>`;
+        const liveImage = product.imagen ? `<img src="${escapeHtml(product.imagen)}" alt="${escapeHtml(name || 'Producto')}" onerror="this.style.display='none';this.parentElement.textContent='Imagen no disponible'">` : 'Sin imagen';
+        const stateLabel = product.isNew ? 'Nuevo' : (dirty ? 'Cambios pendientes' : 'Guardado');
+        return `<details class="product${dirty ? ' is-dirty' : ''}" data-product-card="${index}" ${product.isNew ? 'open' : ''}><summary><div class="summary-main"><div class="summary-title" data-summary-title>${escapeHtml(name || 'Producto sin nombre')}</div><div class="summary-meta" data-summary-meta>${escapeHtml(product.categoria || 'Sin categoría')} · $${Number(product.precio || 0).toFixed(2)} · ${product.activo ? 'Activo' : 'Inactivo'}</div></div><span class="pill${dirty || !product.activo ? ' off' : ''}" data-summary-state>${stateLabel}</span></summary><div class="product-body">${warning}<div class="grid"><div class="field"><label>Nombre</label><input data-product="${index}" data-field="nombre" value="${escapeHtml(product.nombre)}"></div><div class="field"><label>Precio (USD)</label><input data-product="${index}" data-field="precio" type="number" min="0" step="0.01" value="${escapeHtml(product.precio ?? '')}"></div><div class="field"><label>Categoría</label><select data-product="${index}" data-field="categoria">${categoryOptions(product.categoria)}</select></div><div class="field wide"><label>Imagen</label><div class="image-editor">${image}<div><input data-file="${index}" type="file" accept="image/jpeg,image/png,image/webp"><div class="file-row"><button data-action="upload-image" data-index="${index}" type="button">Subir imagen</button><small class="muted">JPG, PNG o WEBP; máximo 5 MB.</small></div><label style="margin-top:10px">URL de imagen (opcional)</label><input data-product="${index}" data-field="imagen" value="${escapeHtml(product.imagen)}" placeholder="https://…"></div></div></div><div class="field wide"><label>Descripción</label><textarea data-product="${index}" data-field="descripcion">${escapeHtml(product.descripcion)}</textarea></div><div class="field wide"><label>Detalles del producto</label><textarea data-product="${index}" data-field="detalles">${escapeHtml(product.detalles)}</textarea></div><div class="field wide"><label>Detalles de solicitud</label><textarea data-product="${index}" data-field="solicitud">${escapeHtml(product.solicitud)}</textarea></div><div class="field wide"><label>Vista previa en la tienda</label><div class="catalog-preview" data-catalog-preview="${index}"><div class="catalog-preview-image" data-live-image>${liveImage}</div><div><span class="catalog-preview-eyebrow" data-live-category>${escapeHtml(product.categoria || 'Sin categoría')}</span><h3 data-live-name>${escapeHtml(name || 'Nombre del producto')}</h3><strong class="catalog-preview-price" data-live-price>$${Number(product.precio || 0).toFixed(2)}</strong><span class="catalog-preview-status" data-live-status>${product.activo ? 'Visible' : 'Oculto'}</span></div></div></div></div><div class="bottom"><label class="toggle"><input data-product="${index}" data-field="activo" type="checkbox" ${product.activo ? 'checked' : ''}> Producto activo</label><div><button class="save" data-action="save-product" data-index="${index}" type="button" ${dirty ? '' : 'disabled'}>${dirty ? 'Guardar producto' : 'Producto guardado'}</button> <button class="danger" data-action="delete-product" data-index="${index}" type="button">Eliminar</button></div></div></div></details>`;
       }).join('');
     }
 
-    async function addCategory() { const input = document.querySelector('#newCategory'); const nombre = input.value.trim(); if (!nombre) return showStatus('Escribe el nombre de la categoría.', true); try { await writeApi('/api/categorias', { method: 'POST', body: JSON.stringify({ nombre }) }); input.value = ''; await loadData(); showStatus('Categoría agregada.'); } catch (error) { showStatus(error.message, true); } }
-    async function saveCategory(index) { const category = state.categorias[index]; const input = document.querySelector(`[data-category="${index}"]`); const nombre = input.value.trim(); if (!nombre) return showStatus('La categoría necesita un nombre.', true); try { await writeApi('/api/categorias', { method: 'PUT', body: JSON.stringify({ ...category, nombre }) }); await loadData(); showStatus('Categoría actualizada.'); } catch (error) { showStatus(error.message, true); } }
-    async function toggleCategory(index) { const category = state.categorias[index]; try { await writeApi('/api/categorias', { method: 'PUT', body: JSON.stringify({ ...category, activa: !category.activa }) }); await loadData(); showStatus('Estado de categoría actualizado.'); } catch (error) { showStatus(error.message, true); } }
-    async function deleteCategory(index) { const category = state.categorias[index]; if (!confirm(`¿Eliminar la categoría “${category.nombre}”?`)) return; try { await writeApi('/api/categorias', { method: 'DELETE', body: JSON.stringify({ id: category.id }) }); await loadData(); showStatus('Categoría eliminada.'); } catch (error) { showStatus(error.message, true); } }
-    function addProduct() { const firstCategory = state.categorias.find(c => c.activa)?.nombre || ''; state.productos.unshift({ id: '', isNew: true, nombre: '', precio: '', categoria: firstCategory, imagen: '', descripcion: '', detalles: '', solicitud: '', activo: true }); renderProducts(); }
-    async function uploadImage(index) { const input = document.querySelector(`[data-file="${index}"]`); const file = input.files[0]; if (!file) return showStatus('Selecciona una imagen primero.', true); if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) return showStatus('Usa una imagen JPG, PNG o WEBP de hasta 5 MB.', true); try { const form = new FormData(); form.append('file', file); const result = await writeApi('/api/upload', { method: 'POST', body: form, json: false }); state.productos[index].imagen = result.url; renderProducts(); showStatus('Imagen subida. Ahora guarda el producto.'); } catch (error) { showStatus(error.message, true); } }
-    async function saveProduct(index) { const product = state.productos[index]; if (!String(product.nombre || '').trim()) return showStatus('Escribe el nombre del producto.', true); if (!String(product.categoria || '').trim()) return showStatus('Selecciona una categoría.', true); try { const isNew = !product.id; const result = await writeApi('/api/productos', { method: isNew ? 'POST' : 'PUT', body: JSON.stringify(product) }); state.productos[index] = { ...result.producto, isNew: false }; renderProducts(); showStatus(isNew ? 'Producto creado correctamente.' : 'Producto actualizado correctamente.'); } catch (error) { showStatus(error.message, true); } }
-    async function deleteProduct(index) { const product = state.productos[index]; if (!product.id) { state.productos.splice(index, 1); renderProducts(); return; } if (!confirm(`¿Eliminar “${product.nombre || 'este producto'}”?`)) return; try { await writeApi('/api/productos', { method: 'DELETE', body: JSON.stringify({ id: product.id }) }); state.productos.splice(index, 1); renderProducts(); showStatus('Producto eliminado.'); } catch (error) { showStatus(error.message, true); } }
+    function updateProductUI(index) {
+      const product = state.productos[index];
+      const card = document.querySelector(`[data-product-card="${index}"]`);
+      if (!product || !card) return;
+      const dirty = state.dirtyProducts.has(productKey(product, index));
+      card.classList.toggle('is-dirty', dirty);
+      const cleanName = String(product.nombre || '').trim();
+      const currentWarning = card.querySelector('.warning');
+      if (cleanName && currentWarning) currentWarning.remove();
+      if (!cleanName && !currentWarning) card.querySelector('.product-body').insertAdjacentHTML('afterbegin', '<p class="warning">Este producto no tiene nombre. Corrígelo o elimínalo para que no aparezca en la tienda.</p>');
+      card.querySelector('[data-summary-title]').textContent = cleanName || 'Producto sin nombre';
+      card.querySelector('[data-summary-meta]').textContent = `${product.categoria || 'Sin categoría'} · $${Number(product.precio || 0).toFixed(2)} · ${product.activo ? 'Activo' : 'Inactivo'}`;
+      const summaryState = card.querySelector('[data-summary-state]');
+      summaryState.textContent = product.isNew ? 'Nuevo' : (dirty ? 'Cambios pendientes' : 'Guardado');
+      summaryState.classList.toggle('off', dirty || !product.activo);
+      card.querySelector('[data-live-category]').textContent = product.categoria || 'Sin categoría';
+      card.querySelector('[data-live-name]').textContent = cleanName || 'Nombre del producto';
+      card.querySelector('[data-live-price]').textContent = `$${Number(product.precio || 0).toFixed(2)}`;
+      card.querySelector('[data-live-status]').textContent = product.activo ? 'Visible' : 'Oculto';
+      const imageTarget = card.querySelector('[data-live-image]');
+      imageTarget.innerHTML = product.imagen ? `<img src="${escapeHtml(product.imagen)}" alt="Vista previa" onerror="this.style.display='none';this.parentElement.textContent='Imagen no disponible'">` : 'Sin imagen';
+      const saveButton = card.querySelector('[data-action="save-product"]');
+      saveButton.disabled = !dirty;
+      saveButton.textContent = dirty ? 'Guardar producto' : 'Producto guardado';
+      updateDashboard();
+    }
+
+    function clearFieldError(input) {
+      input.classList.remove('invalid');
+      const error = input.parentElement.querySelector('.field-error');
+      if (error) error.remove();
+    }
+    function setFieldError(input, message) {
+      clearFieldError(input);
+      input.classList.add('invalid');
+      const error = document.createElement('small');
+      error.className = 'field-error';
+      error.textContent = message;
+      input.insertAdjacentElement('afterend', error);
+    }
+    function validateProduct(product) {
+      const errors = [];
+      if (!String(product.nombre || '').trim()) errors.push({ field: 'nombre', message: 'Escribe el nombre del producto.' });
+      if (String(product.precio ?? '').trim() === '' || !Number.isFinite(Number(product.precio)) || Number(product.precio) < 0) errors.push({ field: 'precio', message: 'Ingresa un precio válido igual o mayor a cero.' });
+      if (!String(product.categoria || '').trim()) errors.push({ field: 'categoria', message: 'Selecciona una categoría.' });
+      if (String(product.imagen || '').trim() && !/^https?:\/\//i.test(String(product.imagen).trim())) errors.push({ field: 'imagen', message: 'La imagen debe comenzar con http:// o https://.' });
+      return errors;
+    }
+    function showValidationErrors(index, errors) {
+      const card = document.querySelector(`[data-product-card="${index}"]`);
+      if (!card) return;
+      card.open = true;
+      card.querySelectorAll('.invalid').forEach(clearFieldError);
+      errors.forEach(error => { const input = card.querySelector(`[data-field="${error.field}"]`); if (input) setFieldError(input, error.message); });
+      const first = card.querySelector('.invalid');
+      if (first) { first.focus(); first.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+
+    async function addCategory() { const input = document.querySelector('#newCategory'); const nombre = input.value.trim(); if (!nombre) return showStatus('Escribe el nombre de la categoría.', true); try { await writeApi('/api/categorias', { method: 'POST', body: JSON.stringify({ nombre }) }); input.value = ''; await loadData({ preserveDirty: true }); showStatus('Categoría agregada correctamente.'); } catch (error) { showStatus(error.message, true); } }
+    async function saveCategory(index) { const category = state.categorias[index]; const nombre = String(category.nombre || '').trim(); if (!nombre) return showStatus('La categoría necesita un nombre.', true); const key = categoryKey(category, index); try { await writeApi('/api/categorias', { method: 'PUT', body: JSON.stringify({ ...category, nombre }) }); state.dirtyCategories.delete(key); await loadData({ preserveDirty: true }); showStatus('Categoría actualizada correctamente.'); } catch (error) { showStatus(error.message, true); } }
+    async function toggleCategory(index) { const category = state.categorias[index]; if (state.dirtyCategories.has(categoryKey(category, index))) return showStatus('Guarda primero el cambio de nombre de esta categoría.', true); try { await writeApi('/api/categorias', { method: 'PUT', body: JSON.stringify({ ...category, activa: !category.activa }) }); await loadData({ preserveDirty: true }); showStatus('Estado de categoría actualizado.'); } catch (error) { showStatus(error.message, true); } }
+    async function deleteCategory(index) { const category = state.categorias[index]; if (!confirm(`¿Eliminar la categoría “${category.nombre}”?\n\nEsta acción no se puede deshacer y podría afectar los filtros de productos asociados.`)) return; const key = categoryKey(category, index); try { await writeApi('/api/categorias', { method: 'DELETE', body: JSON.stringify({ id: category.id }) }); state.dirtyCategories.delete(key); await loadData({ preserveDirty: true }); showStatus('Categoría eliminada.'); } catch (error) { showStatus(error.message, true); } }
+    function addProduct() {
+      const firstCategory = state.categorias.find(category => category.activa)?.nombre || '';
+      const product = { id: '', _clientId: `new-${Date.now()}`, isNew: true, nombre: '', precio: '', categoria: firstCategory, imagen: '', descripcion: '', detalles: '', solicitud: '', activo: true };
+      state.productos.unshift(product);
+      state.dirtyProducts.add(productKey(product, 0));
+      document.querySelector('#search').value = '';
+      document.querySelector('#filterCategory').value = '';
+      document.querySelector('#filterStatus').value = '';
+      document.querySelector('#sortProducts').value = 'default';
+      renderProducts(); updateDashboard();
+      requestAnimationFrame(() => document.querySelector('[data-product-card="0"] [data-field="nombre"]')?.focus());
+    }
+    async function uploadImage(index) {
+      const input = document.querySelector(`[data-file="${index}"]`);
+      const file = input.files[0];
+      if (!file) return showStatus('Selecciona una imagen primero.', true);
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) return showStatus('Usa una imagen JPG, PNG o WEBP de hasta 5 MB.', true);
+      try {
+        const form = new FormData(); form.append('file', file);
+        const result = await writeApi('/api/upload', { method: 'POST', body: form, json: false });
+        const product = state.productos[index];
+        product.imagen = result.url;
+        state.dirtyProducts.add(productKey(product, index));
+        const preview = document.querySelector(`[data-preview="${index}"]`);
+        if (preview) { const image = document.createElement('img'); image.className = 'preview'; image.dataset.preview = index; image.src = result.url; image.alt = 'Vista previa'; preview.replaceWith(image); }
+        updateProductUI(index);
+        showStatus('Imagen subida. Revisa la vista previa y guarda el producto.');
+      } catch (error) { showStatus(error.message, true); }
+    }
+    async function saveProduct(index) {
+      const product = state.productos[index];
+      const errors = validateProduct(product);
+      if (errors.length) { showValidationErrors(index, errors); return showStatus(`Revisa ${errors.length === 1 ? 'el campo marcado' : 'los campos marcados'} antes de guardar.`, true); }
+      const key = productKey(product, index);
+      try {
+        const isNew = !product.id;
+        const payload = { ...product }; delete payload.isNew; delete payload._clientId;
+        const result = await writeApi('/api/productos', { method: isNew ? 'POST' : 'PUT', body: JSON.stringify(payload) });
+        state.dirtyProducts.delete(key);
+        state.productos[index] = { ...result.producto, _clientId: String(result.producto.id), isNew: false };
+        renderProducts(); updateDashboard();
+        showStatus(isNew ? 'Producto creado correctamente.' : 'Producto actualizado correctamente.');
+      } catch (error) { showStatus(error.message, true); }
+    }
+    async function deleteProduct(index) {
+      const product = state.productos[index];
+      const key = productKey(product, index);
+      if (!product.id) { state.dirtyProducts.delete(key); state.productos.splice(index, 1); renderProducts(); updateDashboard(); return showStatus('Producto nuevo descartado.'); }
+      if (!confirm(`¿Eliminar “${product.nombre || 'este producto'}”?\n\nEsta acción elimina el producto del catálogo y no se puede deshacer.`)) return;
+      try { await writeApi('/api/productos', { method: 'DELETE', body: JSON.stringify({ id: product.id }) }); state.dirtyProducts.delete(key); state.productos.splice(index, 1); renderProducts(); updateDashboard(); showStatus('Producto eliminado.'); } catch (error) { showStatus(error.message, true); }
+    }
 
     document.querySelector('#saveKey').addEventListener('click', () => { const key = keyInput.value.trim(); if (!key) return showStatus('Ingresa una clave.', true); sessionStorage.setItem('streamingec-admin-key', key); showStatus('Clave guardada para esta sesión.'); });
     document.querySelector('#search').addEventListener('input', renderProducts);
-    document.addEventListener('input', event => { const index = event.target.dataset.product; const field = event.target.dataset.field; if (index === undefined || !field) return; state.productos[index][field] = event.target.type === 'checkbox' ? event.target.checked : event.target.value; });
-    document.addEventListener('change', event => { const index = event.target.dataset.product; const field = event.target.dataset.field; if (index === undefined || !field) return; state.productos[index][field] = event.target.type === 'checkbox' ? event.target.checked : event.target.value; });
-    document.addEventListener('click', event => { const button = event.target.closest('[data-action]'); if (!button) return; const index = Number(button.dataset.index); const actions = { 'add-category': addCategory, 'save-category': () => saveCategory(index), 'toggle-category': () => toggleCategory(index), 'delete-category': () => deleteCategory(index), 'add-product': addProduct, 'upload-image': () => uploadImage(index), 'save-product': () => saveProduct(index), 'delete-product': () => deleteProduct(index) }; actions[button.dataset.action]?.(); });
+    ['filterCategory', 'filterStatus', 'sortProducts'].forEach(id => document.querySelector(`#${id}`).addEventListener('change', renderProducts));
+    document.addEventListener('input', event => {
+      const productIndex = event.target.dataset.product;
+      const field = event.target.dataset.field;
+      if (productIndex !== undefined && field) {
+        const product = state.productos[productIndex];
+        product[field] = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        state.dirtyProducts.add(productKey(product, productIndex));
+        clearFieldError(event.target);
+        updateProductUI(productIndex);
+      }
+      const categoryIndex = event.target.dataset.category;
+      if (categoryIndex !== undefined) {
+        const category = state.categorias[categoryIndex];
+        category.nombre = event.target.value;
+        state.dirtyCategories.add(categoryKey(category, categoryIndex));
+        const saveButton = event.target.closest('.category').querySelector('[data-action="save-category"]');
+        saveButton.disabled = false; saveButton.textContent = 'Guardar cambio';
+        updateDashboard();
+      }
+    });
+    document.addEventListener('change', event => {
+      const index = event.target.dataset.product;
+      const field = event.target.dataset.field;
+      if (index === undefined || !field) return;
+      const error = validateProduct(state.productos[index]).find(item => item.field === field);
+      if (error) setFieldError(event.target, error.message); else clearFieldError(event.target);
+    });
+    document.addEventListener('click', async event => {
+      const button = event.target.closest('[data-action]');
+      if (!button) return;
+      const index = Number(button.dataset.index);
+      const actions = {
+        'add-category': addCategory,
+        'save-category': () => saveCategory(index),
+        'toggle-category': () => toggleCategory(index),
+        'delete-category': () => deleteCategory(index),
+        'add-product': addProduct,
+        'upload-image': () => uploadImage(index),
+        'save-product': () => saveProduct(index),
+        'delete-product': () => deleteProduct(index),
+        'expand-all': () => document.querySelectorAll('#productList details.product').forEach(details => { details.open = true; }),
+        'collapse-all': () => document.querySelectorAll('#productList details.product').forEach(details => { details.open = false; })
+      };
+      const action = actions[button.dataset.action];
+      if (!action) return;
+      const result = action();
+      if (result instanceof Promise) {
+        const original = button.textContent;
+        button.disabled = true;
+        if (!button.classList.contains('danger')) button.textContent = 'Procesando…';
+        try { await result; } finally { if (button.isConnected) { button.disabled = false; button.textContent = original; } }
+      }
+    });
+    window.addEventListener('beforeunload', event => { if (!hasPendingChanges()) return; event.preventDefault(); event.returnValue = ''; });
     loadData();
   </script>
 </body>
